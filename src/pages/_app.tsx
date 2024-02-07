@@ -1,3 +1,4 @@
+// src/pages/_app.tsx
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '../styles/GlobalStyle';

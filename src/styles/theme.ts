@@ -1,12 +1,17 @@
+// src/styles/theme.ts
 const theme = {
     colors: {
-      primary: '#0070f3',
-      background: '#f0f2f5',
-      text: '#333',
-      // Add more colors as needed
+        primary: '#398ad7',   // Primary color
+        background: '#23272a', // Background color
+        text: '#ffffff', // Primary text
+        secondaryText: '#bbbbbb', // Secondary text
+        border: '#dddddd',     // Border color
     },
-    // Add other theme properties such as font sizes, spacing, etc.
-  };
+    fonts: {
+        body: "'Fira Sans', sans-serif",
+        heading: "'Poppins', sans-serif",
+        monospace: "'Courier Prime', monospace",
+    },
+};
   
-  export default theme;
-  
+export default theme;  
