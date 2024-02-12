@@ -2,6 +2,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import Header from '../components/header/Header';
+import Greeting from '../components/sections/Greeting';
+import Projects from '../components/sections/Projects';
+import SkillsGraph from '../components/sections/SkillsGraph';
+import Footer from '../components/footer/Footer';
+
 const Home: NextPage = () => {
   return (
     <div>
@@ -12,8 +18,11 @@ const Home: NextPage = () => {
       </Head>
       
       <main>
-        <h1>Welcome to My Portfolio</h1>
-        {/* Your content here */}
+        <Header />
+        <Greeting />
+        <Projects />
+        <SkillsGraph />
+        <Footer />
       </main>
     </div>
   );
