@@ -6,6 +6,7 @@ const theme = {
         text: '#ffffff', // Primary text
         secondaryText: '#bbbbbb', // Secondary text
         border: '#dddddd',     // Border color
+        scrollbar: '#1c1f23',  // Scrollbar color
     },
     fonts: {
         body: "'Fira Sans', sans-serif",

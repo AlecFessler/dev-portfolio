@@ -2,11 +2,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import Header from '../components/header/Header';
-import Greeting from '../components/sections/Greeting';
-import Projects from '../components/sections/Projects';
-import SkillsGraph from '../components/sections/SkillsGraph';
-import Footer from '../components/footer/Footer';
+import Main from './portfolio';
 
 const Home: NextPage = () => {
   return (
@@ -16,14 +12,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Welcome to Alec's Developer Portfolio" />
         {/*<link rel="icon" href="/favicon.ico" />*/}
       </Head>
-      
-      <main>
-        <Header />
-        <Greeting />
-        <Projects />
-        <SkillsGraph />
-        <Footer />
-      </main>
+      <Main />
     </div>
   );
 };

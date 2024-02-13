@@ -20,7 +20,7 @@ const ProjectsSection = styled.section`
 
 const Projects = () => {
   return (
-    <ProjectsSection>
+    <ProjectsSection id="Projects">
         <h1>Projects</h1>
         <ProjectCard />
         <ProjectCard />
