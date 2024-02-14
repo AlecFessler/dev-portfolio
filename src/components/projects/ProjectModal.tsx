@@ -15,7 +15,6 @@ const ProjectModalContainer = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    z-index: -100;
     backface-visibility: hidden;
     transform: rotateY(180deg);
 `;

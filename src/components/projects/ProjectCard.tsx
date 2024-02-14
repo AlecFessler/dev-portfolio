@@ -13,7 +13,6 @@ const ProjectCardContainer = styled.div`
     border-radius: 10px;
     width: 100%;
     height: 100%;
-    z-index: 100;
     backface-visibility: hidden;
 `;
 
