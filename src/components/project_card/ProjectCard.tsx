@@ -2,6 +2,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import Image, { StaticImageData } from 'next/image';
 
 // Styled container for the project card
 const ProjectCardContainer = styled.div`
@@ -16,10 +17,18 @@ const ProjectCardContainer = styled.div`
   text-align: center;
 `;
 
-const ProjectCard = () => {
+interface ProjectCardProps {
+  image: StaticImageData;
+  title: string;
+  description: string;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description }) => {
   return (
     <ProjectCardContainer>
-      <h2>Project Card</h2>
+      <Image src={image} alt={title} width={300} height={300} />
+      <h2>{title}</h2>
+      <p>{description}</p>
     </ProjectCardContainer>
   );
 };
