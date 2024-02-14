@@ -1,0 +1,54 @@
+// src/components/projects/ProjectCard.tsx
+
+import React from 'react';
+import styled from 'styled-components';
+import Image, { StaticImageData } from 'next/image';
+
+// Styled container for the project card
+const ProjectCardContainer = styled.div`
+    background-color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.text};
+    padding: 2rem;
+    text-align: center;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    backface-visibility: hidden;
+`;
+
+const ImageWrapper = styled(Image)`
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+`;
+
+const Title = styled.h2`
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: ${({ theme }) => theme.fonts.heading};
+`;
+
+const Description = styled.p`
+    font-size: 1.5rem;
+    text-align: left;
+`;
+
+interface ProjectCardProps {
+    image: StaticImageData;
+    title: string;
+    description: string;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description }) => {
+    return (
+        <ProjectCardContainer>
+            <ImageWrapper src={image} alt={title} />
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+        </ProjectCardContainer>
+    );
+};
+
+export default ProjectCard;
