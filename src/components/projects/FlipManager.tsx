@@ -20,9 +20,14 @@ interface FlipManagerProps {
 const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectModal }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current || isFlipped) return;
+
+    if (!isFlipping) {
+        containerRef.current.style.transition = 'none'; // Temporarily remove transition for tilt effect
+    }
 
     const { left, top, width, height } = containerRef.current.getBoundingClientRect();
     const x = e.clientX - (left + width / 2);
@@ -35,12 +40,6 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectModal }) 
     containerRef.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
   };
 
-  const handleMouseEnter = () => {
-    if (containerRef.current && !isFlipped) {
-      containerRef.current.style.transition = 'none'; // Temporarily remove transition for tilt effect
-    }
-  };
-
   const handleMouseLeave = () => {
     if (containerRef.current && !isFlipped) {
       containerRef.current.style.transition = 'transform 0.6s ease, box-shadow 0.6s ease';
@@ -49,12 +48,14 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectModal }) 
   };
 
   const onCardClick = () => {
-        setIsFlipped(!isFlipped); // Toggle the flipped state
+        setIsFlipped(!isFlipped);
         if (containerRef.current && !isFlipped) {
             containerRef.current.style.transition = 'transform 0.6s ease, box-shadow 0.6s ease';
-            containerRef.current.style.transform = isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)';
+            containerRef.current.style.transform = 'rotateY(180deg)';
+            setIsFlipping(true);
         } else if (containerRef.current) {
-            containerRef.current.style.transform = isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)';
+            containerRef.current.style.transform = 'rotateY(0deg)';
+            setTimeout(() => {if(containerRef) {setIsFlipping(false)}}, 600);
         }
   };
 
@@ -62,9 +63,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectModal }) 
     <FlipManagerContainer
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={onCardClick} // Attach the click event handler here for flip
+      onClick={onCardClick}
     >
       <ProjectCard />
       <ProjectModal />

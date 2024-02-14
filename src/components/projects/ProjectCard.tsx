@@ -11,7 +11,6 @@ const ProjectCardContainer = styled.div`
     padding: 2rem;
     text-align: center;
     border-radius: 10px;
-    width: 100%;
     height: 100%;
     backface-visibility: hidden;
 `;
