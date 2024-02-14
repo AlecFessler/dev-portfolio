@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
         -moz-osx-font-smoothing: grayscale;
         background-color: ${({ theme }) => theme.colors.background};
         color: ${({ theme }) => theme.colors.text};
-        line-height: 1.6;
+        line-height: 1.4;
         font-size: 1.6rem;
     }
 

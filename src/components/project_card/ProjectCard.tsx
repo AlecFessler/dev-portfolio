@@ -10,7 +10,7 @@ const ProjectCardContainer = styled.div`
     color: ${({ theme }) => theme.colors.text};
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    padding: 3rem 4.5rem;
+    padding: 2rem;
     text-align: center;
     max-width: 40rem;
     height: 100%;
@@ -19,9 +19,8 @@ const ProjectCardContainer = styled.div`
 const ImageWrapper = styled(Image)`
     border-radius: 10px;
     margin-bottom: 1rem;
-    width: 80%;
+    width: 100%;
     height: auto;
-    align-self: center;
 `;
 
 const Title = styled.h2`

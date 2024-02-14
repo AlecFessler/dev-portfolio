@@ -18,11 +18,11 @@ const ProjectsSection = styled.section`
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
     align-items: stretch;
-    gap: 9rem;
+    gap: 8rem;
     grid-auto-rows: 1fr;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
-    padding: 0 3rem;
+    padding: 0 2rem;
 `;
 
 const Projects = () => {
