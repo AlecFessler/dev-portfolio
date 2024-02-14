@@ -51,7 +51,7 @@ const Projects = () => {
               description="Interactive Story Writer, a Python script I developed to 
               solve a core problem in a group project for a class of mine: crafting 
               a detailed, branching narrative for a text-based adventure game. Leveraging 
-              the OpenAI API, using an innovative algorithm I devised, the script
+              the OpenAI API, and using an innovative algorithm I devised, the script
               generates a rich, coherent narrative. The result? Our project had an impressive
               2186 unique endings." />
               <ProjectCard image={BedframeImg} title="Floating Bedframe" 
