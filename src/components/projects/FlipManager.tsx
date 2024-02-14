@@ -23,7 +23,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectModal }) 
   const [isFlipping, setIsFlipping] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current || isFlipped) return;
+    if (!containerRef.current || isFlipped || isFlipping) return;
 
     if (!isFlipping) {
         containerRef.current.style.transition = 'none'; // Temporarily remove transition for tilt effect
