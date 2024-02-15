@@ -28,11 +28,17 @@ export const useWindDimensions = (): Dimensions => {
         };
 
         window.addEventListener('resize', updateDimensions);
+        window.addEventListener('scroll', updateDimensions);
 
         updateDimensions();
 
-        return () => window.removeEventListener('resize', updateDimensions);
+        return () => {
+            window.removeEventListener('resize', updateDimensions);
+            window.removeEventListener('scroll', updateDimensions);
+        };
     }, []);
 
     return dimensions;
 };
+
+export default useWindDimensions;

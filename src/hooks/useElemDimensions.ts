@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 
 export interface Dimensions {
+    left: number;
+    top: number;
     width: number;
     height: number;
     centerX: number;
@@ -11,6 +13,8 @@ export interface Dimensions {
 
 export const useElemDimensions = (ref: React.RefObject<HTMLElement>): Dimensions => {
     const [dimensions, setDimensions] = useState<Dimensions>({
+        left: 0,
+        top: 0,
         width: 0,
         height: 0,
         centerX: 0,
@@ -18,13 +22,26 @@ export const useElemDimensions = (ref: React.RefObject<HTMLElement>): Dimensions
     });
 
     useEffect(() => {
-        if (ref.current) {
-            setDimensions({
-                width: ref.current.offsetWidth,
-                height: ref.current.offsetHeight,
-                centerX: ref.current.offsetWidth / 2,
-                centerY: ref.current.offsetHeight / 2,
+        const element = ref.current;
+
+        if (element) {
+            const resizeObserver = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    const { width, height } = entry.contentRect;
+                    setDimensions({
+                        left: element.offsetLeft,
+                        top: element.offsetTop,
+                        width,
+                        height,
+                        centerX: width / 2,
+                        centerY: height / 2,
+                    });
+                }
             });
+
+            resizeObserver.observe(element);
+
+            return () => resizeObserver.unobserve(element);
         }
     }, [ref]);
 
