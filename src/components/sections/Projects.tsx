@@ -12,7 +12,6 @@ import TypewriterImg from '../../../public/project_cards/typewriter.webp';
 import BedframeImg from '../../../public/project_cards/bedframe.webp';
 import AsciiImg from '../../../public/project_cards/ascii.webp';
 
-// Styled section for the projects
 const ProjectsSection = styled.section`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
