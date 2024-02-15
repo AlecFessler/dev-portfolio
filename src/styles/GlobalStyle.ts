@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
     html {
         font-size: 62.5%;
+        overflow-x: hidden;
     }
 
     body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd {

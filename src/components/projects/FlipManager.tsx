@@ -1,7 +1,7 @@
 // src/components/projects/FlipManager.tsx
 
 import React, { useRef, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useMachine } from '@xstate/react';
 
 import flipMachine from '../../utils/FlipManagerMachine';
@@ -15,6 +15,40 @@ const FlipManagerContainer = styled.div`
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transform-style: preserve-3d;
+`;
+
+const FlipAnimations = createGlobalStyle`
+  @keyframes flipLeft {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(90deg);
+    }
+    100% {
+        transform: rotateY(180deg);
+    }
+  }
+
+  @keyframes flipRight {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(-90deg);
+    }
+    100% {
+        transform: rotateY(-180deg);
+    }
+  }
+
+  .flipRight {
+    animation: flipRight 0.6s forwards;
+  }
+
+  .flipLeft {
+    animation: flipLeft 0.6s forwards;
+  }
 `;
 
 interface FlipManagerProps {
@@ -59,7 +93,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectCardProps
     useEffect(() => {
         if (!containerRef.current) return;
 
-        const handleResizeAndScroll = () => {
+        const handleResize = () => {
             if (!containerRef.current) return;
             const { left, top, width, height } = containerRef.current.getBoundingClientRect();
             setFlipDimensions({windowWidth: window.innerWidth, 
@@ -72,14 +106,28 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectCardProps
                                cardCenterY: top + height / 2});
         };
 
-        handleResizeAndScroll();
+        const handleScroll = () => {
+            if (!containerRef.current || current.matches('flippingToFront')) return;
 
-        window.addEventListener('resize', handleResizeAndScroll);
-        window.addEventListener('scroll', handleResizeAndScroll);
+            const { left, top, width, height } = containerRef.current.getBoundingClientRect();
+            setFlipDimensions({windowWidth: window.innerWidth, 
+                               windowHeight: window.innerHeight, 
+                               windowCenterX: window.innerWidth / 2, 
+                               windowCenterY: window.innerHeight / 2, 
+                               cardWidth: width,
+                               cardHeight: height,
+                               cardCenterX: left + width / 2,
+                               cardCenterY: top + height / 2});
+        }
+        
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('scroll', handleScroll);
 
         return () => {
-            window.removeEventListener('resize', handleResizeAndScroll);
-            window.removeEventListener('scroll', handleResizeAndScroll);
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
@@ -126,12 +174,26 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectCardProps
     }, [current]);
 
     const onClick = () => {
+        if (!containerRef.current) return;
         const [scaleX, scaleY] = computeScalingFactors();
         const [translateX, translateY] = computeTranslationValues();
         if (current.matches('tiltable')) {
             send({type: 'FLIP_TO_BACK', scaleX, scaleY, translateX, translateY });
+            if (flipDimensions.cardCenterX > flipDimensions.windowCenterX) {
+                containerRef.current.classList.add('flipRight');
+                containerRef.current.classList.remove('flipLeft');
+            } else {
+                containerRef.current.classList.add('flipLeft');
+                containerRef.current.classList.remove('flipRight');
+            }
+            containerRef.current.style.transition = `transform 1s`;
+            containerRef.current.style.transform = `scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}px) translateY(${translateY}px)`;
+            containerRef.current.style.zIndex = '1000';
         } else if (current.matches('flipped')) {
             send({type: 'FLIP_TO_FRONT', scaleX, scaleY, translateX, translateY });
+            containerRef.current.style.transition = `transform 1s`;
+            containerRef.current.style.transform = `scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}px) translateY(${translateY}px)`;
+            containerRef.current.style.zIndex = '0';
         }
     };
 
@@ -141,7 +203,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({ ProjectCard, ProjectCardProps
             onClick={onClick}
         >
             <ProjectCard {...ProjectCardProps} />
-            <ProjectModal scaleX={computeScalingFactors()[0]} scaleY={computeScalingFactors()[1]} />
+            <ProjectModal />
         </FlipManagerContainer>
     );
 };
