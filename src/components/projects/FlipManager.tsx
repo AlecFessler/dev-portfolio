@@ -2,7 +2,6 @@
 
 import React, { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { StateFrom } from 'xstate';
 import { useActor } from '@xstate/react';
 
 import flipMachine from '../../state/FlipManagerMachine';
@@ -12,28 +11,11 @@ const FLIP_DURATION = 1.0;
 const MODAL_HEIGHT = 0.8; // 80% of the window height
 const MODAL_WIDTH = 0.8; // 80% of the window width
 
-enum CardStates {
-    UNFLIPPED = 'unflipped',
-    FLIPPED = 'flipped',
-}
-const { UNFLIPPED, FLIPPED } = CardStates;
-
 interface FlipManagerProps {
     ProjectCard: React.FC<any>;
     ProjectCardProps: any;
     ProjectModal: React.FC<any>;
     ProjectModalProps: any;
-}
-
-interface FlipManagerContext {
-    rotateX: number;
-    rotateY: number;
-    scaleX: number;
-    scaleY: number;
-    translateX: number;
-    translateY: number;
-    transition: number;
-    zIndex: number;
 }
 
 interface WindowDimensions {
@@ -48,6 +30,8 @@ interface ElementDimensions {
     height: number;
     centerX: number;
     centerY: number;
+    relativeCenterX: number;
+    relativeCenterY: number;
 }
 
 interface FlipEvent {
@@ -58,20 +42,16 @@ interface FlipEvent {
     translateY: number;
 }
 
-interface AnimationStyles {
-    transform: string;
-    transition: string;
-    zIndex: number;
-}
-
 // Container for the flip animation
 const FlipManagerContainer = styled.div`
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     perspective: 1000px;
-    width: 40rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 40rem;
     transform-style: preserve-3d;
+    transform-origin: center;
     &.flipLeft {
         animation: flipLeft ${FLIP_DURATION}s forwards;
     }
@@ -86,43 +66,14 @@ const FlipManagerContainer = styled.div`
     }
 `;
 
-/**
- * Get the transform, transition, and zIndex styles strings for the card based on the context.
- * 
- * @param context - the context object containing the animation properties
- * @returns transform, transition, and zIndex styles for the card
- */
-function getAnimationStyles(context: FlipManagerContext) {
-    const { 
-        rotateX, 
-        rotateY, 
-        scaleX, 
-        scaleY, 
-        translateX, 
-        translateY,
-        transition,
-        zIndex
-    } = context;
-    return {
-        transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}px) translateY(${translateY}px)`,
-        transition: `${transition}s`,
-        zIndex
-    };
-}
-
-/**
- * Apply the transform, transition, and zIndex styles to the card.
- * 
- * @param containerRef - reference to the card container
- * @param animationStyles - transform, transition, and zIndex styles for the card
- */
-function applyAnimationStyles(containerRef: React.RefObject<HTMLDivElement>, animationStyles: AnimationStyles) {
-    if (!containerRef.current) return;
-    const {transform, transition, zIndex} = animationStyles;
-    containerRef.current.style.transition = transition;
-    containerRef.current.style.transform = transform;
-    containerRef.current.style.zIndex = zIndex.toString();
-}
+const ModalInverseScale = styled.div`
+    position: absolute;
+    backface-visibility: hidden;
+    height: var(--modalHeight, 0px);
+    width: var(--modalWidth, 0px);
+    transform-origin: center;
+    transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
+`;
 
 /**
  * Compute the scaling factors for the modal based on the window and card dimensions.
@@ -149,18 +100,12 @@ function computeScalingFactors(windowDimensions: WindowDimensions, cardDimension
  * @returns the translation values for the modal
  */
 function computeTranslationValues(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
-    const {width: windowWidth, height: windowHeight, centerX: windowCenterX, centerY: windowCenterY} = windowDimensions;
-    const {width: cardWidth, height: cardHeight, centerX: cardCenterX, centerY: cardCenterY} = cardDimensions;
-
-    return [0, 0];
-}
-
-function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
-    if (!containerRef.current) return;
-    containerRef.current.style.setProperty('--scaleX', scaleX.toString());
-    containerRef.current.style.setProperty('--scaleY', scaleY.toString());
-    containerRef.current.style.setProperty('--translateX', translateX.toString());
-    containerRef.current.style.setProperty('--translateY', translateY.toString());
+    const {centerX: windowCenterX, centerY: windowCenterY} = windowDimensions;
+    const {relativeCenterX: cardCenterX, relativeCenterY: cardCenterY} = cardDimensions;
+    const [scaleX, scaleY] = computeScalingFactors(windowDimensions, cardDimensions);
+    const translateX = ((windowCenterX - cardCenterX) / scaleX) * -1; // invert the X translation to account for 180 degree Y rotation
+    const translateY = windowCenterY - cardCenterY;
+    return [translateX, translateY];
 }
 
 /**
@@ -177,6 +122,44 @@ function computeTiltAngles(elementDimensions: ElementDimensions, cursorPos: {x: 
     const rotateX = (y / height) * TILT_INTENSITY;
     const rotateY = (x / width) * TILT_INTENSITY * (y > 0 ? 1 : -1); // Invert the rotation for the lower half
     return [rotateX, rotateY];
+}
+
+function computeModalProperties(windowDimensions: WindowDimensions, [scaleX, scaleY]: [number, number]) {
+    const modalWidth = Math.floor(windowDimensions.width * MODAL_WIDTH);
+    const modalHeight = Math.floor(windowDimensions.height * MODAL_HEIGHT);
+    const inverseScaleX = 1 / scaleX;
+    const inverseScaleY = 1 / scaleY;
+    return {modalHeight, modalWidth, inverseScaleX, inverseScaleY};
+}
+
+function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
+    if (!containerRef.current) return;
+    containerRef.current.style.setProperty('--scaleX', scaleX.toString());
+    containerRef.current.style.setProperty('--scaleY', scaleY.toString());
+    containerRef.current.style.setProperty('--translateX', translateX.toString() + 'px');
+    containerRef.current.style.setProperty('--translateY', translateY.toString() + 'px');
+}
+
+function setModalProperties(containerRef: React.RefObject<HTMLDivElement>, modalWidth: number, modalHeight: number, inverseScaleX: number, inverseScaleY: number) {
+    if (!containerRef.current) return;
+    containerRef.current.style.setProperty('--modalWidth', modalWidth.toString() + 'px');
+    containerRef.current.style.setProperty('--modalHeight', modalHeight.toString() + 'px');
+    containerRef.current.style.setProperty('--inverseScaleX', inverseScaleX.toString());
+    containerRef.current.style.setProperty('--inverseScaleY', inverseScaleY.toString());
+}
+
+/**
+ * returns the transform string for the card based on the context of the state machine
+ * 
+ * @param rotateX - the x-axis rotation angle
+ * @param rotateY - the y-axis rotation angle
+ * @param scaleX - the x-axis scaling factor
+ * @param scaleY - the y-axis scaling factor
+ * @param translateX - the x-axis translation value
+ * @param translateY - the y-axis translation value
+ */
+function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number): string {
+    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}px) translateY(${translateY}px)`;
 }
 
 /**
@@ -199,11 +182,13 @@ function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions
  * @returns the dimensions of the element
  */
 function getElementDimensions(containerRef: React.RefObject<HTMLDivElement>) {
-    if (!containerRef.current) return {left: 0, top: 0, width: 0, height: 0, centerX: 0, centerY: 0};
+    if (!containerRef.current) return {left: 0, top: 0, width: 0, height: 0, centerX: 0, centerY: 0, relativeCenterX: 0, relativeCenterY: 0};
     const {left, top, width, height} = containerRef.current.getBoundingClientRect();
     const centerX = left + width / 2;
     const centerY = top + height / 2;
-    return {width, height, centerX, centerY};
+    const relativeCenterX = centerX + window.scrollX;
+    const relativeCenterY = centerY + window.scrollY;
+    return {width, height, centerX, centerY, relativeCenterX, relativeCenterY};
 }
 
 const FlipManager: React.FC<FlipManagerProps> = ({ 
@@ -213,7 +198,9 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     ProjectModalProps 
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const previousStateRef = useRef<StateFrom<typeof flipMachine> | null>(null);
+    const modalContainerRef = useRef<HTMLDivElement>(null);
+    const currentStateRef = useRef<string>('unflipped');
+    const previousStateRef = useRef<string>('unflipped');
     const windowDimensionsRef = useRef({
         width: 0,
         height: 0,
@@ -224,50 +211,55 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         width: 0,
         height: 0,
         centerX: 0,
-        centerY: 0
+        centerY: 0,
+        relativeCenterX: 0,
+        relativeCenterY: 0
     });
     const cursorPosRef = useRef({x: 0, y: 0});
 
-    //console.log("Rendered");
-
     const [state, send, service] = useActor(flipMachine);
 
-    /**
-     * Recompute the modal scale and translate values when the window is resized or scrolled
-     * to keep it centered and sized correctly.
-     */
     const handleWindow = useCallback(() => {
+        if (!containerRef.current) return;
         windowDimensionsRef.current = {
             width: window.innerWidth, 
             height: window.innerHeight, 
-            centerX: window.innerWidth / 2,
-            centerY: window.scrollY + window.innerHeight / 2
+            centerX: window.innerWidth / 2 + window.scrollX,
+            centerY: window.innerHeight / 2 + window.scrollY
         };
         cardDimensionsRef.current = getElementDimensions(containerRef);
-        if (state.value === UNFLIPPED) return;
         const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
         const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current);
-        //applyAnimationStyles(containerRef, getAnimationStyles({...state.context, scaleX, scaleY, translateX, translateY}));
+        // keep the modals height, width, and inverse scaling in sync with the window and cards position and dimensions
+        const { modalWidth, modalHeight, inverseScaleX, inverseScaleY } = computeModalProperties(
+            windowDimensionsRef.current,
+            [scaleX, scaleY],
+        );
+        setModalProperties(modalContainerRef, modalWidth, modalHeight, inverseScaleX, inverseScaleY);
+        if (currentStateRef.current == 'unflipped') return;
+        containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
+        containerRef.current.style.transition = '0s'; // set to 0 for responsive update
+        containerRef.current.style.transform = getTransformString(0, 180, scaleX, scaleY, translateX, translateY);
     }, []);
 
     /**
-     * Update the tilt effect when the mouse moves within the card.
+     * Apply the tilt animation to the card when the cursor moves over.
      */
     const handleMouseMove = useCallback((e: MouseEvent) => {
-        if (state.value !== UNFLIPPED) return;
+        if (!containerRef.current || currentStateRef.current != 'unflipped') return;
         cursorPosRef.current = {x: e.clientX, y: e.clientY};
         const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
-        state.context = {...state.context, transition: 0, rotateX, rotateY};
-        //applyAnimationStyles(containerRef, getAnimationStyles(state.context));
+        containerRef.current.style.transform = getTransformString(rotateX, rotateY, 1, 1, 0, 0);
+        containerRef.current.style.transition = '0s';
     }, []);
 
     /**
-     * Reset the tilt effect when the mouse leaves the card.
+     * Apply the set down animation to the card when the cursor moves out.
      */
     const handleMouseOut = useCallback(() => {
-        if (state.value !== UNFLIPPED) return;
-        state.context = {...state.context, transition: 0.6, rotateX: 0, rotateY: 0};
-        //applyAnimationStyles(containerRef, getAnimationStyles(state.context));
+        if (!containerRef.current || currentStateRef.current != 'unflipped') return;
+        containerRef.current.style.transform = getTransformString(0, 0, 1, 1, 0, 0);
+        containerRef.current.style.transition = '0.6s';
     }, []);
 
     useEffect(() => {
@@ -275,9 +267,11 @@ const FlipManager: React.FC<FlipManagerProps> = ({
 
         // Respond to changes in the state machine without causing a rerender
         service.subscribe((state) => {
-            if (!containerRef.current || previousStateRef.current?.value === state.value) return;
+            // confirm previous state is different to prevent flips while flipping
+            if (!containerRef.current || previousStateRef.current === state.value) return;
+            currentStateRef.current = state.value.toString();
             if (state.value === 'flippingToBack') {
-                containerRef.current.style.zIndex = '1';
+                containerRef.current.style.zIndex = '1'; // raise the card above others for flip
                 containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
                 containerRef.current.classList.add(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                 const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
@@ -289,15 +283,16 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
                 const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current);
                 setTransformValues(containerRef, scaleX, scaleY, translateX, translateY);
-            } else if (state.value === UNFLIPPED) {
-                containerRef.current.style.zIndex = '0';
-                console.log("UNFLIPPED");
-            } else if (state.value === FLIPPED) {
-                // flipped
-                console.log("FLIPPED");
+            } else if (state.value === 'unflipped') {
+                containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
+                containerRef.current.style.transform = getTransformString(0, 0, 1, 1, 0, 0); // reset transform after flip
+                containerRef.current.style.transition = '0.6s'; // reset transition after flip
+                containerRef.current.style.zIndex = '0'; // reset z-index after flip
             }
-            previousStateRef.current = state;
+            previousStateRef.current = state.value.toString();
         });
+
+        handleWindow(); // Initialize the window and card dimensions
 
         // Handle reposition and resize of modal on resize and scroll
         window.addEventListener('resize', handleWindow);
@@ -316,17 +311,6 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         };
     }, []);
 
-    /**
-     * Handle the click event to flip the card. The click event is only valid when the
-     * card is in the unflipped or flipped state. The flip event is sent to the state
-     * machine to trigger the flip transition. The flip direction is computed based on
-     * the position of the card relative to the center of the window. The flip styles
-     * are applied to the container to trigger the rotation part of the flip animation.
-     * The scaling and translation are handled in the callback passed to useStateMachine.
-     * It's done this way because keyframes are necessary to control the direction of the
-     * rotation, and keyframes cannot be applied via direct DOM manipulation, thus we must
-     * dynamically add and remove classes to trigger the keyframes.
-     */
     const onClick = useCallback(() => {
         const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
         const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current);
@@ -340,16 +324,13 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             onClick={onClick}
         >
             <ProjectCard {...ProjectCardProps} />
-            <ProjectModal />
+            <ModalInverseScale
+                ref={modalContainerRef}    
+            >
+                <ProjectModal />
+            </ModalInverseScale>
         </FlipManagerContainer>
     );
 }
 
 export default FlipManager;
-
-/*
-TODO:
-- finish the computeTranslationValues function
-- update the state machine to include lowered, raised, as well as the flip states
-- update the tilt animation logic to work through the state machine
-*/

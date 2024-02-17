@@ -11,8 +11,8 @@ const ProjectCardContainer = styled.div`
     padding: 2rem;
     text-align: center;
     border-radius: 10px;
-    height: 100%;
     backface-visibility: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 `;
 
 const ImageWrapper = styled(Image)`

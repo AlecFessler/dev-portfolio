@@ -27,27 +27,27 @@ const FlipAnimations = createGlobalStyle`
     }
 }
 
-@keyframes flipLeftBack {
+@keyframes flipRightBack {
     0% {
-        transform: rotateY(180deg) scaleX(var(--scaleX, 1)) scaleY(var(--scaleY, 1)) translateX(var(--translateX, 0)) translateY(var(--translateY, 0))
+        transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1))
     }
     50% {
         transform: rotateY(90deg)
     }
     100% {
-        transform: rotateY(0deg) scaleX(1) scaleY(1) translateX(0) translateY(0)
+        transform: rotateY(0deg) scaleX(1) scaleY(1)
     }
 }
 
-@keyframes flipRightBack {
+@keyframes flipLeftBack {
     0% {
-        transform: rotateY(-180deg) scaleX(var(--scaleX, 1)) scaleY(var(--scaleY, 1)) translateX(var(--translateX, 0)) translateY(var(--translateY, 0))
+        transform: rotateY(-180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1))
     }
     50% {
         transform: rotateY(-90deg)
     }
     100% {
-        transform: rotateY(0deg) scaleX(1) scaleY(1) translateX(0) translateY(0)
+        transform: rotateY(0deg) scaleX(1) scaleY(1)
     }
 }
 `;
