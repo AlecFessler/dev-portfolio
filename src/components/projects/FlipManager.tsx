@@ -155,6 +155,14 @@ function computeTranslationValues(windowDimensions: WindowDimensions, cardDimens
     return [0, 0];
 }
 
+function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
+    if (!containerRef.current) return;
+    containerRef.current.style.setProperty('--scaleX', scaleX.toString());
+    containerRef.current.style.setProperty('--scaleY', scaleY.toString());
+    containerRef.current.style.setProperty('--translateX', translateX.toString());
+    containerRef.current.style.setProperty('--translateY', translateY.toString());
+}
+
 /**
  * Compute the tilt angles for the card based on the card dimensions and cursor position.
  * 
@@ -239,7 +247,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         if (state.value === UNFLIPPED) return;
         const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
         const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current);
-        applyAnimationStyles(containerRef, getAnimationStyles({...state.context, scaleX, scaleY, translateX, translateY}));
+        //applyAnimationStyles(containerRef, getAnimationStyles({...state.context, scaleX, scaleY, translateX, translateY}));
     }, []);
 
     /**
@@ -250,7 +258,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         cursorPosRef.current = {x: e.clientX, y: e.clientY};
         const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
         state.context = {...state.context, transition: 0, rotateX, rotateY};
-        applyAnimationStyles(containerRef, getAnimationStyles(state.context));
+        //applyAnimationStyles(containerRef, getAnimationStyles(state.context));
     }, []);
 
     /**
@@ -259,7 +267,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     const handleMouseOut = useCallback(() => {
         if (state.value !== UNFLIPPED) return;
         state.context = {...state.context, transition: 0.6, rotateX: 0, rotateY: 0};
-        applyAnimationStyles(containerRef, getAnimationStyles(state.context));
+        //applyAnimationStyles(containerRef, getAnimationStyles(state.context));
     }, []);
 
     useEffect(() => {
@@ -269,13 +277,24 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         service.subscribe((state) => {
             if (!containerRef.current || previousStateRef.current?.value === state.value) return;
             if (state.value === 'flippingToBack') {
+                containerRef.current.style.zIndex = '1';
                 containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
                 containerRef.current.classList.add(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
+                const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
+                const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current);
+                setTransformValues(containerRef, scaleX, scaleY, translateX, translateY);
             } else if (state.value === 'flippingToFront') {
                 containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
                 containerRef.current.classList.add((computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current) + 'Back'));
-            } else {
-                console.log("finished flipping");
+                const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
+                const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current);
+                setTransformValues(containerRef, scaleX, scaleY, translateX, translateY);
+            } else if (state.value === UNFLIPPED) {
+                containerRef.current.style.zIndex = '0';
+                console.log("UNFLIPPED");
+            } else if (state.value === FLIPPED) {
+                // flipped
+                console.log("FLIPPED");
             }
             previousStateRef.current = state;
         });
@@ -285,15 +304,15 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         window.addEventListener('scroll', handleWindow);
 
         // Handle tilt effect on mouse move
-        //containerRef.current.addEventListener('mousemove', handleMouseMove);
-        //containerRef.current.addEventListener('mouseout', handleMouseOut);
+        containerRef.current.addEventListener('mousemove', handleMouseMove);
+        containerRef.current.addEventListener('mouseout', handleMouseOut);
 
         return () => {
             service.stop();
             window.removeEventListener('resize', handleWindow);
             window.removeEventListener('scroll', handleWindow);
-            //containerRef.current?.removeEventListener('mousemove', handleMouseMove);
-            //containerRef.current?.removeEventListener('mouseout', handleMouseOut);
+            containerRef.current?.removeEventListener('mousemove', handleMouseMove);
+            containerRef.current?.removeEventListener('mouseout', handleMouseOut);
         };
     }, []);
 
@@ -327,3 +346,10 @@ const FlipManager: React.FC<FlipManagerProps> = ({
 }
 
 export default FlipManager;
+
+/*
+TODO:
+- finish the computeTranslationValues function
+- update the state machine to include lowered, raised, as well as the flip states
+- update the tilt animation logic to work through the state machine
+*/

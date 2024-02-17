@@ -1,5 +1,13 @@
 // src/state/FlipManagerMachine.ts
 
+/*
+- add lowered state as default
+- add raised state
+
+- lowered to raised
+- raised to lowered, raised, flippingToBack
+*/
+
 import { createMachine, assign } from 'xstate';
 
 const flipMachine = createMachine({
