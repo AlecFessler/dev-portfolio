@@ -6,11 +6,14 @@ import { useActor } from '@xstate/react';
 import { throttle } from 'lodash';
 
 import flipMachine from '../../state/FlipManagerMachine';
+import ProjectCardConstants from '../../state/ProjectCardConstants.json'
 
-const TILT_INTENSITY = 25;
-const FLIP_DURATION = 1.0;
-const MODAL_HEIGHT = 0.8; // 80% of the window height
-const MODAL_WIDTH = 0.8; // 80% of the window width
+const RESIZE_THROTTLE = 50;
+const SCROLL_THROTTLE = 50;
+
+const { TILT_INTENSITY, FLIP_DURATION, MODAL_HEIGHT, MODAL_WIDTH } = ProjectCardConstants;
+const { lowered, raised } = ProjectCardConstants.TiltAnimationStates;
+const { flippingToBack } = ProjectCardConstants.FlipAnimationStates;
 
 interface FlipManagerProps {
     ProjectCard: React.FC<any>;
@@ -182,34 +185,37 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             if (currentStateRef.current === 'flipped') {
                 send({ type: 'FLIP' });
             }
-        }, 50),
+        }, RESIZE_THROTTLE),
     []);
 
     const handleScroll = useCallback(
         throttle(() => {
-            windowDimensionsRef.current = getWindowDimensions();
-            if (currentStateRef.current === 'flipped') {
+            if (currentStateRef.current === 'unflipped') {
+                windowDimensionsRef.current = getWindowDimensions();
+            } else if (currentStateRef.current === 'flipped') {
                 send({ type: 'FLIP' });
             }
-        }, 50), 
+        }, SCROLL_THROTTLE), 
     []);
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
         requestAnimationFrame(() => {
             if (!containerRef.current || currentStateRef.current != 'unflipped') return;
+            const {scaleX, scaleY, translateX, translateY, transition} = raised;
             const {top, left} = containerRef.current.getBoundingClientRect();
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
-            containerRef.current.style.transform = getTransformString(rotateX, rotateY, 1, 1, 0, -5);
-            containerRef.current.style.transition = '0s';
+            containerRef.current.style.transform = getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY);
+            containerRef.current.style.transition = transition.toString() + 's';
         });
     }, []);
 
     const handleMouseOut = useCallback(() => {
         requestAnimationFrame(() => {
             if (!containerRef.current || currentStateRef.current != 'unflipped') return;
-            containerRef.current.style.transform = getTransformString(0, 0, 1, 1, 0, 0);
-            containerRef.current.style.transition = '0.6s';
+            const {rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition} = lowered;
+            containerRef.current.style.transform = getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY);
+            containerRef.current.style.transition = transition.toString() + 's';
         });
     }, []);
 
@@ -226,7 +232,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 cardDimensionsRef.current = getElementDimensions(containerRef);
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
-                    containerRef.current.style.zIndex = '1';
+                    const { zIndex } = flippingToBack;
+                    containerRef.current.style.zIndex = zIndex.toString();
                     containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
                     containerRef.current.classList.add(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                     setTransformValues(containerRef, scaleX, scaleY, translateX, translateY);
@@ -242,10 +249,11 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             } else if (state.value === 'unflipped') {
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
-                    containerRef.current.style.transition = '0.6s';
-                    containerRef.current.style.zIndex = '0';
+                    const { rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition, zIndex } = lowered;
+                    containerRef.current.style.transition = transition.toString() + 's';
+                    containerRef.current.style.zIndex = zIndex.toString();
                     containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
-                    containerRef.current.style.transform = getTransformString(0, 0, 1, 1, 0, 0);
+                    containerRef.current.style.transform = getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY);
                 });
                 cardDimensionsRef.current = getElementDimensions(containerRef);
             }

@@ -2,6 +2,10 @@
 
 import { createMachine, assign } from 'xstate';
 
+import ProjectCardConstants from './ProjectCardConstants';
+
+const { FLIP_DURATION } = ProjectCardConstants;
+
 const flipMachine = createMachine({
   id: 'flip',
   initial: 'unflipped',
@@ -27,7 +31,7 @@ const flipMachine = createMachine({
     },
     flippingToBack: {
       after: {
-        1000: { target: 'flipped' }
+        [FLIP_DURATION * 1000]: { target: 'flipped' }
       },
     },
     flipped: {
@@ -48,7 +52,7 @@ const flipMachine = createMachine({
     },
     flippingToFront: {
       after: {
-        1000: { target: 'unflipped' }
+        [FLIP_DURATION * 1000]: { target: 'unflipped' }
       }
     },
   },

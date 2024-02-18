@@ -1,0 +1,70 @@
+{
+    "TILT_INTENSITY": 25,
+    "FLIP_DURATION": 1.0,
+    "MODAL_HEIGHT": 0.8,
+    "MODAL_WIDTH": 0.8,
+    "TiltAnimationStates": {
+        "lowered": {
+            "rotateX": 0,
+            "rotateY": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "translateX": 0,
+            "translateY": 0,
+            "transition": 0.6,
+            "zIndex": 0
+        },
+        "raised": {
+            "rotateX": null,
+            "rotateY": null,
+            "scaleX": 1,
+            "scaleY": 1,
+            "translateX": 0,
+            "translateY": -5,
+            "transition": 0,
+            "zIndex": 0
+        }
+    },
+    "FlipAnimationStates": {
+        "unflipped": {
+            "rotateX": 0,
+            "rotateY": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "translateX": 0,
+            "translateY": 0,
+            "transition": 0.6,
+            "zIndex": 0
+        },
+        "flippingToBack": {
+            "rotateX": 0,
+            "rotateY": 180,
+            "scaleX": null,
+            "scaleY": null,
+            "translateX": null,
+            "translateY": null,
+            "transition": 1.0,
+            "zIndex": 1
+        },
+        "flipped": {
+            "rotateX": 0,
+            "rotateY": 180,
+            "scaleX": null,
+            "scaleY": null,
+            "translateX": null,
+            "translateY": null,
+            "transition": 1.0,
+            "zIndex": 1
+        },
+        "flippingToFront": {
+            "rotateX": 0,
+            "rotateY": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "translateX": 0,
+            "translateY": 0,
+            "transition": 1.0,
+            "zIndex": 1
+        }
+    }
+}

@@ -14,8 +14,6 @@ const ProjectCardContainer = styled.div`
     border-radius: 10px;
     backface-visibility: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    /*make text smooth on animations*/
-    transform: translateZ(0);
 `;
 
 const ImageWrapper = styled(Image)`
