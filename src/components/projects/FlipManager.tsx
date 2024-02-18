@@ -200,7 +200,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             const {top, left} = containerRef.current.getBoundingClientRect();
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
-            containerRef.current.style.transform = getTransformString(rotateX, rotateY, 1, 1, 0, 0);
+            containerRef.current.style.transform = getTransformString(rotateX, rotateY, 1, 1, 0, -5);
             containerRef.current.style.transition = '0s';
         });
     }, []);
