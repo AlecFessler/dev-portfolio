@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ProjectCard from '../projects/ProjectCard';
 import ProjectModal from '../projects/ProjectModal';
 import FlipManager from '../projects/FlipManager';
+import ProjectMedia from '../projects/ProjectMedia';
 
 import BarbellImg from '../../../public/project_cards/barbell.webp';
 import PaintingImg from '../../../public/project_cards/painting.webp';
@@ -58,15 +59,54 @@ const Projects = () => {
         }
     ];
 
+    const ProjectModalContent = [
+        <ProjectMedia
+            image={BarbellImg.src}
+            caption="Level Up Exercise Log"
+        />,
+        <ProjectMedia
+            image={PaintingImg.src}
+            caption="Fesslerpainting.com"
+        />,
+        <ProjectMedia
+            image={CircuitImg.src}
+            caption="Turing Complete CPU"
+        />,
+        <ProjectMedia
+            image={TypewriterImg.src}
+            caption="Interactive Story Writer"
+        />,
+        <ProjectMedia
+            image={BedframeImg.src}
+            caption="Floating Bedframe"
+        />,
+        <ProjectMedia
+            image={AsciiImg.src}
+            caption="ASCII Art Generator"
+        />
+    ];
+
+    // Zip the project cards and project modal content together
+    let FlipManagerProps = [];
+    for (let i = 0; i < projectCards.length; i++) {
+        FlipManagerProps.push({
+            ProjectCard: ProjectCard,
+            ProjectCardProps: projectCards[i],
+            ProjectModal: ProjectModal,
+            ProjectModalProps: [ProjectModalContent[i]]
+        });
+    }
+
+
     return (
         <ProjectsSection id="Projects">
-            {projectCards.map((project, index) => (
+            {FlipManagerProps.map((project, index) => (
                 <FlipManager
                     key={index}
                     ProjectCard={ProjectCard}
-                    ProjectCardProps={project}
+                    ProjectCardProps={project.ProjectCardProps}
                     ProjectModal={ProjectModal}
-                    ProjectModalProps={project}
+                    ProjectModalProps={{content: project.ProjectModalProps}}
                 />
             ))}
         </ProjectsSection>

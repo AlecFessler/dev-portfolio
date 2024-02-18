@@ -294,7 +294,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             <ModalInverseScale
                 ref={modalContainerRef}    
             >
-                <ProjectModal />
+                <ProjectModal {...ProjectModalProps} />
             </ModalInverseScale>
         </FlipManagerContainer>
     );

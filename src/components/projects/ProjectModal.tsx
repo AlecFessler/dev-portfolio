@@ -3,6 +3,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ProjectMediaCarousel from './ProjectMediaCarousel';
+
 // Styled container for the project modal
 const ProjectModalContainer = styled.div`
     width: 100%;
@@ -22,11 +24,16 @@ const ModalContent = styled.div`
     border-radius: 10px;
 `;
 
-const ProjectModal = () => {
+interface ProjectModalProps {
+    content: React.ReactNode[];
+}
+
+const ProjectModal = ({ content }: ProjectModalProps) => {
+    console.log("ProjectModal: ", content);
     return (
         <ProjectModalContainer>
             <ModalContent>
-                <h1>Project Modal</h1>
+                <ProjectMediaCarousel content={content} />
             </ModalContent>
         </ProjectModalContainer>
     );
