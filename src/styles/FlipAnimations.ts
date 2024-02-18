@@ -29,7 +29,7 @@ const FlipAnimations = createGlobalStyle`
 
 @keyframes flipRightBack {
     0% {
-        transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1))
+        transform: rotateY(180deg) scaleX(var(--scaleX, 1)) scaleY(var(--scaleY, 1))
     }
     50% {
         transform: rotateY(90deg)
@@ -41,7 +41,7 @@ const FlipAnimations = createGlobalStyle`
 
 @keyframes flipLeftBack {
     0% {
-        transform: rotateY(-180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1))
+        transform: rotateY(-180deg) scaleX(var(--scaleX, 1)) scaleY(var(--scaleY, 1))
     }
     50% {
         transform: rotateY(-90deg)

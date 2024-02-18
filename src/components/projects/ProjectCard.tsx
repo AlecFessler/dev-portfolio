@@ -9,6 +9,7 @@ const ProjectCardContainer = styled.div`
     background-color: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme }) => theme.colors.text};
     padding: 2rem;
+    height: 100%;
     text-align: center;
     border-radius: 10px;
     backface-visibility: hidden;

@@ -12,6 +12,7 @@ const ProjectModalContainer = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 `;
 
 const ModalContent = styled.div`
