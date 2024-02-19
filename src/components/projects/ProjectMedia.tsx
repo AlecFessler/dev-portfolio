@@ -50,13 +50,7 @@ interface ProjectMediaProps {
 }
 
 const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) => {
-    const [isImage, setIsImage] = useState(true);
-
-    if (!image && !video) {
-        return null;
-    } else if (!image) {
-        setIsImage(false);
-    }
+    const [isImage, setIsImage] = useState(image ? true : false);
 
     return (
         <ProjectMediaContainer>

@@ -60,30 +60,16 @@ const Projects = () => {
     ];
 
     const ProjectModalContent = [
-        <ProjectMedia
-            image={BarbellImg.src}
-            caption="Level Up Exercise Log"
+        [<ProjectMedia
+            key={0}
+            image={'../../../public/projects/turing_complete/cpu_circuit.png'}
+            caption="Turing Complete CPU Circuit"
         />,
         <ProjectMedia
-            image={PaintingImg.src}
-            caption="Fesslerpainting.com"
-        />,
-        <ProjectMedia
-            image={CircuitImg.src}
-            caption="Turing Complete CPU"
-        />,
-        <ProjectMedia
-            image={TypewriterImg.src}
-            caption="Interactive Story Writer"
-        />,
-        <ProjectMedia
-            image={BedframeImg.src}
-            caption="Floating Bedframe"
-        />,
-        <ProjectMedia
-            image={AsciiImg.src}
-            caption="ASCII Art Generator"
-        />
+            key={1}
+            video={'../../../public/projects/turing_complete/maze_vid.mkv'}
+            caption="Turing Complete CPU Maze Game"
+        />],
     ];
 
     // Zip the project cards and project modal content together
@@ -93,7 +79,7 @@ const Projects = () => {
             ProjectCard: ProjectCard,
             ProjectCardProps: projectCards[i],
             ProjectModal: ProjectModal,
-            ProjectModalProps: [ProjectModalContent[i]]
+            ProjectModalProps: [ProjectModalContent[0]]
         });
     }
 

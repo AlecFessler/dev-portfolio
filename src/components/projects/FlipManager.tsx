@@ -288,13 +288,12 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     return (
         <FlipManagerContainer
             ref={containerRef}
-            onClick={onClick}
         >
-            <ProjectCard {...ProjectCardProps} />
+            <ProjectCard {...ProjectCardProps} flipCard={onClick} />
             <ModalInverseScale
                 ref={modalContainerRef}    
             >
-                <ProjectModal {...ProjectModalProps} />
+                <ProjectModal content={ProjectModalProps} closeModal={onClick} />
             </ModalInverseScale>
         </FlipManagerContainer>
     );

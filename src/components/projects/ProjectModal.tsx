@@ -26,10 +26,10 @@ const ModalContent = styled.div`
 
 interface ProjectModalProps {
     content: React.ReactNode[];
+    closeModal: () => void;
 }
 
-const ProjectModal = ({ content }: ProjectModalProps) => {
-    console.log("ProjectModal: ", content);
+const ProjectModal = ({ content, closeModal }: ProjectModalProps) => {
     return (
         <ProjectModalContainer>
             <ModalContent>

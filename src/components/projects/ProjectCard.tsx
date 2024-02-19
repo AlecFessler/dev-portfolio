@@ -38,11 +38,12 @@ interface ProjectCardProps {
     image: StaticImageData;
     title: string;
     description: string;
+    flipCard: () => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, flipCard }) => {
     return (
-        <ProjectCardContainer>
+        <ProjectCardContainer onClick={flipCard}>
             <ImageWrapper src={image} alt={title} />
             <Title>{title}</Title>
             <Description>{description}</Description>
