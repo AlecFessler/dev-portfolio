@@ -1,8 +1,8 @@
 // src/componets/projects/ProjectMedia.tsx
 
-import { StaticImageData } from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import Image, { StaticImageData } from 'next/image';
 
 const ProjectMediaContainer = styled.div`
     width: 100%;
@@ -24,18 +24,12 @@ const MediaContent = styled.div`
     flex-direction: column;
 `;
 
-const MediaImage = styled.img`
+const MediaImage = styled(Image)`
     border-radius: 10px;
-    margin-bottom: 1rem;
-    width: 100%;
-    height: auto;
 `;
 
 const MediaVideo = styled.video`
     border-radius: 10px;
-    margin-bottom: 1rem;
-    width: 100%;
-    height: auto;
 `;
 
 const MediaCaption = styled.p`
@@ -44,18 +38,23 @@ const MediaCaption = styled.p`
 `;
 
 interface ProjectMediaProps {
-    image?: string;
+    image?: StaticImageData;
     video?: string;
     caption: string;
 }
 
 const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) => {
-    const [isImage, setIsImage] = useState(image ? true : false);
+
+    console.log(video);
 
     return (
         <ProjectMediaContainer>
             <MediaContent>
-                {isImage ? <MediaImage src={image} alt={caption} /> : <MediaVideo src={video} autoPlay loop muted />}
+                {image ? <MediaImage src={image} alt={caption} width={160} height={90} /> : 
+                         <MediaVideo controls muted>
+                            <source src={video} type="video/mp4" />
+                            Your browser does not support video.
+                         </MediaVideo>}
                 <MediaCaption>{caption}</MediaCaption>
             </MediaContent>
         </ProjectMediaContainer>

@@ -38,20 +38,21 @@ const CarouselButton = styled.button`
 `;
 
 const ProjectMediaCarousel = ({ content }: { content: React.ReactNode[] }) => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-
+    const [slideIndex, setSlideIndex] = useState(0);
+    const currentSlide = content[slideIndex];
+    
     const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % content.length);
+        setSlideIndex((slideIndex + 1) % content.length);
     };
 
     const prevSlide = () => {
-        setCurrentSlide((prev) => (prev - 1 + content.length) % content.length);
+        setSlideIndex((slideIndex - 1 + content.length) % content.length);
     };
 
     return (
         <CarouselContainer>
             <CarouselContent>
-                {content[currentSlide]}
+                {currentSlide}
             </CarouselContent>
             <ButtonContainer>
                 <CarouselButton onClick={prevSlide}>Prev</CarouselButton>

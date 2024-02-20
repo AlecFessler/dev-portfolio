@@ -13,6 +13,8 @@ import TypewriterImg from '../../../public/project_cards/typewriter.webp';
 import BedframeImg from '../../../public/project_cards/bedframe.webp';
 import AsciiImg from '../../../public/project_cards/ascii.webp';
 
+import CpuCircuit from '../../../public/projects/turing_complete/cpu_circuit.png';
+
 const ProjectsSection = styled.section`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -62,12 +64,12 @@ const Projects = () => {
     const ProjectModalContent = [
         [<ProjectMedia
             key={0}
-            image={'../../../public/projects/turing_complete/cpu_circuit.png'}
+            image={CpuCircuit}
             caption="Turing Complete CPU Circuit"
         />,
         <ProjectMedia
             key={1}
-            video={'../../../public/projects/turing_complete/maze_vid.mkv'}
+            video="../../../public/projects/turing_complete/maze_vid.mp4"
             caption="Turing Complete CPU Maze Game"
         />],
     ];
@@ -79,7 +81,7 @@ const Projects = () => {
             ProjectCard: ProjectCard,
             ProjectCardProps: projectCards[i],
             ProjectModal: ProjectModal,
-            ProjectModalProps: [ProjectModalContent[0]]
+            ProjectModalProps: ProjectModalContent[0]
         });
     }
 
@@ -92,7 +94,7 @@ const Projects = () => {
                     ProjectCard={ProjectCard}
                     ProjectCardProps={project.ProjectCardProps}
                     ProjectModal={ProjectModal}
-                    ProjectModalProps={{content: project.ProjectModalProps}}
+                    ProjectModalProps={project.ProjectModalProps}
                 />
             ))}
         </ProjectsSection>
