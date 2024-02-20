@@ -1,7 +1,5 @@
-// src/components/projects/ProjectMediaCarousel.tsx
-
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const CarouselContainer = styled.div`
     width: 100%;
@@ -25,16 +23,43 @@ const CarouselContent = styled.div`
 
 const ButtonContainer = styled.div`
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
 `;
 
 const CarouselButton = styled.button`
-    flex: 1;
-    padding: 10px;
-    margin: 0 5px;
+    background: none;
+    border: none;
     cursor: pointer;
+    font-size: 24px;
+    margin: 0 10px;
+    color: ${({ theme }) => theme.colors.text};
+`;
+
+const DotsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+`;
+
+interface DotProps {
+    $isActive: boolean;
+    onClick?: () => void;
+}
+  
+const Dot = styled.span<DotProps>`
+padding: 5px;
+margin: 0 5px;
+cursor: pointer;
+background-color: white;
+border-radius: 50%;
+transition: transform 0.3s ease-in-out;
+${({ $isActive }) =>
+    $isActive &&
+    css`
+        transform: scale(1.2);
+    `}
 `;
 
 const ProjectMediaCarousel = ({ content }: { content: React.ReactNode[] }) => {
@@ -55,8 +80,13 @@ const ProjectMediaCarousel = ({ content }: { content: React.ReactNode[] }) => {
                 {currentSlide}
             </CarouselContent>
             <ButtonContainer>
-                <CarouselButton onClick={prevSlide}>Prev</CarouselButton>
-                <CarouselButton onClick={nextSlide}>Next</CarouselButton>
+                <CarouselButton onClick={prevSlide}>&lt;</CarouselButton>
+                <DotsContainer>
+                    {content.map((_, index) => (
+                        <Dot key={index} $isActive={index === slideIndex} onClick={() => setSlideIndex(index)} />
+                    ))}
+                </DotsContainer>
+                <CarouselButton onClick={nextSlide}>&gt;</CarouselButton>
             </ButtonContainer>
         </CarouselContainer>
     );

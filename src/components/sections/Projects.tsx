@@ -69,7 +69,7 @@ const Projects = () => {
         />,
         <ProjectMedia
             key={1}
-            video="../../../public/projects/turing_complete/maze_vid.mp4"
+            video="https://www.youtube.com/embed/dQw4w9WgXcQ"
             caption="Turing Complete CPU Maze Game"
         />],
     ];

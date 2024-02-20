@@ -1,40 +1,44 @@
-// src/componets/projects/ProjectMedia.tsx
-
 import React from 'react';
 import styled from 'styled-components';
 import Image, { StaticImageData } from 'next/image';
 
+import Video from './Video';
+
 const ProjectMediaContainer = styled.div`
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    overflow: hidden;
 `;
 
 const MediaContent = styled.div`
     background: ${({ theme }) => theme.colors.secondary};
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
+    width: 70%;
+    aspect-ratio: 16 / 9;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-radius: 10px;
 `;
 
 const MediaImage = styled(Image)`
     border-radius: 10px;
-`;
-
-const MediaVideo = styled.video`
-    border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 `;
 
 const MediaCaption = styled.p`
     font-size: 1.5rem;
-    text-align: left;
+    text-align: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
 `;
 
 interface ProjectMediaProps {
@@ -44,17 +48,14 @@ interface ProjectMediaProps {
 }
 
 const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) => {
-
-    console.log(video);
-
     return (
         <ProjectMediaContainer>
             <MediaContent>
-                {image ? <MediaImage src={image} alt={caption} width={160} height={90} /> : 
-                         <MediaVideo controls muted>
-                            <source src={video} type="video/mp4" />
-                            Your browser does not support video.
-                         </MediaVideo>}
+                {image ? (
+                    <MediaImage src={image} alt={caption} />
+                ) : (
+                    <Video src={video || ''} />
+                )}
                 <MediaCaption>{caption}</MediaCaption>
             </MediaContent>
         </ProjectMediaContainer>
@@ -62,3 +63,10 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) =>
 };
 
 export default ProjectMedia;
+
+/*
+TODO:
+- dynamically compute the height and width based on the 16:9 aspect ratio and set in useEffect
+- ensure the positioning of elements within the container is correct
+- finish styling the carousel controls
+*/
