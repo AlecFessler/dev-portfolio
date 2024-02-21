@@ -11,7 +11,7 @@ import ProjectCardConstants from '../../state/ProjectCardConstants.json'
 const RESIZE_THROTTLE = 50;
 const SCROLL_THROTTLE = 50;
 
-const { TILT_INTENSITY, FLIP_DURATION, MODAL_HEIGHT, MODAL_WIDTH } = ProjectCardConstants;
+const { TILT_INTENSITY, FLIP_DURATION } = ProjectCardConstants;
 const { lowered, raised } = ProjectCardConstants.TiltAnimationStates;
 const { flippingToBack } = ProjectCardConstants.FlipAnimationStates;
 
@@ -47,6 +47,9 @@ const FlipManagerContainer = styled.div`
     max-width: 40rem;
     transform-style: preserve-3d;
     transform-origin: center;
+    transition: var(--transition, 0);
+    transform: var(--transform, none);
+    z-index: var(--zIndex, 0);
     &.flipLeft {
         animation: flipLeft ${FLIP_DURATION}s forwards;
     }
@@ -60,8 +63,6 @@ const FlipManagerContainer = styled.div`
         animation: flipRightBack ${FLIP_DURATION}s forwards;
     }
 `;
-
-
 
 const ModalInverseScale = styled.div`
     position: absolute;
@@ -106,6 +107,13 @@ function computeTiltAngles(elementDimensions: ElementDimensions, cursorPos: {x: 
     const rotateX = (y / height) * TILT_INTENSITY;
     const rotateY = (x / width) * TILT_INTENSITY * (y > 0 ? 1 : -1); // Invert the rotation for the lower half
     return [rotateX, rotateY];
+}
+
+function setContainerStyleValues(containerRef: React.RefObject<HTMLDivElement>, transition: number, zIndex: number, transform: string) {
+    if (!containerRef.current) return;
+    containerRef.current.style.setProperty('--transition', transition.toString() + 's');
+    containerRef.current.style.setProperty('--zIndex', zIndex.toString());
+    containerRef.current.style.setProperty('--transform', transform);
 }
 
 function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
@@ -211,8 +219,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             const {top, left} = containerRef.current.getBoundingClientRect();
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
-            containerRef.current.style.transform = getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY);
-            containerRef.current.style.transition = transition.toString() + 's';
+            setContainerStyleValues(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
         });
     }, []);
 
@@ -220,8 +227,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         requestAnimationFrame(() => {
             if (!containerRef.current || currentStateRef.current != 'unflipped') return;
             const {rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition} = lowered;
-            containerRef.current.style.transform = getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY);
-            containerRef.current.style.transition = transition.toString() + 's';
+            setContainerStyleValues(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
         });
     }, []);
 
@@ -241,7 +247,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { zIndex } = flippingToBack;
-                    containerRef.current.style.zIndex = zIndex.toString();
+                    setContainerStyleValues(containerRef, 0, zIndex, '');
                     containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
                     containerRef.current.classList.add(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                     setTransformValues(containerRef, scaleX, scaleY, translateX, translateY);
@@ -258,8 +264,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition, zIndex } = lowered;
-                    containerRef.current.style.transition = transition.toString() + 's';
-                    containerRef.current.style.zIndex = zIndex.toString();
+                    setContainerStyleValues(containerRef, transition, zIndex, '');
                     containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
                     containerRef.current.style.transform = getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY);
                 });

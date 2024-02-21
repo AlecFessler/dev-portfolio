@@ -1,8 +1,6 @@
 {
     "TILT_INTENSITY": 25,
     "FLIP_DURATION": 1.0,
-    "MODAL_HEIGHT": 0.9,
-    "MODAL_WIDTH": 0.9,
     "TiltAnimationStates": {
         "lowered": {
             "rotateX": 0,
