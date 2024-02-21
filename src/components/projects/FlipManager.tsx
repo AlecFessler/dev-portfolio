@@ -1,6 +1,6 @@
 // src/components/projects/FlipManager.tsx
 
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useActor } from '@xstate/react';
 import { throttle } from 'lodash';
@@ -109,14 +109,14 @@ function computeTiltAngles(elementDimensions: ElementDimensions, cursorPos: {x: 
     return [rotateX, rotateY];
 }
 
-function setContainerStyleValues(containerRef: React.RefObject<HTMLDivElement>, transition: number, zIndex: number, transform: string) {
+function setContainerStyleVars(containerRef: React.RefObject<HTMLDivElement>, transition: number, zIndex: number, transform: string) {
     if (!containerRef.current) return;
     containerRef.current.style.setProperty('--transition', transition.toString() + 's');
     containerRef.current.style.setProperty('--zIndex', zIndex.toString());
     containerRef.current.style.setProperty('--transform', transform);
 }
 
-function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
+function setFlipAnimationTransformVars(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
     if (!containerRef.current) return;
     containerRef.current.style.setProperty('--scaleX', scaleX.toString());
     containerRef.current.style.setProperty('--scaleY', scaleY.toString());
@@ -190,8 +190,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     });
     const modalDimensionsRef = useRef({modalWidth: 0, modalHeight: 0});
     const cursorPosRef = useRef({x: 0, y: 0});
-
     const [state, send, service] = useActor(flipMachine);
+    const [animationClass, setAnimationClass] = useState('' as string);
 
     const handleResize = useCallback(
         throttle(() => {
@@ -219,7 +219,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             const {top, left} = containerRef.current.getBoundingClientRect();
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
-            setContainerStyleValues(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
+            setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
         });
     }, []);
 
@@ -227,7 +227,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         requestAnimationFrame(() => {
             if (!containerRef.current || currentStateRef.current != 'unflipped') return;
             const {rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition} = lowered;
-            setContainerStyleValues(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
+            setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
         });
     }, []);
 
@@ -247,26 +247,23 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { zIndex } = flippingToBack;
-                    setContainerStyleValues(containerRef, 0, zIndex, '');
-                    containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
-                    containerRef.current.classList.add(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
-                    setTransformValues(containerRef, scaleX, scaleY, translateX, translateY);
+                    setContainerStyleVars(containerRef, 0, zIndex, '');
+                    setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
+                    setAnimationClass(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                 });
             } else if (state.value === 'flippingToFront') {
                 windowDimensionsRef.current = getWindowDimensions();
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
-                    containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
-                    containerRef.current.classList.add((computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current) + 'Back'));
-                    setTransformValues(containerRef, scaleX, scaleY, translateX, translateY);
+                    setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
+                    setAnimationClass((computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current) + 'Back'));
                 });
             } else if (state.value === 'unflipped') {
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
-                    const { rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition, zIndex } = lowered;
-                    setContainerStyleValues(containerRef, transition, zIndex, '');
-                    containerRef.current.classList.remove('flipLeft', 'flipRight', 'flipLeftBack', 'flipRightBack');
-                    containerRef.current.style.transform = getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY);
+                    const { transition, zIndex } = lowered;
+                    setContainerStyleVars(containerRef, transition, zIndex, '');
+                    setAnimationClass('');
                 });
                 cardDimensionsRef.current = getElementDimensions(containerRef);
             }
@@ -301,6 +298,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     return (
         <FlipManagerContainer
             ref={containerRef}
+            className={animationClass}
         >
             <ProjectCard {...ProjectCardProps} flipCard={onClick} />
             <ModalInverseScale
