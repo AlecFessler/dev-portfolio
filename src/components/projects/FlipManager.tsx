@@ -70,20 +70,22 @@ const ModalInverseScale = styled.div`
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
 `;
 
-function computeScalingFactors(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
-    const {width: windowWidth, height: windowHeight} = windowDimensions;
+function computeScalingFactors(
+    cardDimensions: ElementDimensions, 
+    modalDimensions: {modalWidth: number, modalHeight: number}) {
     const {width: cardWidth, height: cardHeight} = cardDimensions;
-    const targetWidth = windowWidth * MODAL_WIDTH;
-    const targetHeight = windowHeight * MODAL_HEIGHT;
-    const scaleX = targetWidth / cardWidth;
-    const scaleY = targetHeight / cardHeight;
+    const {modalWidth, modalHeight} = modalDimensions;
+    const scaleX = modalWidth / cardWidth;
+    const scaleY = modalHeight / cardHeight;
     return [scaleX, scaleY];
 }
 
-function computeTranslationValues(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
+function computeTranslationValues(windowDimensions: WindowDimensions, 
+                                  cardDimensions: ElementDimensions, 
+                                  modalDimensions: {modalWidth: number, modalHeight: number}) {
     const {centerX: windowCenterX, centerY: windowCenterY} = windowDimensions;
     const {relativeCenterX: cardCenterX, relativeCenterY: cardCenterY} = cardDimensions;
-    const [scaleX, scaleY] = computeScalingFactors(windowDimensions, cardDimensions);
+    const [scaleX, scaleY] = computeScalingFactors(cardDimensions, modalDimensions);
     const translateX = ((windowCenterX - cardCenterX) / scaleX) * -1; // invert the X translation to account for 180 degree Y rotation
     const translateY = (windowCenterY - cardCenterY) / scaleY;
     return [translateX, translateY];
@@ -98,12 +100,22 @@ function computeTiltAngles(elementDimensions: ElementDimensions, cursorPos: {x: 
     return [rotateX, rotateY];
 }
 
-function computeModalProperties(windowDimensions: WindowDimensions, [scaleX, scaleY]: [number, number]) {
-    const modalWidth = Math.floor(windowDimensions.width * MODAL_WIDTH);
-    const modalHeight = Math.floor(windowDimensions.height * MODAL_HEIGHT);
-    const inverseScaleX = 1 / scaleX;
-    const inverseScaleY = 1 / scaleY;
-    return {modalHeight, modalWidth, inverseScaleX, inverseScaleY};
+function computeModalDimensions(windowDimensions: WindowDimensions) {
+    const { width: windowWidth, height: windowHeight } = windowDimensions;
+    let modalWidth, modalHeight;
+
+    // Check if the window's aspect ratio is wider than 16:9
+    if ((windowWidth / windowHeight) > (16 / 9)) {
+        // Height is the limiting factor
+        modalHeight = windowHeight * MODAL_HEIGHT;
+        modalWidth = modalHeight * (16 / 9);
+    } else {
+        // Width is the limiting factor
+        modalWidth = windowWidth * MODAL_WIDTH;
+        modalHeight = modalWidth * (9 / 16);
+    }
+
+    return { modalWidth, modalHeight };
 }
 
 function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
@@ -175,6 +187,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         relativeCenterX: 0,
         relativeCenterY: 0
     });
+    const modalDimensionsRef = useRef({modalWidth: 0, modalHeight: 0});
     const cursorPosRef = useRef({x: 0, y: 0});
 
     const [state, send, service] = useActor(flipMachine);
@@ -225,8 +238,10 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         service.subscribe((state) => {
             if (!containerRef.current || previousStateRef.current === state.value) return;
             currentStateRef.current = state.value.toString();
-            const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
-            const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current);
+            const [scaleX, scaleY] = computeScalingFactors(cardDimensionsRef.current, modalDimensionsRef.current);
+            const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, 
+                                                                      cardDimensionsRef.current,
+                                                                      modalDimensionsRef.current);
             if (state.value === 'flippingToBack') {
                 windowDimensionsRef.current = getWindowDimensions();
                 cardDimensionsRef.current = getElementDimensions(containerRef);
@@ -262,9 +277,9 @@ const FlipManager: React.FC<FlipManagerProps> = ({
 
         windowDimensionsRef.current = getWindowDimensions();
         cardDimensionsRef.current = getElementDimensions(containerRef);
-        const [scaleX, scaleY] = computeScalingFactors(windowDimensionsRef.current, cardDimensionsRef.current);
-        const { modalHeight, modalWidth, inverseScaleX, inverseScaleY } = computeModalProperties(windowDimensionsRef.current, [scaleX, scaleY]);
-        setModalProperties(modalContainerRef, modalWidth, modalHeight, inverseScaleX, inverseScaleY);
+        modalDimensionsRef.current = computeModalDimensions(windowDimensionsRef.current);
+        const [scaleX, scaleY] = computeScalingFactors(cardDimensionsRef.current, modalDimensionsRef.current);
+        setModalProperties(modalContainerRef, modalDimensionsRef.current.modalWidth, modalDimensionsRef.current.modalHeight, 1 / scaleX, 1 / scaleY);
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('scroll', handleScroll);
