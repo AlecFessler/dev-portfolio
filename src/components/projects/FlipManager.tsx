@@ -131,7 +131,7 @@ function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseSca
 }
 
 function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number): string {
-    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}px) translateY(${translateY}px)`;
+    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}${translateX.toString().includes('%') ? '' : 'px'}) translateY(${translateY}${translateY.toString().includes('%') ? '' : 'px'})`;
 }
 
 function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
@@ -196,19 +196,12 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     const handleResize = useCallback(
         throttle(() => {
             windowDimensionsRef.current = getWindowDimensions();
-            if (currentStateRef.current === 'flipped') {
-                send({ type: 'FLIP' });
-            }
         }, RESIZE_THROTTLE),
     []);
 
     const handleScroll = useCallback(
         throttle(() => {
-            if (currentStateRef.current === 'unflipped') {
-                windowDimensionsRef.current = getWindowDimensions();
-            } else if (currentStateRef.current === 'flipped') {
-                send({ type: 'FLIP' });
-            }
+            windowDimensionsRef.current = getWindowDimensions();
         }, SCROLL_THROTTLE), 
     []);
 
@@ -251,6 +244,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
                     setAnimationClass(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                 });
+            } else if (state.value === 'flipped') {
+                // set position to fixed, top and left to 0, and translate x and y to -50%
             } else if (state.value === 'flippingToFront') {
                 windowDimensionsRef.current = getWindowDimensions();
                 requestAnimationFrame(() => {

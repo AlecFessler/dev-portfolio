@@ -60,7 +60,7 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) =>
                 width: mediaImageContainerRef.current.offsetWidth,
                 height: mediaImageContainerRef.current.offsetHeight,
             });
-            console.log(mediaImageContainerRef.current.offsetWidth, mediaImageContainerRef.current.offsetHeight);
+            //console.log(mediaImageContainerRef.current.offsetWidth, mediaImageContainerRef.current.offsetHeight);
         }
     }, []);
 
