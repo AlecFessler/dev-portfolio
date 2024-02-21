@@ -25,6 +25,11 @@ const ProjectsSection = styled.section`
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     padding: 0 2rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
 `;
 
 const Projects = () => {
