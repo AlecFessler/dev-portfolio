@@ -71,11 +71,15 @@ const Projects = () => {
             key={0}
             image={CpuCircuit}
             caption="Turing Complete CPU Circuit"
+            width={0} // 0 dimensions placeholders, actual size is calculated in ProjectMediaCarousel.tsx
+            height={0}
         />,
         <ProjectMedia
             key={1}
             video="https://www.youtube.com/embed/dQw4w9WgXcQ"
             caption="Turing Complete CPU Maze Game"
+            width={0}
+            height={0}
         />],
     ];
 

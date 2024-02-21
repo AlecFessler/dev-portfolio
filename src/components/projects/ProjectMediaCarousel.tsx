@@ -2,22 +2,20 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 const CarouselContainer = styled.div`
+    height: 100%;
     width: 100%;
-    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
-    overflow: hidden;
 `;
 
 const CarouselContent = styled.div`
-    background: ${({ theme }) => theme.colors.secondary};
-    height: 100%;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: ${({ theme }) => theme.colors.secondary};
+    height: 90%;
     border-radius: 10px;
 `;
 
@@ -25,14 +23,14 @@ const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    height: 10%;
 `;
 
 const CarouselButton = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 2rem;
     margin: 0 10px;
     color: ${({ theme }) => theme.colors.text};
 `;

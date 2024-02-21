@@ -61,13 +61,21 @@ const FlipManagerContainer = styled.div`
     }
 `;
 
+
+
 const ModalInverseScale = styled.div`
     position: absolute;
     backface-visibility: hidden;
-    height: var(--modalHeight, 0px);
-    width: var(--modalWidth, 0px);
+    height: 80vh;
+    width: 90vw;
+    max-height: 80vh;
+    max-width: 90vw;
+    aspect-ratio: 16 / 10;
     transform-origin: center;
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;
 
 function computeScalingFactors(
@@ -100,24 +108,6 @@ function computeTiltAngles(elementDimensions: ElementDimensions, cursorPos: {x: 
     return [rotateX, rotateY];
 }
 
-function computeModalDimensions(windowDimensions: WindowDimensions) {
-    const { width: windowWidth, height: windowHeight } = windowDimensions;
-    let modalWidth, modalHeight;
-
-    // Check if the window's aspect ratio is wider than 16:9
-    if ((windowWidth / windowHeight) > (16 / 9)) {
-        // Height is the limiting factor
-        modalHeight = windowHeight * MODAL_HEIGHT;
-        modalWidth = modalHeight * (16 / 9);
-    } else {
-        // Width is the limiting factor
-        modalWidth = windowWidth * MODAL_WIDTH;
-        modalHeight = modalWidth * (9 / 16);
-    }
-
-    return { modalWidth, modalHeight };
-}
-
 function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
     if (!containerRef.current) return;
     containerRef.current.style.setProperty('--scaleX', scaleX.toString());
@@ -126,10 +116,8 @@ function setTransformValues(containerRef: React.RefObject<HTMLDivElement>, scale
     containerRef.current.style.setProperty('--translateY', translateY.toString() + 'px');
 }
 
-function setModalProperties(containerRef: React.RefObject<HTMLDivElement>, modalWidth: number, modalHeight: number, inverseScaleX: number, inverseScaleY: number) {
+function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseScaleX: number, inverseScaleY: number) {
     if (!containerRef.current) return;
-    containerRef.current.style.setProperty('--modalWidth', modalWidth.toString() + 'px');
-    containerRef.current.style.setProperty('--modalHeight', modalHeight.toString() + 'px');
     containerRef.current.style.setProperty('--inverseScaleX', inverseScaleX.toString());
     containerRef.current.style.setProperty('--inverseScaleY', inverseScaleY.toString());
 }
@@ -144,6 +132,15 @@ function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions
     return cardCenterX > windowCenterX ? 'flipLeft' : 'flipRight';
 }
 
+function getWindowDimensions() {
+    return {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        centerX: window.innerWidth / 2 + window.scrollX,
+        centerY: window.innerHeight / 2 + window.scrollY
+    };
+}
+
 function getElementDimensions(containerRef: React.RefObject<HTMLDivElement>) {
     if (!containerRef.current) return {left: 0, top: 0, width: 0, height: 0, centerX: 0, centerY: 0, relativeCenterX: 0, relativeCenterY: 0};
     const {top, left, width, height} = containerRef.current.getBoundingClientRect();
@@ -154,13 +151,9 @@ function getElementDimensions(containerRef: React.RefObject<HTMLDivElement>) {
     return {width, height, centerX, centerY, relativeCenterX, relativeCenterY};
 }
 
-function getWindowDimensions() {
-    return {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        centerX: window.innerWidth / 2 + window.scrollX,
-        centerY: window.innerHeight / 2 + window.scrollY
-    };
+function getModalDimensions(modalContainerRef: React.RefObject<HTMLDivElement>) {
+    if (!modalContainerRef.current) return {modalWidth: 0, modalHeight: 0};
+    return {modalWidth: modalContainerRef.current.offsetWidth, modalHeight: modalContainerRef.current.offsetHeight};
 }
 
 const FlipManager: React.FC<FlipManagerProps> = ({ 
@@ -277,9 +270,9 @@ const FlipManager: React.FC<FlipManagerProps> = ({
 
         windowDimensionsRef.current = getWindowDimensions();
         cardDimensionsRef.current = getElementDimensions(containerRef);
-        modalDimensionsRef.current = computeModalDimensions(windowDimensionsRef.current);
+        modalDimensionsRef.current = getModalDimensions(modalContainerRef);
         const [scaleX, scaleY] = computeScalingFactors(cardDimensionsRef.current, modalDimensionsRef.current);
-        setModalProperties(modalContainerRef, modalDimensionsRef.current.modalWidth, modalDimensionsRef.current.modalHeight, 1 / scaleX, 1 / scaleY);
+        setModalScale(modalContainerRef, 1 / scaleX, 1 / scaleY);
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('scroll', handleScroll);

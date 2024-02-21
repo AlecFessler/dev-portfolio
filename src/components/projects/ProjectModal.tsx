@@ -6,9 +6,8 @@ import styled from 'styled-components';
 import ProjectMediaCarousel from './ProjectMediaCarousel';
 
 const ProjectModalContainer = styled.div`
-    width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,7 +19,6 @@ const ProjectModalContainer = styled.div`
 
 const ExitButton = styled.button`
     align-self: flex-end;
-    margin: 1rem;
     padding: 1rem;
     font-size: 2rem;
     cursor: pointer;
@@ -34,12 +32,6 @@ const ExitButton = styled.button`
     }
 `;
 
-const ModalContent = styled.div`
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-`;
-
 interface ProjectModalProps {
     content: React.ReactNode[];
     closeModal: () => void;
@@ -47,11 +39,9 @@ interface ProjectModalProps {
 
 const ProjectModal = ({ content, closeModal }: ProjectModalProps) => {
     return (
-        <ProjectModalContainer>
-            <ExitButton onClick={closeModal}>X</ExitButton>
-            <ModalContent>
-                <ProjectMediaCarousel content={content} />
-            </ModalContent>
+        <ProjectModalContainer onClick={closeModal}>
+            {/* <ExitButton onClick={closeModal}>X</ExitButton> */}
+            <ProjectMediaCarousel content={content} />
         </ProjectModalContainer>
     );
 };
