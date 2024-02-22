@@ -131,7 +131,7 @@ function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseSca
 }
 
 function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number | string): string {
-    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}) translateY(${translateY}${translateY.toString().includes('%') ? '' : 'px'})`;
+    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translate3d(${translateX}px, ${translateY}${translateY.toString().includes('%') ? '' : 'px'}, 0)`;
 }
 
 function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
