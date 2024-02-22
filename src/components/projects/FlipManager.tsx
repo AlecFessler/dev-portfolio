@@ -131,7 +131,7 @@ function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseSca
 }
 
 function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number | string): string {
-    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translate3d(${translateX}px, ${translateY}${translateY.toString().includes('%') ? '' : 'px'}, 0)`;
+    return `rotateX(${rotateX}) rotateY(${rotateY}) scale3d(${scaleX}, ${scaleY}, 1) translate3d(${translateX}px, ${translateY}${translateY.toString().includes('%') ? '' : 'px'}, 0)`;
 }
 
 function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
@@ -243,7 +243,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { zIndex } = flippingToBack;
-                    setContainerStyleVars(containerRef, 0, zIndex, '');
+                    setContainerStyleVars(containerRef, 0.1, zIndex, '');
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
                     setAnimationClass(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                 });
