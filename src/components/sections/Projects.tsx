@@ -17,18 +17,31 @@ import CpuCircuit from '../../../public/projects/turing_complete/cpu_circuit.png
 
 const ProjectsSection = styled.section`
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     justify-items: center;
+    gap: 2rem;
     align-items: stretch;
-    gap: 8rem;
     grid-auto-rows: 1fr;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     padding: 0 2rem;
 
-    @media (max-width: 768px) {
-        grid-template-columns: 1fr;
+    @media (min-width: 768px) {
         gap: 4rem;
+        padding: 0 4rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 850px) {
+        gap: 6rem;
+        padding: 0 6rem;
+    }
+    @media (min-width: 900px) {
+        gap: 7rem;
+        padding: 0 7rem;
+    }
+    @media (min-width: 1024px) {
+        gap: 8rem;
+        padding: 0 8rem;
     }
 `;
 
@@ -104,20 +117,18 @@ const Projects = () => {
             ProjectModalProps: ProjectModalContent[0]
         });
     }
-
+    
     return (
         <ProjectsSection id="Projects">
-            {FlipManagerProps.map((project, index) => {
+            {projectCards.map((project, index) => {
                 return (
-                    <FlipManagerPlaceholder key={index}>
-                        <FlipManager
-                            key={index}
-                            ProjectCard={ProjectCard}
-                            ProjectCardProps={project.ProjectCardProps}
-                            ProjectModal={ProjectModal}
-                            ProjectModalProps={project.ProjectModalProps}
-                        />
-                    </FlipManagerPlaceholder>
+                    <FlipManager
+                        key={index}
+                        ProjectCard={ProjectCard}
+                        ProjectCardProps={project}
+                        ProjectModal={ProjectModal}
+                        ProjectModalProps={ProjectModalContent[0]}
+                    />
                 );
             })}
         </ProjectsSection>

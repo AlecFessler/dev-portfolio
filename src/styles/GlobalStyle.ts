@@ -41,6 +41,7 @@ const GlobalStyle = createGlobalStyle`
     ::-webkit-scrollbar-thumb {
         background: ${({ theme }) => theme.colors.scrollbar};
         border-radius: 10px;
+        margin-left: -10px;
     }
 `;
 

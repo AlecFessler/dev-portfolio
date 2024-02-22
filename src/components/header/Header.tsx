@@ -9,16 +9,32 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 1rem 0;
+  padding: 1rem 2rem;
   position: fixed;
   top: 0;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 1000;
+  @media (max-width: 375px) {
+    justify-content: center;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 601px) {
+  }
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 1024px) {
+  }
+  @media (min-width: 1440px) {
+  }
+  @media (min-width: 2560px) {
+  }
 `;
 
 const ScrollNav = styled(ScrollLink)`
-  margin: 0 1rem;
+  margin-left: 2rem;
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
@@ -27,10 +43,13 @@ const ScrollNav = styled(ScrollLink)`
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
   }
+  @media (max-width: 375px) {
+    margin-left: 1.5rem;
+  }
 `;
 
 const RouterNav = styled(Link)`
-  margin: 0 1rem;
+  margin-left: 2rem;
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
@@ -38,6 +57,9 @@ const RouterNav = styled(Link)`
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
+  }
+  @media (max-width: 375px) {
+    margin-left: 1.5rem;
   }
 `;
 

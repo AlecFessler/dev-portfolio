@@ -6,8 +6,6 @@ const CarouselContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-
-    // add breakpoint at 1192px to swap to vw instead of vh
 `;
 
 const ButtonContainer = styled.div`
@@ -15,8 +13,19 @@ const ButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 10px;
-    height: min-content;
-    // figure out what to do with the breakpoint ?
+    @media (max-width: 600px) {
+        padding: 5px;
+    }
+    @media (min-width: 601px) {
+    }
+    @media (min-width: 768px) {
+    }
+    @media (min-width: 1024px) {
+    }
+    @media (min-width: 1440px) {
+    }
+    @media (min-width: 2560px) {
+    }
 `;
 
 const CarouselButton = styled.button`
@@ -27,6 +36,19 @@ const CarouselButton = styled.button`
     margin: 0 15px;
     padding: 0;
     color: ${({ theme }) => theme.colors.text};
+    @media (max-width: 600px) {
+        font-size: 1.5rem;
+    }
+    @media (min-width: 601px) {
+    }
+    @media (min-width: 768px) {
+    }
+    @media (min-width: 1024px) {
+    }
+    @media (min-width: 1440px) {
+    }
+    @media (min-width: 2560px) {
+    }
 `;
 
 const CloseModalButton = styled.button`
@@ -36,6 +58,19 @@ const CloseModalButton = styled.button`
     font-size: 2rem;
     padding: 0;
     color: ${({ theme }) => theme.colors.text};
+    @media (max-width: 600px) {
+        font-size: 1.5rem;
+    }
+    @media (min-width: 601px) {
+    }
+    @media (min-width: 768px) {
+    }
+    @media (min-width: 1024px) {
+    }
+    @media (min-width: 1440px) {
+    }
+    @media (min-width: 2560px) {
+    }
 `;
 
 const DotsContainer = styled.div`
@@ -60,7 +95,22 @@ ${({ $isActive }) =>
     $isActive &&
     css`
         transform: scale(1.2);
-    `}
+    `
+}
+@media (max-width: 600px) {
+    padding: 3px;
+    margin: 0 3px;
+}
+@media (min-width: 601px) {
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 1024px) {
+}
+@media (min-width: 1440px) {
+}
+@media (min-width: 2560px) {
+}
 `;
 
 const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {

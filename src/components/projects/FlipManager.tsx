@@ -44,7 +44,6 @@ const FlipManagerContainer = styled.div`
     justify-content: center;
     align-items: center;
     perspective: 1000px;
-    max-width: 40rem;
     transform-style: preserve-3d;
     transition: var(--transition, 0);
     transform: var(--transform, none);
@@ -70,8 +69,19 @@ const ModalInverseScale = styled.div`
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
     background: ${({ theme }) => theme.colors.secondary};
     border-radius: 10px;
-
-    // add breakpoint at width 1192px to swap to vw instead of vh
+    @media (max-width: 600px) {
+        padding: 0;
+    }
+    @media (min-width: 601px) {
+    }
+    @media (min-width: 768px) {
+    }
+    @media (min-width: 1024px) {
+    }
+    @media (min-width: 1440px) {
+    }
+    @media (min-width: 2560px) {
+    }
 `;
 
 function headerHeight() {
@@ -131,7 +141,7 @@ function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseSca
 }
 
 function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number | string): string {
-    return `rotateX(${rotateX}) rotateY(${rotateY}) scale3d(${scaleX}, ${scaleY}, 1) translate3d(${translateX}px, ${translateY}${translateY.toString().includes('%') ? '' : 'px'}, 0)`;
+    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}) translateY(${translateY}${translateY.toString().includes('%') ? '' : 'px'})`;
 }
 
 function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
@@ -193,11 +203,10 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     const [state, send, service] = useActor(flipMachine);
     const [animationClass, setAnimationClass] = useState('' as string);
 
-    const handleResize = useCallback(
-        throttle(() => {
-            windowDimensionsRef.current = getWindowDimensions();
-        }, RESIZE_THROTTLE),
-    []);
+    const handleResize = useCallback(() => {
+        windowDimensionsRef.current = getWindowDimensions();
+        modalDimensionsRef.current = getModalDimensions(modalContainerRef);
+    }, []);
 
     const handleScroll = useCallback(() => {
         requestAnimationFrame(() => {
@@ -243,7 +252,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { zIndex } = flippingToBack;
-                    setContainerStyleVars(containerRef, 0.1, zIndex, '');
+                    setContainerStyleVars(containerRef, 0, zIndex, '');
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
                     setAnimationClass(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                 });
@@ -276,7 +285,6 @@ const FlipManager: React.FC<FlipManagerProps> = ({
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('scroll', handleScroll);
-
         containerRef.current.addEventListener('mousemove', handleMouseMove);
         containerRef.current.addEventListener('mouseout', handleMouseOut);
 
@@ -309,7 +317,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         <ModalBackgroundShader visible={() => {
             // this works because the component rerenders on the flip animation due to setting the
             // animation class, thus the lambda passed to this function gets a new reference to the
-            // state value to trigger a rerender of the background shader with the correct class
+            // state value to cause a rerender of the background shader with the correct class
             if (state.value === 'unflipped') { return '' }
             else if (state.value === 'flippingToFront') { return 'animateOpacityOut' }
             else { return 'animateOpacity' }
