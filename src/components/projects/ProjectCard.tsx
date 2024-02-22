@@ -43,10 +43,10 @@ const ProjectCardContainer = styled.div`
         width: 100%;
     }
     @media (min-width: 1024px) {
-        width: 90%;
+        width: 85%;
     }
     @media (min-width: 1440px) {
-        width: 80%;
+        width: 75%;
         padding: 2.5rem;
     }
     @media (min-width: 2560px) {

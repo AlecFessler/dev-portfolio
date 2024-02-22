@@ -47,10 +47,6 @@ const ProjectsSection = styled.section`
         gap: 11rem;
         padding: 0 11rem;
     }
-    @media (min-width: 1200px) {
-        gap: 13rem;
-        padding: 0 13rem;
-    }
 `;
 
 const FlipManagerPlaceholder = styled.div`

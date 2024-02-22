@@ -3,13 +3,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useActor } from '@xstate/react';
-import { throttle } from 'lodash';
 
 import ModalBackgroundShader from './ModalBackgroundShader';
 import flipMachine from '../../state/FlipManagerMachine';
 import ProjectCardConstants from '../../state/ProjectCardConstants.json'
-
-const RESIZE_THROTTLE = 50;
 
 const { TILT_INTENSITY, FLIP_DURATION } = ProjectCardConstants;
 const { lowered, raised } = ProjectCardConstants.TiltAnimationStates;
@@ -38,10 +35,10 @@ interface ElementDimensions {
     relativeCenterY: number;
 }
 
-const FlipManagerContainer = styled.div`
+const FlipManagerContainer = styled.div<{ $side: 'left' | 'right' }>`
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: ${({ $side }) => $side === 'left' ? 'flex-end' : 'flex-start'};
     align-items: center;
     perspective: 1000px;
     transform-style: preserve-3d;
@@ -144,10 +141,11 @@ function getTransformString(rotateX: number, rotateY: number, scaleX: number, sc
     return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}) translateY(${translateY}${translateY.toString().includes('%') ? '' : 'px'})`;
 }
 
-function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
+function computeScreenSide(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
     const {centerX: windowCenterX} = windowDimensions;
-    const {centerX: cardCenterX} = cardDimensions;
-    return cardCenterX > windowCenterX ? 'flipLeft' : 'flipRight';
+    const {relativeCenterX: cardCenterX} = cardDimensions;
+    console.log(cardCenterX, windowCenterX, cardCenterX < windowCenterX ? 'left' : 'right');
+    return cardCenterX < windowCenterX ? 'left' : 'right';
 }
 
 function getWindowDimensions() {
@@ -202,6 +200,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     const cursorPosRef = useRef({x: 0, y: 0});
     const [state, send, service] = useActor(flipMachine);
     const [animationClass, setAnimationClass] = useState('' as string);
+    const [screenSide, setScreenSide] = useState('left' as 'left' | 'right');
 
     const handleResize = useCallback(() => {
         windowDimensionsRef.current = getWindowDimensions();
@@ -246,6 +245,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, 
                                                                       cardDimensionsRef.current,
                                                                       modalDimensionsRef.current);
+            const flipDirection = screenSide === 'left' ? 'Left' : 'Right';
+            const animationClass = `flip${flipDirection}`;
             if (state.value === 'flippingToBack') {
                 windowDimensionsRef.current = getWindowDimensions();
                 cardDimensionsRef.current = getElementDimensions(containerRef);
@@ -254,7 +255,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                     const { zIndex } = flippingToBack;
                     setContainerStyleVars(containerRef, 0, zIndex, '');
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
-                    setAnimationClass(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
+                    setAnimationClass(animationClass);
                 });
             } else if (state.value === 'flippingToFront') {
                 windowDimensionsRef.current = getWindowDimensions();
@@ -263,7 +264,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                     const { zIndex } = flippingToFront;
                     setContainerStyleVars(containerRef, 0, zIndex, '');
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
-                    setAnimationClass((computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current) + 'Back'));
+                    setAnimationClass(animationClass + 'Back');
                 });
             } else if (state.value === 'unflipped') {
                 requestAnimationFrame(() => {
@@ -282,6 +283,11 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         modalDimensionsRef.current = getModalDimensions(modalContainerRef);
         const [scaleX, scaleY] = computeScalingFactors(cardDimensionsRef.current, modalDimensionsRef.current);
         setModalScale(modalContainerRef, 1 / scaleX, 1 / scaleY);
+
+        // set screen side
+        console.log(cardDimensionsRef.current, windowDimensionsRef.current);
+        setScreenSide(computeScreenSide(windowDimensionsRef.current, cardDimensionsRef.current));
+        console.log(screenSide);
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('scroll', handleScroll);
@@ -306,6 +312,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         <FlipManagerContainer
             ref={containerRef}
             className={animationClass}
+            $side={screenSide}
         >
             <ProjectCard {...ProjectCardProps} flipCard={onClick} />
             <ModalInverseScale
