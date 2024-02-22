@@ -10,19 +10,12 @@ const StyledSection = styled.section`
     color: ${({ theme }) => theme.colors.text};
     text-align: left;
     padding: 0 2rem;
-    margin: 0 auto;
 `;
 
 const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    @media (min-width: 320px) {
-        clamp(1rem, 5vw, 2rem);
-    }
-    @media (min-width: 375px) {
-        clamp(2rem, 5vw, 2.5rem);
-    }
 `;
 
 const GreetingText = styled.h1`

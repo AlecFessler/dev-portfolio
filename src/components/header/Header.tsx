@@ -12,16 +12,15 @@ const HeaderContainer = styled.header`
   padding: 1rem 2rem 1rem 0;
   font-size: clamp(1.25rem, 1vw + 1rem, 2.5rem);
   position: fixed;
-  top: 0;
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 1000;
   @media (min-width: 1440px) {
     padding: 2rem 2rem 2rem 0;
-    font-size: clamp(2.5rem, 2vw, 3.5rem);
+    font-size: clamp(2.5rem, 1vw + 1rem, 3.5rem);
   }
   @media (min-width: 1920px) {
     padding: 3rem 2rem 3rem 0;
-    font-size: clamp(3.5rem, 2vw, 4.5rem);
+    font-size: clamp(3.5rem, 1.5vw + 1rem, 4.5rem);
   }
 `;
 
@@ -30,7 +29,6 @@ const ScrollNav = styled(ScrollLink)`
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
-  text-decoration: none;
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
@@ -42,7 +40,6 @@ const RouterNav = styled(Link)`
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
-  text-decoration: none;
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
