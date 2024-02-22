@@ -17,41 +17,26 @@ const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    @media (min-width: 350px) { // 350 - 700 are for aligning with the cards while they're one per row
+    @media (min-width: 374px) {
         width: 90%;
     }
+    @media (min-width: 375px) { // shrink to keep 2 line definition
+        width: 65%;
+    }
     @media (min-width: 400px) {
-        width: 80%;
-    }
-    @media (min-width: 450px) {
-        width: 75%;
-    }
-    @media (min-width: 500px) {
         width: 70%;
     }
-    @media (min-width: 525px) {
-        width: 60%;
-    }
-    @media (min-width: 600px) {
+    @media (min-width: 768px) {
         width: 55%;
     }
-    @media (min-width: 650px) {
-        width: 50%;
-    }
-    @media (min-width: 700px) {
+    @media (min-width: 1200px) {
         width: 45%;
     }
-    @media (min-width: 768px) { // 2 cards per row starts now, no longer need to couple sizing
-        width: 50%;
-    }
-    @media (min-width: 850px) {
-        width: 55%;
-    }
-    @media (min-width: 1024px) {
-    }
     @media (min-width: 1440px) {
+        width: 40%;
     }
     @media (min-width: 2560px) {
+        width: 30%;
     }
 `;
 
@@ -75,9 +60,8 @@ const GreetingText = styled.h1`
     @media (min-width: 1024px) {
         font-size: 5rem;
     }
-    @media (min-width: 1440px) {
-    }
     @media (min-width: 2560px) {
+        font-size: 8rem;
     }
 `;
 
@@ -104,9 +88,8 @@ const Definition = styled.h2`
     @media (min-width: 1024px) {
         font-size: 2.5rem;
     }
-    @media (min-width: 1440px) {
-    }
     @media (min-width: 2560px) {
+        font-size: 3.5rem;
     }
 `;
 

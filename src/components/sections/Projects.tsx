@@ -36,12 +36,20 @@ const ProjectsSection = styled.section`
         padding: 0 6rem;
     }
     @media (min-width: 900px) {
-        gap: 7rem;
-        padding: 0 7rem;
-    }
-    @media (min-width: 1024px) {
         gap: 8rem;
         padding: 0 8rem;
+    }
+    @media (min-width: 1024px) {
+        gap: 9rem;
+        padding: 0 9rem;
+    }
+    @media (min-width: 1100px) {
+        gap: 11rem;
+        padding: 0 11rem;
+    }
+    @media (min-width: 1200px) {
+        gap: 13rem;
+        padding: 0 13rem;
     }
 `;
 
