@@ -45,16 +45,20 @@
             "zIndex": 1
         },
         "flipped": {
+            "position": "fixed",
+            "top": "50%",
             "rotateX": 0,
             "rotateY": 180,
             "scaleX": null,
             "scaleY": null,
             "translateX": null,
-            "translateY": null,
-            "transition": 1.0,
+            "translateY": "-50%",
+            "transition": 0,
             "zIndex": 1
         },
         "flippingToFront": {
+            "position": "relative",
+            "top": 0,
             "rotateX": 0,
             "rotateY": 0,
             "scaleX": 1,

@@ -9,11 +9,10 @@ import flipMachine from '../../state/FlipManagerMachine';
 import ProjectCardConstants from '../../state/ProjectCardConstants.json'
 
 const RESIZE_THROTTLE = 50;
-const SCROLL_THROTTLE = 50;
 
 const { TILT_INTENSITY, FLIP_DURATION } = ProjectCardConstants;
 const { lowered, raised } = ProjectCardConstants.TiltAnimationStates;
-const { flippingToBack } = ProjectCardConstants.FlipAnimationStates;
+const { flippingToBack, flipped, flippingToFront } = ProjectCardConstants.FlipAnimationStates;
 
 interface FlipManagerProps {
     ProjectCard: React.FC<any>;
@@ -39,7 +38,8 @@ interface ElementDimensions {
 }
 
 const FlipManagerContainer = styled.div`
-    position: relative;
+    position: var(--position, relative);
+    top: var(--top, 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,19 +109,21 @@ function computeTiltAngles(elementDimensions: ElementDimensions, cursorPos: {x: 
     return [rotateX, rotateY];
 }
 
-function setContainerStyleVars(containerRef: React.RefObject<HTMLDivElement>, transition: number, zIndex: number, transform: string) {
+function setContainerStyleVars(containerRef: React.RefObject<HTMLDivElement>, position: string | null, top: number | string | null, transition: number, zIndex: number, transform: string) {
     if (!containerRef.current) return;
+    if (position) containerRef.current.style.setProperty('--position', position);
+    if (top !== null) containerRef.current.style.setProperty('--top', top.toString());
     containerRef.current.style.setProperty('--transition', transition.toString() + 's');
     containerRef.current.style.setProperty('--zIndex', zIndex.toString());
     containerRef.current.style.setProperty('--transform', transform);
 }
 
-function setFlipAnimationTransformVars(containerRef: React.RefObject<HTMLDivElement>, scaleX: number, scaleY: number, translateX: number, translateY: number) {
+function setFlipAnimationTransformVars(containerRef: React.RefObject<HTMLDivElement>, scaleX: number | null, scaleY: number | null, translateX: number | string | null, translateY: number | string | null) {
     if (!containerRef.current) return;
-    containerRef.current.style.setProperty('--scaleX', scaleX.toString());
-    containerRef.current.style.setProperty('--scaleY', scaleY.toString());
-    containerRef.current.style.setProperty('--translateX', translateX.toString() + 'px');
-    containerRef.current.style.setProperty('--translateY', translateY.toString() + 'px');
+    if (scaleX !== null) containerRef.current.style.setProperty('--scaleX', scaleX.toString());
+    if (scaleY !== null) containerRef.current.style.setProperty('--scaleY', scaleY.toString());
+    if (translateX !== null) containerRef.current.style.setProperty('--translateX', translateX.toString() + (typeof translateX === 'string' ? '' : 'px'));
+    if (translateY !== null) containerRef.current.style.setProperty('--translateY', translateY.toString() + (typeof translateY === 'string' ? '' : 'px'));
 }
 
 function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseScaleX: number, inverseScaleY: number) {
@@ -130,8 +132,8 @@ function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseSca
     containerRef.current.style.setProperty('--inverseScaleY', inverseScaleY.toString());
 }
 
-function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number): string {
-    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}${translateX.toString().includes('%') ? '' : 'px'}) translateY(${translateY}${translateY.toString().includes('%') ? '' : 'px'})`;
+function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number | string): string {
+    return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}) translateY(${translateY}${translateY.toString().includes('%') ? '' : 'px'})`;
 }
 
 function computeFlipDirection(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
@@ -199,11 +201,12 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         }, RESIZE_THROTTLE),
     []);
 
-    const handleScroll = useCallback(
-        throttle(() => {
+    const handleScroll = useCallback(() => {
             windowDimensionsRef.current = getWindowDimensions();
-        }, SCROLL_THROTTLE), 
-    []);
+            if (currentStateRef.current !== 'flippingToBack') return;
+            const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current, modalDimensionsRef.current);
+            setFlipAnimationTransformVars(containerRef, null, null, null, translateY);
+    }, []);
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
         requestAnimationFrame(() => {
@@ -212,7 +215,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             const {top, left} = containerRef.current.getBoundingClientRect();
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
-            setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
+            setContainerStyleVars(containerRef, null, null, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
         });
     }, []);
 
@@ -220,7 +223,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         requestAnimationFrame(() => {
             if (!containerRef.current || currentStateRef.current != 'unflipped') return;
             const {rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition} = lowered;
-            setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
+            setContainerStyleVars(containerRef, null, null, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
         });
     }, []);
 
@@ -240,16 +243,23 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { zIndex } = flippingToBack;
-                    setContainerStyleVars(containerRef, 0, zIndex, '');
+                    setContainerStyleVars(containerRef, null, null, 0, zIndex, '');
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
                     setAnimationClass(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
                 });
             } else if (state.value === 'flipped') {
-                // set position to fixed, top and left to 0, and translate x and y to -50%
+                requestAnimationFrame(() => {
+                    if (!containerRef.current) return;
+                    const { position, top, translateY, transition, zIndex } = flipped;
+                    setContainerStyleVars(containerRef, position, top, transition, zIndex, '');
+                    setFlipAnimationTransformVars(containerRef, null, null, null, translateY);
+                });
             } else if (state.value === 'flippingToFront') {
                 windowDimensionsRef.current = getWindowDimensions();
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
+                    const { position, top, zIndex } = flippingToFront;
+                    setContainerStyleVars(containerRef, position, top, 0, zIndex, '');
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
                     setAnimationClass((computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current) + 'Back'));
                 });
@@ -257,7 +267,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { transition, zIndex } = lowered;
-                    setContainerStyleVars(containerRef, transition, zIndex, '');
+                    setContainerStyleVars(containerRef, null, null, transition, zIndex, '');
                     setAnimationClass('');
                 });
                 cardDimensionsRef.current = getElementDimensions(containerRef);
