@@ -43,10 +43,15 @@ const ProjectCardContainer = styled.div`
         width: 100%;
     }
     @media (min-width: 1024px) {
+        width: 90%;
     }
     @media (min-width: 1440px) {
+        width: 80%;
+        padding: 2.5rem;
     }
     @media (min-width: 2560px) {
+        width: 65%;
+        padding: 4rem;
     }
 `;
 
@@ -64,13 +69,11 @@ const Title = styled.h2`
     @media (min-width: 500px) {
         font-size: 2.25rem
     }
-    @media (min-width: 768px) {
-    }
-    @media (min-width: 1024px) {
-    }
     @media (min-width: 1440px) {
+        font-size: 2.5rem;
     }
     @media (min-width: 2560px) {
+        font-size: 5rem;
     }
 `;
 
@@ -80,13 +83,11 @@ const Description = styled.p`
     @media (min-width: 600px) {
         font-size: 1.375rem;
     }
-    @media (min-width: 768px) {
-    }
-    @media (min-width: 1024px) {
-    }
     @media (min-width: 1440px) {
+        font-size: 1.75rem;
     }
     @media (min-width: 2560px) {
+        font-size: 3rem;
     }
 `;
 

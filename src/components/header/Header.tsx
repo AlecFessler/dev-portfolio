@@ -10,6 +10,7 @@ const HeaderContainer = styled.header`
   justify-content: flex-end;
   align-items: center;
   padding: 1rem 2rem;
+  font-size: 1.2rem;
   position: fixed;
   top: 0;
   width: 100%;
@@ -18,23 +19,20 @@ const HeaderContainer = styled.header`
   @media (max-width: 375px) {
     justify-content: center;
   }
-  @media (max-width: 600px) {
+  @media (min-width: 600px) {
     font-size: 1.5rem;
   }
-  @media (min-width: 601px) {
-  }
-  @media (min-width: 768px) {
-  }
-  @media (min-width: 1024px) {
-  }
   @media (min-width: 1440px) {
+    font-size: 2rem;
   }
   @media (min-width: 2560px) {
+    font-size: 3.5rem;
+    padding: 2rem 4rem;
   }
 `;
 
 const ScrollNav = styled(ScrollLink)`
-  margin-left: 2rem;
+  margin-left: 1rem;
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
@@ -45,11 +43,17 @@ const ScrollNav = styled(ScrollLink)`
   }
   @media (max-width: 375px) {
     margin-left: 1.5rem;
+  }
+  @media (min-width: 375px) {
+    margin-left: 1.5rem;
+  }
+  @media (min-width: 600px) {
+    margin-left: 2rem;
   }
 `;
 
 const RouterNav = styled(Link)`
-  margin-left: 2rem;
+  margin-left: 1rem;
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
@@ -58,8 +62,11 @@ const RouterNav = styled(Link)`
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
   }
-  @media (max-width: 375px) {
+  @media (min-width: 375px) {
     margin-left: 1.5rem;
+  }
+  @media (min-width: 600px) {
+    margin-left: 2rem;
   }
 `;
 

@@ -17,9 +17,6 @@ const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    @media (min-width: 374px) {
-        width: 90%;
-    }
     @media (min-width: 375px) { // shrink to keep 2 line definition
         width: 65%;
     }
@@ -34,9 +31,6 @@ const TextContainer = styled.div`
     }
     @media (min-width: 1440px) {
         width: 40%;
-    }
-    @media (min-width: 2560px) {
-        width: 30%;
     }
 `;
 
@@ -61,7 +55,7 @@ const GreetingText = styled.h1`
         font-size: 5rem;
     }
     @media (min-width: 2560px) {
-        font-size: 8rem;
+        font-size: 10rem;
     }
 `;
 
@@ -89,7 +83,7 @@ const Definition = styled.h2`
         font-size: 2.5rem;
     }
     @media (min-width: 2560px) {
-        font-size: 3.5rem;
+        font-size: 5rem;
     }
 `;
 
