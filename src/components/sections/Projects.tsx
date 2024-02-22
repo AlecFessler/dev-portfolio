@@ -32,6 +32,11 @@ const ProjectsSection = styled.section`
     }
 `;
 
+const FlipManagerPlaceholder = styled.div`
+    width: 100%;
+    height: 100%;
+`;
+
 const Projects = () => {
     const projectCards = [
         {
@@ -84,7 +89,13 @@ const Projects = () => {
     ];
 
     // Zip the project cards and project modal content together
-    let FlipManagerProps = [];
+    let FlipManagerProps: {
+        ProjectCard: React.ComponentType<any>;
+        ProjectCardProps: any;
+        ProjectModal: React.ComponentType<any>;
+        ProjectModalProps: any;
+    }[] = [];
+
     for (let i = 0; i < projectCards.length; i++) {
         FlipManagerProps.push({
             ProjectCard: ProjectCard,
@@ -94,18 +105,21 @@ const Projects = () => {
         });
     }
 
-
     return (
         <ProjectsSection id="Projects">
-            {FlipManagerProps.map((project, index) => (
-                <FlipManager
-                    key={index}
-                    ProjectCard={ProjectCard}
-                    ProjectCardProps={project.ProjectCardProps}
-                    ProjectModal={ProjectModal}
-                    ProjectModalProps={project.ProjectModalProps}
-                />
-            ))}
+            {FlipManagerProps.map((project, index) => {
+                return (
+                    <FlipManagerPlaceholder key={index}>
+                        <FlipManager
+                            key={index}
+                            ProjectCard={ProjectCard}
+                            ProjectCardProps={project.ProjectCardProps}
+                            ProjectModal={ProjectModal}
+                            ProjectModalProps={project.ProjectModalProps}
+                        />
+                    </FlipManagerPlaceholder>
+                );
+            })}
         </ProjectsSection>
     );
 };

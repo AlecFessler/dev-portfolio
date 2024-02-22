@@ -3,28 +3,20 @@ import styled, { css } from 'styled-components';
 
 const CarouselContainer = styled.div`
     height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border-radius: 10px;
-`;
+    justify-content: flex-end;
 
-const CarouselContent = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: ${({ theme }) => theme.colors.secondary};
-    height: 90%;
-    width: 100%;
-    border-radius: 10px;
+    // add breakpoint at 1192px to swap to vw instead of vh
 `;
 
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10%;
+    padding: 10px;
+    height: min-content;
+    // figure out what to do with the breakpoint ?
 `;
 
 const CarouselButton = styled.button`
@@ -85,10 +77,9 @@ const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNod
 
     return (
         <CarouselContainer>
-            <CarouselContent>
-                {currentSlide}
-            </CarouselContent>
+            {currentSlide}
             <ButtonContainer>
+                {/* REPLACE THESE WITH IMAGES FOR NICE BUTTONS */}
                 <CarouselButton onClick={prevSlide}>&lt;</CarouselButton>
                 <DotsContainer>
                     {content.map((_, index) => (

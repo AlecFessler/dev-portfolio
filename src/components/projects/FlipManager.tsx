@@ -46,7 +46,6 @@ const FlipManagerContainer = styled.div`
     perspective: 1000px;
     max-width: 40rem;
     transform-style: preserve-3d;
-    transform-origin: center;
     transition: var(--transition, 0);
     transform: var(--transform, none);
     z-index: var(--zIndex, 0);
@@ -67,15 +66,18 @@ const FlipManagerContainer = styled.div`
 const ModalInverseScale = styled.div`
     position: absolute;
     backface-visibility: hidden;
-    height: 80vh;
-    width: 90vw;
-    aspect-ratio: 16 / 10;
-    transform-origin: center;
+    padding: 43.2px 43.2px 0 43.2px;
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: ${({ theme }) => theme.colors.secondary};
+    border-radius: 10px;
+
+    // add breakpoint at width 1192px to swap to vw instead of vh
 `;
+
+function headerHeight() {
+    const header = document.querySelector('header');
+    return header ? header.clientHeight : 0;
+}
 
 function computeScalingFactors(
     cardDimensions: ElementDimensions, 
@@ -94,7 +96,7 @@ function computeTranslationValues(windowDimensions: WindowDimensions,
     const {relativeCenterX: cardCenterX, relativeCenterY: cardCenterY} = cardDimensions;
     const [scaleX, scaleY] = computeScalingFactors(cardDimensions, modalDimensions);
     const translateX = ((windowCenterX - cardCenterX) / scaleX) * -1; // invert the X translation to account for 180 degree Y rotation
-    const translateY = (windowCenterY - cardCenterY) / scaleY;
+    const translateY = ((windowCenterY - cardCenterY) / scaleY) + headerHeight() / 2;
     return [translateX, translateY];
 }
 
@@ -166,7 +168,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     ProjectCard, 
     ProjectCardProps, 
     ProjectModal, 
-    ProjectModalProps 
+    ProjectModalProps,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const modalContainerRef = useRef<HTMLDivElement>(null);
@@ -198,10 +200,12 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     []);
 
     const handleScroll = useCallback(() => {
+        requestAnimationFrame(() => {
             windowDimensionsRef.current = getWindowDimensions();
             if (currentStateRef.current !== 'flippingToBack' && currentStateRef.current != 'flipped') return;
             const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current, modalDimensionsRef.current);
             setFlipAnimationTransformVars(containerRef, null, null, null, translateY);
+        });
     }, []);
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
