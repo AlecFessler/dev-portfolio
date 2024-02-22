@@ -304,7 +304,11 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 <ProjectModal content={ProjectModalProps} closeModal={onClick} />
             </ModalInverseScale>
         </FlipManagerContainer>
-        <ModalBackgroundShader visible={state.value === 'flippingToBack' || state.value === 'flipped'} />
+        <ModalBackgroundShader visible={() => {
+            if (state.value === 'unflipped') { return '' }
+            else if (state.value === 'flippingToFront') { return 'animateOpacityOut' }
+            else { return 'animateOpacity' }
+        }} />
         </>
     );
 }

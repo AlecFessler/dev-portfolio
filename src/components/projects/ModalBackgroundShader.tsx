@@ -25,9 +25,9 @@ const BackgroundShader = styled.div`
     }
 `;
 
-const ModalBackgroundShader = ({ visible }: { visible: boolean }) => {
+const ModalBackgroundShader = ({ visible }: { visible: () => string }) => {
     return (
-        <BackgroundShader className={visible ? 'animateOpacity' : 'animateOpacityOut'} />
+        <BackgroundShader className={visible()} />
     );
 };
 
