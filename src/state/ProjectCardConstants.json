@@ -42,7 +42,7 @@
             "translateX": null,
             "translateY": null,
             "transition": 1.0,
-            "zIndex": 1
+            "zIndex": 2
         },
         "flipped": {
             "rotateX": 0,
@@ -52,7 +52,7 @@
             "translateX": null,
             "translateY": null,
             "transition": 0,
-            "zIndex": 1
+            "zIndex": 2
         },
         "flippingToFront": {
             "rotateX": 0,
@@ -62,7 +62,7 @@
             "translateX": 0,
             "translateY": 0,
             "transition": 1.0,
-            "zIndex": 1
+            "zIndex": 2
         }
     }
 }

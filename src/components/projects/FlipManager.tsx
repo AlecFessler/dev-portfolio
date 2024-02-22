@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useActor } from '@xstate/react';
 import { throttle } from 'lodash';
 
+import ModalBackgroundShader from './ModalBackgroundShader';
 import flipMachine from '../../state/FlipManagerMachine';
 import ProjectCardConstants from '../../state/ProjectCardConstants.json'
 
@@ -291,6 +292,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     }, []);
 
     return (
+        <>
         <FlipManagerContainer
             ref={containerRef}
             className={animationClass}
@@ -302,6 +304,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 <ProjectModal content={ProjectModalProps} closeModal={onClick} />
             </ModalInverseScale>
         </FlipManagerContainer>
+        <ModalBackgroundShader visible={state.value === 'flippingToBack' || state.value === 'flipped'} />
+        </>
     );
 }
 
