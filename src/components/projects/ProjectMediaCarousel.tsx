@@ -16,6 +16,7 @@ const CarouselContent = styled.div`
     align-items: center;
     background: ${({ theme }) => theme.colors.secondary};
     height: 90%;
+    width: 100%;
     border-radius: 10px;
 `;
 
@@ -31,7 +32,17 @@ const CarouselButton = styled.button`
     border: none;
     cursor: pointer;
     font-size: 2rem;
-    margin: 0 10px;
+    margin: 0 15px;
+    padding: 0;
+    color: ${({ theme }) => theme.colors.text};
+`;
+
+const CloseModalButton = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 0;
     color: ${({ theme }) => theme.colors.text};
 `;
 
@@ -60,7 +71,7 @@ ${({ $isActive }) =>
     `}
 `;
 
-const ProjectMediaCarousel = ({ content }: { content: React.ReactNode[] }) => {
+const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {
     const [slideIndex, setSlideIndex] = useState(0);
     const currentSlide = content[slideIndex];
     
@@ -85,6 +96,7 @@ const ProjectMediaCarousel = ({ content }: { content: React.ReactNode[] }) => {
                     ))}
                 </DotsContainer>
                 <CarouselButton onClick={nextSlide}>&gt;</CarouselButton>
+                <CloseModalButton onClick={closeModal}>X</CloseModalButton>
             </ButtonContainer>
         </CarouselContainer>
     );

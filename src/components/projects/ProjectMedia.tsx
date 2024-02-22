@@ -16,24 +16,28 @@ height. The parent containers 16:10 aspect ratio is crucial to ensure the media 
 
 const MediaContent = styled.div`
     display: flex;
-    height: 90%;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
     max-width: 100%;
     aspect-ratio: 16 / 10;
-    flex-direction: column;
     background: ${({ theme }) => theme.colors.secondary};
     border-radius: 10px;
 `;
 
-const MediaImageContainer = styled.div`
+const MediaContainer = styled.div`
     position: relative;
     max-width: 100%;
+    height: 90%;
     border-radius: 10px 10px 0 0;
     aspect-ratio: 16 / 9;
 `;
 
 const MediaCaption = styled.p`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.5rem;
-    text-align: center;
     background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 1rem;
@@ -51,28 +55,41 @@ interface ProjectMediaProps {
 }
 
 const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) => {
-    const mediaImageContainerRef = useRef<HTMLDivElement>(null);
-    const [imageContainerDimensions, setImageContainerDimensions] = useState({ width: 0, height: 0 });
+    const mediaContainerRef = useRef<HTMLDivElement>(null);
+    const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+    const [rendered, setRendered] = useState(false);
 
     useEffect(() => {
-        if (mediaImageContainerRef.current) {
-            setImageContainerDimensions({
-                width: mediaImageContainerRef.current.offsetWidth,
-                height: mediaImageContainerRef.current.offsetHeight,
-            });
-            //console.log(mediaImageContainerRef.current.offsetWidth, mediaImageContainerRef.current.offsetHeight);
-        }
+        const handleResize = () => {
+            if (mediaContainerRef.current) {
+                setContainerDimensions({
+                    width: mediaContainerRef.current.offsetWidth,
+                    height: mediaContainerRef.current.offsetHeight,
+                });
+            }
+        };
+        handleResize(); // initialize dimensions
+        setRendered(true);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     return (
         <MediaContent>
             {image ? (
-                <MediaImageContainer ref={mediaImageContainerRef}>
-                    <Image src={image} alt={caption} {...imageContainerDimensions} style={{ borderRadius: '10px 10px 0 0' }} />
-                </MediaImageContainer>
+                <MediaContainer ref={mediaContainerRef}>
+                    {mediaContainerRef.current && <Image 
+                        src={image}
+                        alt={caption} 
+                        width={containerDimensions.width}
+                        height={containerDimensions.height}
+                        style={{ borderRadius: '10px 10px 0 0' }} />}
+                </MediaContainer>
 
             ) : (
-                <Video src={video || ''} />
+                <MediaContainer ref={mediaContainerRef}>
+                    <Video src={video || ''} {...containerDimensions} />
+                </MediaContainer>
             )}
             <MediaCaption>{caption}</MediaCaption>
         </MediaContent>
@@ -80,3 +97,10 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) =>
 };
 
 export default ProjectMedia;
+
+/*
+TODO: 
+- make mobile responsive
+- add nice images for buttons
+- adjust the way that dimensions are calculated to implicitly use the aspect ratio and apply correct padding
+*/

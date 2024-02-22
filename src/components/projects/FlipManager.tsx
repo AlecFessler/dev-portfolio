@@ -69,8 +69,6 @@ const ModalInverseScale = styled.div`
     backface-visibility: hidden;
     height: 80vh;
     width: 90vw;
-    max-height: 80vh;
-    max-width: 90vw;
     aspect-ratio: 16 / 10;
     transform-origin: center;
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
@@ -305,6 +303,9 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             </ModalInverseScale>
         </FlipManagerContainer>
         <ModalBackgroundShader visible={() => {
+            // this works because the component rerenders on the flip animation due to setting the
+            // animation class, thus the lambda passed to this function gets a new reference to the
+            // state value to trigger a rerender of the background shader with the correct class
             if (state.value === 'unflipped') { return '' }
             else if (state.value === 'flippingToFront') { return 'animateOpacityOut' }
             else { return 'animateOpacity' }
