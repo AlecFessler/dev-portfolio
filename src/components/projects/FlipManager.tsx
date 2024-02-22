@@ -12,7 +12,7 @@ const RESIZE_THROTTLE = 50;
 
 const { TILT_INTENSITY, FLIP_DURATION } = ProjectCardConstants;
 const { lowered, raised } = ProjectCardConstants.TiltAnimationStates;
-const { flippingToBack, flipped, flippingToFront } = ProjectCardConstants.FlipAnimationStates;
+const { flippingToBack, flippingToFront } = ProjectCardConstants.FlipAnimationStates;
 
 interface FlipManagerProps {
     ProjectCard: React.FC<any>;
@@ -38,8 +38,7 @@ interface ElementDimensions {
 }
 
 const FlipManagerContainer = styled.div`
-    position: var(--position, relative);
-    top: var(--top, 0);
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -201,7 +200,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
 
     const handleScroll = useCallback(() => {
             windowDimensionsRef.current = getWindowDimensions();
-            if (currentStateRef.current !== 'flippingToBack') return;
+            if (currentStateRef.current !== 'flippingToBack' && currentStateRef.current != 'flipped') return;
             const [translateX, translateY] = computeTranslationValues(windowDimensionsRef.current, cardDimensionsRef.current, modalDimensionsRef.current);
             setFlipAnimationTransformVars(containerRef, null, null, null, translateY);
     }, []);
@@ -244,13 +243,6 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                     setContainerStyleVars(containerRef, 0, zIndex, '');
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
                     setAnimationClass(computeFlipDirection(windowDimensionsRef.current, cardDimensionsRef.current));
-                });
-            } else if (state.value === 'flipped') {
-                requestAnimationFrame(() => {
-                    if (!containerRef.current) return;
-                    const { translateY, transition, zIndex } = flipped;
-                    setContainerStyleVars(containerRef, transition, zIndex, '');
-                    setFlipAnimationTransformVars(containerRef, null, null, null, translateY);
                 });
             } else if (state.value === 'flippingToFront') {
                 windowDimensionsRef.current = getWindowDimensions();
