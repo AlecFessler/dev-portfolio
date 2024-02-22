@@ -17,20 +17,11 @@ const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    @media (min-width: 375px) { // shrink to keep 2 line definition
-        width: 65%;
+    @media (min-width: 320px) {
+        clamp(1rem, 5vw, 2rem);
     }
-    @media (min-width: 400px) {
-        width: 70%;
-    }
-    @media (min-width: 768px) {
-        width: 55%;
-    }
-    @media (min-width: 1200px) {
-        width: 45%;
-    }
-    @media (min-width: 1440px) {
-        width: 40%;
+    @media (min-width: 375px) {
+        clamp(2rem, 5vw, 2.5rem);
     }
 `;
 
@@ -39,24 +30,6 @@ const GreetingText = styled.h1`
     font-size: 2rem;
     margin-bottom: 2rem;
     font-weight: 400;
-    @media (min-width: 400px) {
-        font-size: 2.5rem;
-    }
-    @media (min-width: 583px) { // to stick to 2 lines of text
-        font-size: 3rem;
-    }
-    @media (min-width: 768px) {
-        font-size: 4rem;
-    }
-    @media (min-width: 850px) {
-        font-size: 4.5rem;
-    }
-    @media (min-width: 1024px) {
-        font-size: 5rem;
-    }
-    @media (min-width: 2560px) {
-        font-size: 10rem;
-    }
 `;
 
 const Highlight = styled.span`
@@ -70,21 +43,6 @@ const Definition = styled.h2`
     font-size: 1.25rem;
     max-width: 100%;
     font-weight: 400;
-    @media (min-width: 400px) {
-        font-size: 1.5rem;
-    }
-    @media (min-width: 583px) { // to resize with the h1
-        font-size: 1.75rem;
-    }
-    @media (min-width: 768px) {
-        font-size: 2rem;
-    }
-    @media (min-width: 1024px) {
-        font-size: 2.5rem;
-    }
-    @media (min-width: 2560px) {
-        font-size: 5rem;
-    }
 `;
 
 const Hello = () => {

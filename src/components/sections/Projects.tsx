@@ -27,31 +27,8 @@ const ProjectsSection = styled.section`
     padding: 0 2rem;
 
     @media (min-width: 768px) {
-        gap: 4rem;
-        padding: 0 4rem;
         grid-template-columns: repeat(2, 1fr);
     }
-    @media (min-width: 850px) {
-        gap: 6rem;
-        padding: 0 6rem;
-    }
-    @media (min-width: 900px) {
-        gap: 8rem;
-        padding: 0 8rem;
-    }
-    @media (min-width: 1024px) {
-        gap: 9rem;
-        padding: 0 9rem;
-    }
-    @media (min-width: 1100px) {
-        gap: 11rem;
-        padding: 0 11rem;
-    }
-`;
-
-const FlipManagerPlaceholder = styled.div`
-    width: 100%;
-    height: 100%;
 `;
 
 const Projects = () => {

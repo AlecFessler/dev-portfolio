@@ -144,7 +144,6 @@ function getTransformString(rotateX: number, rotateY: number, scaleX: number, sc
 function computeScreenSide(windowDimensions: WindowDimensions, cardDimensions: ElementDimensions) {
     const {centerX: windowCenterX} = windowDimensions;
     const {relativeCenterX: cardCenterX} = cardDimensions;
-    console.log(cardCenterX, windowCenterX, cardCenterX < windowCenterX ? 'left' : 'right');
     return cardCenterX < windowCenterX ? 'left' : 'right';
 }
 
@@ -283,11 +282,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         modalDimensionsRef.current = getModalDimensions(modalContainerRef);
         const [scaleX, scaleY] = computeScalingFactors(cardDimensionsRef.current, modalDimensionsRef.current);
         setModalScale(modalContainerRef, 1 / scaleX, 1 / scaleY);
-
-        // set screen side
-        console.log(cardDimensionsRef.current, windowDimensionsRef.current);
         setScreenSide(computeScreenSide(windowDimensionsRef.current, cardDimensionsRef.current));
-        console.log(screenSide);
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('scroll', handleScroll);
