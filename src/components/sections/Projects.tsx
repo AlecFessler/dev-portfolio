@@ -32,11 +32,6 @@ const ProjectsSection = styled.section`
     }
 `;
 
-const FlipManagerPlaceholder = styled.div`
-    height: 100%;
-    width: 100%;
-`;
-
 const Projects = () => {
     const projectCards = [
         {
@@ -103,14 +98,13 @@ const Projects = () => {
     return (
         <ProjectsSection id="Projects">
             {FlipManagerProps.map((project, index) => (
-                <FlipManagerPlaceholder key={index}>
-                    <FlipManager
-                        ProjectCard={ProjectCard}
-                        ProjectCardProps={project.ProjectCardProps}
-                        ProjectModal={ProjectModal}
-                        ProjectModalProps={project.ProjectModalProps}
+                <FlipManager
+                    key={index}
+                    ProjectCard={ProjectCard}
+                    ProjectCardProps={project.ProjectCardProps}
+                    ProjectModal={ProjectModal}
+                    ProjectModalProps={project.ProjectModalProps}
                 />
-                </FlipManagerPlaceholder>
             ))}
         </ProjectsSection>
     );
