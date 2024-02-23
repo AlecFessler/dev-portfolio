@@ -10,7 +10,7 @@ const MediaContainer = styled.div`
     aspect-ratio: 16 / 9;
 
     @media (min-width: 768px) {
-        width: calc(100vw - 19rem);
+        width: calc(100vw - 10.5rem);
     }
 `;
 
@@ -30,10 +30,6 @@ const MediaCaption = styled.p`
     @media (min-width: 425px) {
         font-size: ${({ theme }) => theme.fontSizes.small};
         padding: 10px;
-    }
-
-    @media (min-width: 768px) {
-        border-radius: 0 0 10px 10px;
     }
 `;
 

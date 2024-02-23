@@ -36,7 +36,11 @@ const Title = styled.h3`
 
 const Description = styled.p`
     text-align: left;
-    font-size: ${({ theme }) => theme.fontSizes.small};
+    font-size: ${({ theme }) => theme.fontSizes.xsmall};
+
+    @media (min-width: 375px) {
+        font-size: ${({ theme }) => theme.fontSizes.small};
+    }
 `;
 
 interface ProjectCardProps {

@@ -18,10 +18,12 @@ const HeaderContainer = styled.header`
   @media (min-width: 425px) {
     padding: 1rem 4rem 1rem 0;
   }
-
   @media (min-width: 768px) {
     padding: 1rem 5rem 1rem 0;
     font-size: ${({ theme }) => theme.fontSizes.regular};
+  }
+  @media (min-width: 1024px) {
+    padding: 1rem 10rem 1rem 0;
   }
 `;
 
@@ -38,6 +40,9 @@ const ScrollNav = styled(ScrollLink)`
   @media (min-width: 768px) {
     margin-left: 1.5rem;
   }
+  @media (min-width: 1024px) {
+    margin-left: 2rem;
+  }
 `;
 
 const RouterNav = styled(Link)`
@@ -52,6 +57,9 @@ const RouterNav = styled(Link)`
 
   @media (min-width: 768px) {
     margin-left: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    margin-left: 2rem;
   }
 `;
 

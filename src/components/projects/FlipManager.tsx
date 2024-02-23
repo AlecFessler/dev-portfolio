@@ -57,32 +57,14 @@ const FlipManagerContainer = styled.div<{ $side: 'left' | 'right' }>`
     &.flipRightBack {
         animation: flipRightBack ${FLIP_DURATION}s forwards;
     }
-    
-    @media (min-widt: 768px) {
-        justify-content: ${({ $side }) => $side === 'left' ? 'flex-end' : 'flex-start'};
-    }
 `;
 
 const ModalInverseScale = styled.div`
     position: absolute;
     backface-visibility: hidden;
-    padding: 43.2px 43.2px 0 43.2px;
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
     background: ${({ theme }) => theme.colors.secondary};
     border-radius: 10px;
-    @media (max-width: 600px) {
-        padding: 0;
-    }
-    @media (min-width: 601px) {
-    }
-    @media (min-width: 768px) {
-    }
-    @media (min-width: 1024px) {
-    }
-    @media (min-width: 1440px) {
-    }
-    @media (min-width: 2560px) {
-    }
 `;
 
 function headerHeight() {

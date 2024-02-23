@@ -14,10 +14,12 @@ const StyledSection = styled.section`
     @media (min-width: 425px) {
         padding: 0 4rem;
     }
-
     @media (min-width: 768px) {
         padding: 0;
-        width: 70%;
+        width: 59%;
+    }
+    @media (min-width: 1024px) {
+        width: 44%;
     }
 `;
 
@@ -36,7 +38,6 @@ const GreetingText = styled.h1`
     @media (min-width: 425px) {
         font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
     }
-
     @media (min-width: 768px) {
         font-size: ${({ theme }) => theme.fontSizes.huge};
     }

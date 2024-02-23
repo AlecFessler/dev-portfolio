@@ -30,11 +30,14 @@ const ProjectsSection = styled.section`
         padding: 0 4rem;
         gap: 4rem;
     }
-
     @media (min-width: 768px) {
         padding: 0 5rem;
         gap: 5rem;
         grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 1024px) {
+        padding: 0 10rem;
+        gap: 10rem;
     }
 `;
 
