@@ -32,6 +32,8 @@ const ProjectsSection = styled.section`
     }
 
     @media (min-width: 768px) {
+        padding: 0 5rem;
+        gap: 5rem;
         grid-template-columns: repeat(2, 1fr);
     }
 `;

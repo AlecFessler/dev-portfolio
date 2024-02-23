@@ -14,6 +14,11 @@ const StyledSection = styled.section`
     @media (min-width: 425px) {
         padding: 0 4rem;
     }
+
+    @media (min-width: 768px) {
+        padding: 0;
+        width: 70%;
+    }
 `;
 
 const TextContainer = styled.div`
@@ -31,6 +36,10 @@ const GreetingText = styled.h1`
     @media (min-width: 425px) {
         font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
     }
+
+    @media (min-width: 768px) {
+        font-size: ${({ theme }) => theme.fontSizes.huge};
+    }
 `;
 
 const Highlight = styled.span`
@@ -44,6 +53,10 @@ const Definition = styled.h2`
     max-width: 100%;
     font-weight: 400;
     font-size: ${({ theme }) => theme.fontSizes.regular};
+
+    @media (min-width: 768px) {
+        font-size: ${({ theme }) => theme.fontSizes.large};
+    }
 `;
 
 const Hello = () => {

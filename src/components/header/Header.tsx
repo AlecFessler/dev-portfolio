@@ -14,10 +14,19 @@ const HeaderContainer = styled.header`
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 1000;
   font-size: ${({ theme }) => theme.fontSizes.medium};
+
+  @media (min-width: 425px) {
+    padding: 1rem 4rem 1rem 0;
+  }
+
+  @media (min-width: 768px) {
+    padding: 1rem 5rem 1rem 0;
+    font-size: ${({ theme }) => theme.fontSizes.regular};
+  }
 `;
 
 const ScrollNav = styled(ScrollLink)`
-  margin-left: clamp(1rem, 1.5vw, 3rem);
+  margin-left: 1rem;
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
@@ -25,16 +34,24 @@ const ScrollNav = styled(ScrollLink)`
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
   }
+
+  @media (min-width: 768px) {
+    margin-left: 1.5rem;
+  }
 `;
 
 const RouterNav = styled(Link)`
-  margin-left: clamp(1rem, 1.5vw, 3rem);
+  margin-left: 1rem;
   cursor: pointer;
   transition: color 0.2s;
   color: ${({ theme }) => theme.colors.text};
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
+  }
+
+  @media (min-width: 768px) {
+    margin-left: 1.5rem;
   }
 `;
 
