@@ -71,7 +71,6 @@ const ModalInverseScale = styled.div`
     position: absolute;
     backface-visibility: hidden;
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
-    background: ${({ theme }) => theme.colors.secondary};
     border-radius: 10px;
 `;
 

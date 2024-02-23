@@ -5,6 +5,7 @@ const theme = {
         primary: '#398ad7',   // Primary color
         secondary: '#404A60', // Secondary color
         background: '#23272a', // Background color
+        shadedContainer: '0, 0, 0, 0.25', // Shaded container color
         glow: '109,186,217', // Glow color
         text: '#ffffff', // Primary text
         secondaryText: '#bbbbbb', // Secondary text

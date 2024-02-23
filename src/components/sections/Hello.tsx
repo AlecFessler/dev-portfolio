@@ -71,13 +71,13 @@ const Highlight = styled.span`
 
     @keyframes glow {
         0% {
-            text-shadow: 0 0 12.5px rgba(${({ theme }) => theme.colors.glow}, 0.5);
+            text-shadow: 0 0 12.5px rgba(${({ theme }) => theme.colors.glow}, 0.4);
         }
         50% {
-            text-shadow: 0 0 20px rgba(${({ theme }) => theme.colors.glow}, 0.75);
+            text-shadow: 0 0 20px rgba(${({ theme }) => theme.colors.glow}, 0.8);
         }
         100% {
-            text-shadow: 0 0 12.5px rgba(${({ theme }) => theme.colors.glow}, 0.5);
+            text-shadow: 0 0 12.5px rgba(${({ theme }) => theme.colors.glow}, 0.4);
         }
     }
 

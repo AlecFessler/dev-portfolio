@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 const CarouselContainer = styled.div`
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    transform-style: preserve-3d;
+`;
+
+const ContentContainer = styled.div`
+    border-radius: 10px;
+    border: 2px solid ${({ theme }) => theme.colors.border};
 `;
 
 const ButtonContainer = styled.div`
@@ -142,7 +147,9 @@ const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNod
 
     return (
         <CarouselContainer>
-            {currentSlide}
+                <ContentContainer>
+                    {currentSlide}
+                </ContentContainer>
             <ButtonContainer>
                 {/* REPLACE THESE WITH IMAGES FOR NICE BUTTONS */}
                 <CarouselButton onClick={prevSlide}>&lt;</CarouselButton>

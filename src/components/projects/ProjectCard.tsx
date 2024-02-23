@@ -12,15 +12,15 @@ const ProjectCardContainer = styled.div`
     padding: 2rem;
     align-self: stretch;
     border-radius: 10px;
-    border: 0.5px solid ${({ theme }) => theme.colors.border};
+    border: 2px solid ${({ theme }) => theme.colors.border};
     backface-visibility: hidden;
     cursor: pointer;
     transform-style: preserve-3d;
     transition: var(--glow-transition);
-    box-shadow: 0 var(--box-shadow-bottom) 30px rgba(${({ theme }) => theme.colors.glow}, 0.1), 
-                var(--box-shadow-left) 0 30px rgba(${({ theme }) => theme.colors.glow}, 0.1), 
-                var(--box-shadow-right) 0 30px rgba(${({ theme }) => theme.colors.glow}, 0.1), 
-                0 var(--box-shadow-top) 30px rgba(${({ theme }) => theme.colors.glow}, 0.1);
+    box-shadow: 0 var(--box-shadow-bottom) 30px 5px rgba(${({ theme }) => theme.colors.glow}, 0.05), 
+                var(--box-shadow-left) 0 30px 5px rgba(${({ theme }) => theme.colors.glow}, 0.05), 
+                var(--box-shadow-right) 0 30px 5px rgba(${({ theme }) => theme.colors.glow}, 0.05), 
+                0 var(--box-shadow-top) 30px 5px rgba(${({ theme }) => theme.colors.glow}, 0.05);
 
     @media (min-width: 1920px) {
         padding: 3rem;
@@ -32,7 +32,6 @@ const ProjectCardContainer = styled.div`
 
 const ImageWrapper = styled(Image)`
     border-radius: 10px;
-    border: 0.5px solid ${({ theme }) => theme.colors.border};
     margin-bottom: 2rem;
     width: 100%;
     height: auto;
@@ -44,15 +43,15 @@ const ImageWrapper = styled(Image)`
     
 
     @media (min-width: 1920px) {
-        margin-bottom: 1.5rem;
+        margin-bottom: 3rem;
     }
     @media (min-width: 2560px) {
-        margin-bottom: 2rem;
+        margin-bottom: 4rem;
     }
 `;
 
 const TextBackground = styled.div`
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(${({ theme }) => theme.colors.shadedContainer});
     padding: 1rem;
     border-radius: 10px;
     backface-visibility: hidden;

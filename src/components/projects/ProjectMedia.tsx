@@ -8,8 +8,11 @@ import Video from './Video';
 
 const MediaContainer = styled.div`
     position: relative;
+    display: flex;
     width: calc(100vw - 4rem);
     aspect-ratio: 16 / 9;
+    transform-style: preserve-3d;
+    border-radius: 10px;
 
     @media (min-width: 768px) {
         width: calc(100vw - 10.5rem);
@@ -28,13 +31,28 @@ const MediaContainer = styled.div`
     }
 `;
 
+const InsetShadowLayer = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border-radius: 10px 10px 0 0;
+`;
+
+const MediaCaptionContainer = styled.div`
+    background-color: ${({ theme }) => theme.colors.secondary};
+    border-radius: 0 0 10px 10px;
+`;
+
 const MediaCaption = styled.p`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(${({ theme }) => theme.colors.shadedContainer});
     color: ${({ theme }) => theme.colors.text};
     font-size: ${({ theme }) => theme.fontSizes.xsmall};
+    font-family: ${({ theme }) => theme.fonts.body};
     padding: 5px;
 
     @media (min-width: 375px) {
@@ -72,19 +90,23 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) =>
         <>
             {image ? (
                 <MediaContainer>
+                    <InsetShadowLayer />
                     <Image 
                         src={image}
                         alt={caption}
-                        fill={true}
-                        style={{ borderRadius: '10px 10px 0 0' }} />
+                        fill={true} 
+                        style={{borderRadius: '10px 10px 0 0'}} />
                 </MediaContainer>
 
             ) : (
                 <MediaContainer>
+                    <InsetShadowLayer />
                     <Video src={video || ''} />
                 </MediaContainer>
             )}
-            <MediaCaption>{caption}</MediaCaption>
+            <MediaCaptionContainer>
+                <MediaCaption>{caption}</MediaCaption>
+            </MediaCaptionContainer>
         </>
     );
 };
