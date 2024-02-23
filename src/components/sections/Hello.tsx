@@ -1,3 +1,5 @@
+// src/components/sections/Hello.tsx
+
 import { styled } from 'styled-components';
 
 const StyledSection = styled.section`

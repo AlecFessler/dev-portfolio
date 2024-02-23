@@ -1,4 +1,5 @@
 // src/styles/theme.ts
+
 const theme = {
     colors: {
         primary: '#398ad7',   // Primary color

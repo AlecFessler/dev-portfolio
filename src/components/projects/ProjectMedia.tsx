@@ -1,3 +1,5 @@
+// src/components/projects/ProjectMedia.tsx
+
 import React from 'react';
 import styled from 'styled-components';
 import Image, { StaticImageData } from 'next/image';
