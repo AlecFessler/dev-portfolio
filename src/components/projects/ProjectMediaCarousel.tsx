@@ -26,6 +26,9 @@ const ButtonContainer = styled.div`
     @media (min-width: 1920px) {
         padding: 17.5px;
     }
+    @media (min-width: 2560px) {
+        padding: 20px;
+    }
 `;
 
 const CarouselButton = styled.button`
@@ -50,6 +53,10 @@ const CarouselButton = styled.button`
         margin: 0 20px;
         font-size: ${({ theme }) => theme.fontSizes.xxlarge};
     }
+    @media (min-width: 2560px) {
+        margin: 0 25px;
+        font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
+    }
 `;
 
 const CloseModalButton = styled.button`
@@ -71,6 +78,9 @@ const CloseModalButton = styled.button`
     }
     @media (min-width: 1920px) {
         font-size: ${({ theme }) => theme.fontSizes.xxlarge};
+    }
+    @media (min-width: 2560px) {
+        font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
     }
 `;
 

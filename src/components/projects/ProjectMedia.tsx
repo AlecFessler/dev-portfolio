@@ -21,6 +21,9 @@ const MediaContainer = styled.div`
     @media (min-width: 1920px) {
         width: calc(100vw - 70.5rem);
     }
+    @media (min-width: 2560px) {
+        width: calc(100vw - 79.5rem);
+    }
 `;
 
 const MediaCaption = styled.p`
@@ -46,6 +49,10 @@ const MediaCaption = styled.p`
     @media (min-width: 1920px) {
         font-size: ${({ theme }) => theme.fontSizes.xlarge};
         padding: 20px;
+    }
+    @media (min-width: 2560px) {
+        font-size: ${({ theme }) => theme.fontSizes.xxlarge};
+        padding: 25px;
     }
 `;
 

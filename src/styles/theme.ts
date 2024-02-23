@@ -26,6 +26,7 @@ const theme = {
         huge: '4.8rem', // 48px, for major headings or key page elements
         xhuge: '6.0rem', // 60px, for very large headings, like on landing pages
         xxhuge: '7.2rem', // 72px, ultra-large text, possibly for hero sections
+        xxxhuge: '9rem', // 84px, for the largest text on the largest screens
     },
 };
   

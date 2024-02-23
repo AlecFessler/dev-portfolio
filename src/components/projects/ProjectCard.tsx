@@ -73,7 +73,7 @@ const Description = styled.p`
     }
     @media (min-width: 2560px) {
         font-size: ${({ theme }) => theme.fontSizes.xxlarge};
-        line-height: 1.5;
+        line-height: 1.6;
     }
 `;
 
