@@ -22,6 +22,11 @@ const MediaCaption = styled.p`
     @media (min-width: 375px) {
         padding: 7.5px;
     }
+
+    @media (min-width: 425px) {
+        font-size: ${({ theme }) => theme.fontSizes.small};
+        padding: 10px;
+    }
 `;
 
 interface ProjectMediaProps {

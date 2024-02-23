@@ -38,8 +38,8 @@ interface ElementDimensions {
 const FlipManagerContainer = styled.div<{ $side: 'left' | 'right' }>`
     position: relative;
     display: flex;
-    justify-content: ${({ $side }) => $side === 'left' ? 'flex-end' : 'flex-start'};
     align-items: center;
+    justify-content: center;
     perspective: 1000px;
     transform-style: preserve-3d;
     transition: var(--transition, 0);
@@ -56,6 +56,10 @@ const FlipManagerContainer = styled.div<{ $side: 'left' | 'right' }>`
     }
     &.flipRightBack {
         animation: flipRightBack ${FLIP_DURATION}s forwards;
+    }
+    
+    @media (min-widt: 768px) {
+        justify-content: ${({ $side }) => $side === 'left' ? 'flex-end' : 'flex-start'};
     }
 `;
 

@@ -26,6 +26,11 @@ const ProjectsSection = styled.section`
     color: ${({ theme }) => theme.colors.text};
     padding: 0 2rem;
 
+    @media (min-width: 425px) {
+        padding: 0 4rem;
+        gap: 4rem;
+    }
+
     @media (min-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
     }

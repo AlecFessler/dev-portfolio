@@ -10,6 +10,10 @@ const StyledSection = styled.section`
     color: ${({ theme }) => theme.colors.text};
     text-align: left;
     padding: 0 2rem;
+
+    @media (min-width: 425px) {
+        padding: 0 4rem;
+    }
 `;
 
 const TextContainer = styled.div`
@@ -23,6 +27,10 @@ const GreetingText = styled.h1`
     margin-bottom: 2rem;
     font-weight: 400;
     font-size: ${({ theme }) => theme.fontSizes.xxlarge};
+
+    @media (min-width: 425px) {
+        font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
+    }
 `;
 
 const Highlight = styled.span`

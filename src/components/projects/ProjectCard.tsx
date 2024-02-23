@@ -32,6 +32,10 @@ const Title = styled.h3`
     @media (min-width: 375px) {
         font-size: ${({ theme }) => theme.fontSizes.large};
     }
+
+    @media (min-width: 425px) {
+        font-size: ${({ theme }) => theme.fontSizes.xlarge};
+    }
 `;
 
 const Description = styled.p`
