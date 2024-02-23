@@ -17,7 +17,11 @@ const MediaCaption = styled.p`
     background: rgba(0, 0, 0, 0.5);
     color: ${({ theme }) => theme.colors.text};
     font-size: ${({ theme }) => theme.fontSizes.xsmall};
-    padding: 10px;
+    padding: 5px;
+
+    @media (min-width: 375px) {
+        padding: 7.5px;
+    }
 `;
 
 interface ProjectMediaProps {

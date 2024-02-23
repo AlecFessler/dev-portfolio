@@ -28,6 +28,10 @@ const Title = styled.h3`
     font-family: ${({ theme }) => theme.fonts.heading};
     font-size: ${({ theme }) => theme.fontSizes.regular};
     margin-bottom: 1rem;
+    
+    @media (min-width: 375px) {
+        font-size: ${({ theme }) => theme.fontSizes.large};
+    }
 `;
 
 const Description = styled.p`
