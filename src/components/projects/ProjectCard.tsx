@@ -13,6 +13,13 @@ const ProjectCardContainer = styled.div`
     backface-visibility: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+
+    @media (min-width: 1920px) {
+        padding: 3rem;
+    }
+    @media (min-width: 2560px) {
+        padding: 4rem;
+    }
 `;
 
 const ImageWrapper = styled(Image)`
@@ -20,6 +27,13 @@ const ImageWrapper = styled(Image)`
     margin-bottom: 1rem;
     width: 100%;
     height: auto;
+
+    @media (min-width: 1920px) {
+        margin-bottom: 1.5rem;
+    }
+    @media (min-width: 2560px) {
+        margin-bottom: 2rem;
+    }
 `;
 
 const Title = styled.h3`
@@ -34,6 +48,14 @@ const Title = styled.h3`
     @media (min-width: 1024px) {
         font-size: ${({ theme }) => theme.fontSizes.xlarge};
     }
+    @media (min-width: 1920px) {
+        font-size: ${({ theme }) => theme.fontSizes.xxlarge};
+        margin-bottom: 1.5rem;
+    }
+    @media (min-width: 2560px) {
+        font-size: ${({ theme }) => theme.fontSizes.huge};
+        margin-bottom: 2rem;
+    }
 `;
 
 const Description = styled.p`
@@ -45,6 +67,13 @@ const Description = styled.p`
     }
     @media (min-width: 1024px) {
         font-size: ${({ theme }) => theme.fontSizes.medium};
+    }
+    @media (min-width: 1920px) {
+        font-size: ${({ theme }) => theme.fontSizes.xlarge};
+    }
+    @media (min-width: 2560px) {
+        font-size: ${({ theme }) => theme.fontSizes.xxlarge};
+        line-height: 1.5;
     }
 `;
 
