@@ -12,6 +12,12 @@ const MediaContainer = styled.div`
     @media (min-width: 768px) {
         width: calc(100vw - 10.5rem);
     }
+    @media (min-width: 1024px) {
+        width: calc(100vw - 20.25rem);
+    }
+    @media (min-width: 1440px) {
+        width: calc(100vw - 60rem);
+    }
 `;
 
 const MediaCaption = styled.p`
@@ -26,10 +32,13 @@ const MediaCaption = styled.p`
     @media (min-width: 375px) {
         padding: 7.5px;
     }
-
     @media (min-width: 425px) {
         font-size: ${({ theme }) => theme.fontSizes.small};
         padding: 10px;
+    }
+    @media (min-width: 1440px) {
+        font-size: ${({ theme }) => theme.fontSizes.regular};
+        padding: 15px;
     }
 `;
 

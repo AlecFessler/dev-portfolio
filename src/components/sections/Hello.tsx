@@ -21,6 +21,9 @@ const StyledSection = styled.section`
     @media (min-width: 1024px) {
         width: 44%;
     }
+    @media (min-width: 1440px) {
+        width: 39%;
+    }
 `;
 
 const TextContainer = styled.div`
@@ -41,6 +44,9 @@ const GreetingText = styled.h1`
     @media (min-width: 768px) {
         font-size: ${({ theme }) => theme.fontSizes.huge};
     }
+    @media (min-width: 1440px) {
+        font-size: ${({ theme }) => theme.fontSizes.xhuge};
+    }
 `;
 
 const Highlight = styled.span`
@@ -57,6 +63,9 @@ const Definition = styled.h2`
 
     @media (min-width: 768px) {
         font-size: ${({ theme }) => theme.fontSizes.large};
+    }
+    @media (min-width: 1024px) {
+        font-size: ${({ theme }) => theme.fontSizes.xlarge};
     }
 `;
 

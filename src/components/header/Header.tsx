@@ -25,6 +25,9 @@ const HeaderContainer = styled.header`
   @media (min-width: 1024px) {
     padding: 1rem 10rem 1rem 0;
   }
+  @media (min-width: 1440px) {
+    padding: 1rem 30rem 1rem 0;
+  }
 `;
 
 const ScrollNav = styled(ScrollLink)`
@@ -43,6 +46,9 @@ const ScrollNav = styled(ScrollLink)`
   @media (min-width: 1024px) {
     margin-left: 2rem;
   }
+  @media (min-width: 1440px) {
+    margin-left: 2.5rem;
+  }
 `;
 
 const RouterNav = styled(Link)`
@@ -60,6 +66,9 @@ const RouterNav = styled(Link)`
   }
   @media (min-width: 1024px) {
     margin-left: 2rem;
+  }
+  @media (min-width: 1440px) {
+    margin-left: 2.5rem;
   }
 `;
 

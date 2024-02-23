@@ -39,6 +39,10 @@ const ProjectsSection = styled.section`
         padding: 0 10rem;
         gap: 10rem;
     }
+    @media (min-width: 1440px) {
+        padding: 0 30rem;
+        gap: 12.5rem;
+    }
 `;
 
 const Projects = () => {
@@ -61,7 +65,7 @@ const Projects = () => {
         {
             image: TypewriterImg,
             title: "Interactive Story Writer",
-            description: "Interactive Story Writer, a Python script I developed to solve a core problem in a group project for a class of mine: crafting a detailed, branching narrative for a text-based adventure game. Leveraging the OpenAI API, and using an innovative algorithm I devised, the script generates a rich, coherent narrative. The result? Our project had an impressive 2186 unique endings."
+            description: "Interactive Story Writer, a Python script I developed to solve a core problem in a group project for a college class of mine: crafting a detailed, branching narrative for a text-based adventure game. Leveraging the OpenAI API, and using an innovative algorithm I devised, the script generates a rich, coherent narrative. The result? Our project had an impressive 2186 unique endings."
         },
         {
             image: BedframeImg,

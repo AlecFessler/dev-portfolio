@@ -12,14 +12,16 @@ const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 2.5px;
     
     @media (min-width: 375px) {
+        padding: 5px;
+    }
+    @media (min-width: 425px) {
         padding: 7.5px;
     }
-
-    @media (min-width: 425px) {
-        padding: 10px;
+    @media (min-width: 1440px) {
+        padding: 12.5px;
     }
 `;
 
@@ -35,9 +37,11 @@ const CarouselButton = styled.button`
     @media (min-width: 375px) {
         font-size: ${({ theme }) => theme.fontSizes.regular};
     }
-
     @media (min-width: 425px) {
         font-size: ${({ theme }) => theme.fontSizes.large};
+    }
+    @media (min-width: 1440px) {
+        font-size: ${({ theme }) => theme.fontSizes.xlarge};
     }
 `;
 
@@ -52,9 +56,11 @@ const CloseModalButton = styled.button`
     @media (min-width: 375px) {
         font-size: ${({ theme }) => theme.fontSizes.regular};
     }
-
     @media (min-width: 425px) {
         font-size: ${({ theme }) => theme.fontSizes.large};
+    }
+    @media (min-width: 1440px) {
+        font-size: ${({ theme }) => theme.fontSizes.xlarge};
     }
 `;
 
@@ -85,6 +91,17 @@ ${({ $isActive }) =>
 
 @media (min-width: 425px) {
     margin: 0 7.5px;
+}
+@media (min-width: 1440px) {
+    margin: 0 10px;
+    padding: 5px;
+    ${({ $isActive }) =>
+        $isActive &&
+        css`
+            transform: scale(1.2);
+        `
+    }
+}
 `;
 
 const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {

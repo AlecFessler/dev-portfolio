@@ -4,7 +4,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Image, { StaticImageData } from 'next/image';
 
-// Styled container for the project card
 const ProjectCardContainer = styled.div`
     background-color: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme }) => theme.colors.text};
@@ -32,6 +31,9 @@ const Title = styled.h3`
     @media (min-width: 375px) {
         font-size: ${({ theme }) => theme.fontSizes.large};
     }
+    @media (min-width: 1024px) {
+        font-size: ${({ theme }) => theme.fontSizes.xlarge};
+    }
 `;
 
 const Description = styled.p`
@@ -40,6 +42,9 @@ const Description = styled.p`
 
     @media (min-width: 375px) {
         font-size: ${({ theme }) => theme.fontSizes.small};
+    }
+    @media (min-width: 1024px) {
+        font-size: ${({ theme }) => theme.fontSizes.medium};
     }
 `;
 
