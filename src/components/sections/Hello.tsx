@@ -20,9 +20,9 @@ const TextContainer = styled.div`
 
 const GreetingText = styled.h1`
     font-family: ${({ theme }) => theme.fonts.heading};
-    font-size: 2rem;
     margin-bottom: 2rem;
     font-weight: 400;
+    font-size: ${({ theme }) => theme.fontSizes.xxlarge};
 `;
 
 const Highlight = styled.span`
@@ -33,9 +33,9 @@ const Highlight = styled.span`
 
 const Definition = styled.h2`
     font-family: ${({ theme }) => theme.fonts.monospace};
-    font-size: 1.25rem;
     max-width: 100%;
     font-weight: 400;
+    font-size: ${({ theme }) => theme.fontSizes.regular};
 `;
 
 const Hello = () => {

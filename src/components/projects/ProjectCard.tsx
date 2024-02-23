@@ -10,7 +10,6 @@ const ProjectCardContainer = styled.div`
     color: ${({ theme }) => theme.colors.text};
     padding: 2rem;
     align-self: stretch;
-    text-align: center;
     border-radius: 10px;
     backface-visibility: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -24,15 +23,16 @@ const ImageWrapper = styled(Image)`
     height: auto;
 `;
 
-const Title = styled.h2`
-    font-size: 2rem;
-    margin-bottom: 1rem;
+const Title = styled.h3`
+    text-align: center;
     font-family: ${({ theme }) => theme.fonts.heading};
+    font-size: ${({ theme }) => theme.fontSizes.regular};
+    margin-bottom: 1rem;
 `;
 
 const Description = styled.p`
-    font-size: 1.25rem;
     text-align: left;
+    font-size: ${({ theme }) => theme.fontSizes.small};
 `;
 
 interface ProjectCardProps {

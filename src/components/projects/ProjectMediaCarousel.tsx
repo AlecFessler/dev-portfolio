@@ -12,65 +12,26 @@ const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    @media (max-width: 600px) {
-        padding: 5px;
-    }
-    @media (min-width: 601px) {
-    }
-    @media (min-width: 768px) {
-    }
-    @media (min-width: 1024px) {
-    }
-    @media (min-width: 1440px) {
-    }
-    @media (min-width: 2560px) {
-    }
+    padding: 5px;
 `;
 
 const CarouselButton = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 2rem;
     margin: 0 15px;
     padding: 0;
     color: ${({ theme }) => theme.colors.text};
-    @media (max-width: 600px) {
-        font-size: 1.5rem;
-    }
-    @media (min-width: 601px) {
-    }
-    @media (min-width: 768px) {
-    }
-    @media (min-width: 1024px) {
-    }
-    @media (min-width: 1440px) {
-    }
-    @media (min-width: 2560px) {
-    }
+    font-size: ${({ theme }) => theme.fontSizes.medium};
 `;
 
 const CloseModalButton = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 2rem;
     padding: 0;
     color: ${({ theme }) => theme.colors.text};
-    @media (max-width: 600px) {
-        font-size: 1.5rem;
-    }
-    @media (min-width: 601px) {
-    }
-    @media (min-width: 768px) {
-    }
-    @media (min-width: 1024px) {
-    }
-    @media (min-width: 1440px) {
-    }
-    @media (min-width: 2560px) {
-    }
+    font-size: ${({ theme }) => theme.fontSizes.medium};
 `;
 
 const DotsContainer = styled.div`
@@ -85,7 +46,7 @@ interface DotProps {
 }
   
 const Dot = styled.span<DotProps>`
-padding: 5px;
+padding: 3.5px;
 margin: 0 5px;
 cursor: pointer;
 background-color: white;
@@ -96,20 +57,6 @@ ${({ $isActive }) =>
     css`
         transform: scale(1.2);
     `
-}
-@media (max-width: 600px) {
-    padding: 3px;
-    margin: 0 3px;
-}
-@media (min-width: 601px) {
-}
-@media (min-width: 768px) {
-}
-@media (min-width: 1024px) {
-}
-@media (min-width: 1440px) {
-}
-@media (min-width: 2560px) {
 }
 `;
 
