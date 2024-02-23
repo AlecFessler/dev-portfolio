@@ -5,9 +5,10 @@ const theme = {
         primary: '#398ad7',   // Primary color
         secondary: '#404A60', // Secondary color
         background: '#23272a', // Background color
+        glow: '109,186,217', // Glow color
         text: '#ffffff', // Primary text
         secondaryText: '#bbbbbb', // Secondary text
-        border: '#dddddd',     // Border color
+        border: '#9FAAB5',     // Border color
         scrollbar: '#1c1f23',  // Scrollbar color
     },
     fonts: {
@@ -18,6 +19,7 @@ const theme = {
     fontSizes: {
         xsmall: '1.2rem', // 12px, for less prominent information or captions
         small: '1.4rem', // 14px, suitable for secondary text
+        smedium: '1.5rem', // 15px, slightly larger than body text
         medium: '1.6rem', // 16px, standard body text size
         regular: '1.8rem', // 18px, slightly larger text, could be used for lead paragraphs
         large: '2.0rem', // 20px, for highlighted information or subheadings

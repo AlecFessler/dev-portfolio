@@ -45,6 +45,14 @@ const FlipManagerContainer = styled.div<{ $side: 'left' | 'right' }>`
     transition: var(--transition, 0);
     transform: var(--transform, none);
     z-index: var(--zIndex, 0);
+
+    /* These properties are for controlling the project cards glow */
+    --box-shadow-top: 2.5px;
+    --box-shadow-right: -2.5px;
+    --box-shadow-bottom: -2.5px;
+    --box-shadow-left: 2.5px;
+    --glow-transition: 0.3s linear;
+
     &.flipLeft {
         animation: flipLeft ${FLIP_DURATION}s forwards;
     }
@@ -104,7 +112,7 @@ function computeTiltAngles(elementDimensions: ElementDimensions, cursorPos: {x: 
 
 function setContainerStyleVars(containerRef: React.RefObject<HTMLDivElement>, transition: number, zIndex: number, transform: string) {
     if (!containerRef.current) return;
-    containerRef.current.style.setProperty('--transition', transition.toString() + 's');
+    containerRef.current.style.setProperty('--transition', transition.toString() + 's' + ' linear');
     containerRef.current.style.setProperty('--zIndex', zIndex.toString());
     containerRef.current.style.setProperty('--transform', transform);
 }
@@ -122,6 +130,15 @@ function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseSca
     containerRef.current.style.setProperty('--inverseScaleX', inverseScaleX.toString());
     containerRef.current.style.setProperty('--inverseScaleY', inverseScaleY.toString());
 }
+
+function setProjectCardGlowStyleVars(containerRef: React.RefObject<HTMLDivElement>, top: string | null, right: string | null, bottom: string | null, left: string | null, glowTransition: string | null = null) {
+    if (!containerRef.current) return;
+    if (top !== null) containerRef.current.style.setProperty('--box-shadow-top', top);
+    if (right !== null) containerRef.current.style.setProperty('--box-shadow-right', right);
+    if (bottom !== null) containerRef.current.style.setProperty('--box-shadow-bottom', bottom);
+    if (left !== null) containerRef.current.style.setProperty('--box-shadow-left', left);
+    if (glowTransition !== null) containerRef.current.style.setProperty('--glow-transition', glowTransition + 's' + ' linear');
+};
 
 function getTransformString(rotateX: number, rotateY: number, scaleX: number, scaleY: number, translateX: number, translateY: number | string): string {
     return `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scaleX(${scaleX}) scaleY(${scaleY}) translateX(${translateX}) translateY(${translateY}${translateY.toString().includes('%') ? '' : 'px'})`;
@@ -209,6 +226,15 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
             setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
+            const topGlow = rotateX > 0 ? rotateX * -2.5 : 2.5;
+            let rightGlow = rotateY > 0 ? rotateY * 2.5 : -2.5;
+            const bottomGlow = rotateX < 0 ? rotateX * -2.5 : -2.5;
+            let leftGlow = rotateY < 0 ? rotateY * 2.5 : 2.5;
+            if (rotateX > 0) {
+                rightGlow *= -1;
+                leftGlow *= -1;
+            }
+            setProjectCardGlowStyleVars(containerRef, topGlow.toString() + 'px', rightGlow.toString() + 'px', bottomGlow.toString() + 'px', leftGlow.toString() + 'px', '0');
         });
     }, []);
 
@@ -217,6 +243,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             if (!containerRef.current || currentStateRef.current != 'unflipped') return;
             const {rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition} = lowered;
             setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
+            setProjectCardGlowStyleVars(containerRef, '2.5px', '-2.5px', '-2.5px', '2.5px', '0.3');
         });
     }, []);
 

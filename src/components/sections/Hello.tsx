@@ -3,7 +3,7 @@
 import { styled } from 'styled-components';
 
 const StyledSection = styled.section`
-    height: 100vh;
+    height: 105vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -67,6 +67,21 @@ const Highlight = styled.span`
     color: ${({ theme }) => theme.colors.primary};
     position: relative;
     display: inline;
+    text-shadow: 0 0 10px rgba(${({ theme }) => theme.colors.glow}, 0.5);
+
+    @keyframes glow {
+        0% {
+            text-shadow: 0 0 12.5px rgba(${({ theme }) => theme.colors.glow}, 0.5);
+        }
+        50% {
+            text-shadow: 0 0 20px rgba(${({ theme }) => theme.colors.glow}, 0.75);
+        }
+        100% {
+            text-shadow: 0 0 12.5px rgba(${({ theme }) => theme.colors.glow}, 0.5);
+        }
+    }
+
+    animation: glow 3s infinite linear;
 `;
 
 const Definition = styled.h2`
