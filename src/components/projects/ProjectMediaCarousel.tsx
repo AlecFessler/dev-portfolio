@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
-
-import Flip from './modal_buttons/Flip';
-import Next from './modal_buttons/Next';
-import Star from './modal_buttons/Star';
+import styled, { css } from 'styled-components';
 
 const CarouselContainer = styled.div`
     display: flex;
@@ -26,7 +22,6 @@ const ButtonContainer = styled.div`
 `;
 
 const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {
-    const theme = React.useContext(ThemeContext);
     const [slideIndex, setSlideIndex] = useState(0);
     const currentSlide = content[slideIndex];
     
@@ -44,12 +39,6 @@ const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNod
                 {currentSlide}
             </ContentContainer>
             <ButtonContainer>
-                <Next next={nextSlide} direction='right' fill={theme?.colors.text} stroke={theme?.colors.text} />
-                {content.map((_, index) => (
-                    <Star key={index} onClick={closeModal}  fill={theme?.colors.text} stroke={theme?.colors.text} />
-                ))}
-                <Next next={prevSlide} direction='left'  fill={theme?.colors.text} stroke={theme?.colors.text} />
-                <Flip flip={closeModal}  fill={theme?.colors.text} stroke={theme?.colors.text} />
             </ButtonContainer>
         </CarouselContainer>
     );

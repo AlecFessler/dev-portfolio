@@ -5,17 +5,18 @@ import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import Logo from './Logo';
+
 const HeaderContainer = styled.header`
-  width: 100%;
-  max-width: 100vw;
-  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100vw;
   padding: 1rem 2rem 1rem 0;
   position: fixed;
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 1000;
   font-size: ${({ theme }) => theme.fontSizes.medium};
-  border-bottom: 2px solid ${({ theme }) => theme.colors.border};
-  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.15);
 
   @media (min-width: 425px) {
     padding: 1rem 4rem 1rem 0;
@@ -38,6 +39,13 @@ const HeaderContainer = styled.header`
     padding: 2rem 40rem 2rem 0;
     font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
   }
+`;
+
+const LogoContainer = styled.div`
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 1001;
 `;
 
 const ScrollNav = styled(ScrollLink)`
@@ -98,6 +106,10 @@ const RouterNav = styled(Link)`
 
 const Header = () => {
   return (
+    <>
+    <LogoContainer>
+      <Logo />
+    </LogoContainer>
     <HeaderContainer>
       <nav>
         <ScrollNav to="Hello" smooth={true} duration={500}>
@@ -117,6 +129,7 @@ const Header = () => {
         </RouterNav>
       </nav>
     </HeaderContainer>
+    </>
   );
 };
 
