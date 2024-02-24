@@ -6,7 +6,9 @@ const theme = {
         secondary: '#404A60', // Secondary color
         background: '#23272a', // Background color
         shadedContainer: '0, 0, 0, 0.25', // Shaded container color
-        glow: '109,186,217', // Glow color
+        glow: '64,130,174', // Glow color
+        innerGlow: '156,229,245', // For inner glow
+        outerGlow: '52,109,153', // For outter glow
         text: '#ffffff', // Primary text
         secondaryText: '#bbbbbb', // Secondary text
         border: '#9FAAB5',     // Border color
