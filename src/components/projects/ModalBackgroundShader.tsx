@@ -12,7 +12,7 @@ const BackgroundShader = styled.div`
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0);
+    background-color: ${({ theme }) => theme.colors.background};
     opacity: 0;
     z-index: -1;
 

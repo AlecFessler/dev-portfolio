@@ -2,7 +2,7 @@
 
 const theme = {
     buttonSizes: {
-        small: '32px', // Suitable for icon buttons or compact spaces
+        small: '80px', // Suitable for icon buttons or compact spaces
         medium: '48px', // Default size for most buttons
         large: '64px', // For more prominent buttons or calls to action
         xlarge: '80px', // Extra large buttons, possibly for hero sections or major actions
