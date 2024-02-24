@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
+
+import Flip from './modal_buttons/Flip';
+import Next from './modal_buttons/Next';
+import Star from './modal_buttons/Star';
 
 const CarouselContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    align-items: center;
     transform-style: preserve-3d;
 `;
 
@@ -15,125 +20,13 @@ const ContentContainer = styled.div`
 
 const ButtonContainer = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 2.5px;
-    
-    @media (min-width: 375px) {
-        padding: 5px;
-    }
-    @media (min-width: 425px) {
-        padding: 7.5px;
-    }
-    @media (min-width: 1440px) {
-        padding: 12.5px;
-    }
-    @media (min-width: 1920px) {
-        padding: 17.5px;
-    }
-    @media (min-width: 2560px) {
-        padding: 20px;
-    }
-`;
-
-const CarouselButton = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin: 0 15px;
-    padding: 0;
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${({ theme }) => theme.fontSizes.medium};
-
-    @media (min-width: 375px) {
-        font-size: ${({ theme }) => theme.fontSizes.regular};
-    }
-    @media (min-width: 425px) {
-        font-size: ${({ theme }) => theme.fontSizes.large};
-    }
-    @media (min-width: 1440px) {
-        font-size: ${({ theme }) => theme.fontSizes.xlarge};
-    }
-    @media (min-width: 1920px) {
-        margin: 0 20px;
-        font-size: ${({ theme }) => theme.fontSizes.xxlarge};
-    }
-    @media (min-width: 2560px) {
-        margin: 0 25px;
-        font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
-    }
-`;
-
-const CloseModalButton = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${({ theme }) => theme.fontSizes.medium};
-
-    @media (min-width: 375px) {
-        font-size: ${({ theme }) => theme.fontSizes.regular};
-    }
-    @media (min-width: 425px) {
-        font-size: ${({ theme }) => theme.fontSizes.large};
-    }
-    @media (min-width: 1440px) {
-        font-size: ${({ theme }) => theme.fontSizes.xlarge};
-    }
-    @media (min-width: 1920px) {
-        font-size: ${({ theme }) => theme.fontSizes.xxlarge};
-    }
-    @media (min-width: 2560px) {
-        font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
-    }
-`;
-
-const DotsContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-`;
-
-interface DotProps {
-    $isActive: boolean;
-    onClick?: () => void;
-}
-  
-const Dot = styled.span<DotProps>`
-padding: 3.5px;
-margin: 0 5px;
-cursor: pointer;
-background-color: white;
-border-radius: 50%;
-transition: transform 0.3s ease-in-out;
-${({ $isActive }) =>
-    $isActive &&
-    css`
-        transform: scale(1.3);
-    `
-}
-
-@media (min-width: 425px) {
-    margin: 0 7.5px;
-}
-@media (min-width: 1440px) {
-    margin: 0 10px;
-    padding: 5px;
-    ${({ $isActive }) =>
-        $isActive &&
-        css`
-            transform: scale(1.2);
-        `
-    }
-}
-@media (min-width: 1920px) {
-    margin: 0 12.5px;
-    padding: 7.5px;
-}
+    width: 30%;
 `;
 
 const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {
+    const theme = React.useContext(ThemeContext);
     const [slideIndex, setSlideIndex] = useState(0);
     const currentSlide = content[slideIndex];
     
@@ -147,19 +40,16 @@ const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNod
 
     return (
         <CarouselContainer>
-                <ContentContainer>
-                    {currentSlide}
-                </ContentContainer>
+            <ContentContainer>
+                {currentSlide}
+            </ContentContainer>
             <ButtonContainer>
-                {/* REPLACE THESE WITH IMAGES FOR NICE BUTTONS */}
-                <CarouselButton onClick={prevSlide}>&lt;</CarouselButton>
-                <DotsContainer>
-                    {content.map((_, index) => (
-                        <Dot key={index} $isActive={index === slideIndex} onClick={() => setSlideIndex(index)} />
-                    ))}
-                </DotsContainer>
-                <CarouselButton onClick={nextSlide}>&gt;</CarouselButton>
-                <CloseModalButton onClick={closeModal}>X</CloseModalButton>
+                <Next next={nextSlide} direction='right' fill={theme?.colors.text} stroke={theme?.colors.text} />
+                {content.map((_, index) => (
+                    <Star key={index} onClick={closeModal}  fill={theme?.colors.text} stroke={theme?.colors.text} />
+                ))}
+                <Next next={prevSlide} direction='left'  fill={theme?.colors.text} stroke={theme?.colors.text} />
+                <Flip flip={closeModal}  fill={theme?.colors.text} stroke={theme?.colors.text} />
             </ButtonContainer>
         </CarouselContainer>
     );

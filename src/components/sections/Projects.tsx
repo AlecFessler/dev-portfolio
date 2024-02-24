@@ -8,12 +8,12 @@ import ProjectModal from '../projects/ProjectModal';
 import FlipManager from '../projects/FlipManager';
 import ProjectMedia from '../projects/ProjectMedia';
 
-import BarbellImg from '../../../public/project_cards/barbell.webp';
-import PaintingImg from '../../../public/project_cards/painting.webp';
-import CircuitImg from '../../../public/project_cards/circuit.webp';
-import TypewriterImg from '../../../public/project_cards/typewriter.webp';
-import BedframeImg from '../../../public/project_cards/bedframe.webp';
-import AsciiImg from '../../../public/project_cards/ascii.webp';
+import BarbellImg from '../../../public/project_cards/barbell.png';
+import PaintingImg from '../../../public/project_cards/painting.png';
+import CircuitImg from '../../../public/project_cards/circuit.png';
+import TypewriterImg from '../../../public/project_cards/typewriter.png';
+import BedframeImg from '../../../public/project_cards/bedframe.png';
+import AsciiImg from '../../../public/project_cards/ascii.png';
 
 import CpuCircuit from '../../../public/projects/turing_complete/cpu_circuit.png';
 

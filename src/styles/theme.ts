@@ -1,9 +1,16 @@
 // src/styles/theme.ts
 
 const theme = {
+    buttonSizes: {
+        small: '32px', // Suitable for icon buttons or compact spaces
+        medium: '48px', // Default size for most buttons
+        large: '64px', // For more prominent buttons or calls to action
+        xlarge: '80px', // Extra large buttons, possibly for hero sections or major actions
+    },
     colors: {
         primary: '#398ad7',   // Primary color
         secondary: '#404A60', // Secondary color
+        tertiary: '48,101,140', // Tertiary, dark navy
         background: '#23272a', // Background color
         shadedContainer: '0, 0, 0, 0.25', // Shaded container color
         glow: '64,130,174', // Glow color

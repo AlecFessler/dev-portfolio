@@ -225,10 +225,10 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
             setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
-            const topGlow = rotateX > 0 ? rotateX * -2.5 : 2.5;
-            let rightGlow = rotateY > 0 ? rotateY * 2.5 : -2.5;
-            const bottomGlow = rotateX < 0 ? rotateX * -2.5 : -2.5;
-            let leftGlow = rotateY < 0 ? rotateY * 2.5 : 2.5;
+            const topGlow = rotateX > 0 ? rotateX * -3 : 5;
+            let rightGlow = rotateY > 0 ? rotateY * 3 : -5;
+            const bottomGlow = rotateX < 0 ? rotateX * -3 : -5;
+            let leftGlow = rotateY < 0 ? rotateY * 3 : 5;
             if (rotateX > 0) {
                 rightGlow *= -1;
                 leftGlow *= -1;

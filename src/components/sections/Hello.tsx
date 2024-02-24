@@ -110,7 +110,7 @@ const Highlight = styled.span<{ $top: boolean }>`
     }
 `;
 
-const Definition = styled.h2`
+{/*const Definition = styled.h2`
     font-family: ${({ theme }) => theme.fonts.monospace};
     max-width: 100%;
     font-weight: 400;
@@ -128,7 +128,7 @@ const Definition = styled.h2`
     @media (min-width: 2560px) {
         font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
     }
-`;
+`;*/}
 
 const Hello = () => {
   return (
@@ -138,12 +138,12 @@ const Hello = () => {
                 Hello, I'm <Highlight $top={true}>Alec</Highlight>. <br />
                 I'm a <Highlight $top={false}>programmer</Highlight>.
             </GreetingText>
-            <Definition>
+            {/*<Definition>
                 pro·gram·mer<br />
                 /`prōˌgramər/<br />
                 noun<br />
                 a lifelong learner, driven by insatiable curiosity and a passion for problem-solving.
-            </Definition>
+            </Definition>*/}
         </TextContainer>
     </StyledSection>
   );
