@@ -20,7 +20,7 @@ const ButtonContainer = styled.div<{ $side: 'left' | 'right' }>`
 const NexButton = ({ onClick, side }: { onClick: () => void; side: 'left' | 'right' }) => {
     return (
         <ButtonContainer $side={side} onClick={onClick}>
-            {side === 'left' ? <Image src={NextImg} alt="previous media" layout="fill" /> : <Image src={NextImg2} alt="next media" layout="fill" />}
+            {side === 'left' ? <Image src={NextImg} alt="previous media" fill={true} /> : <Image src={NextImg2} alt="next media" fill={true} />}
         </ButtonContainer>
     );
 };

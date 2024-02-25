@@ -6,12 +6,12 @@ import ProjectMediaCarousel from './ProjectMediaCarousel';
 
 interface ProjectModalProps {
     content: React.ReactNode[];
-    closeModal: () => void;
+    project: string;
 }
 
-const ProjectModal = ({ content, closeModal }: ProjectModalProps) => {
+const ProjectModal = ({ content, project }: ProjectModalProps) => {
     return (
-        <ProjectMediaCarousel content={content} closeModal={closeModal} />
+        <ProjectMediaCarousel content={content} project={project} />
     );
 };
 

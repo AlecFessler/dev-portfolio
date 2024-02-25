@@ -1,12 +1,15 @@
 // src/components/projects/FlipManager.tsx
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { useActor } from '@xstate/react';
 
 import ModalBackgroundShader from './ModalBackgroundShader';
+import ModalContext from '../../state/ModalContext';
 import flipMachine from '../../state/FlipManagerMachine';
-import ProjectCardConstants from '../../state/ProjectCardConstants.json'
+import ProjectCardConstants from '../../state/ProjectCardConstants.json';
+import Next from './modal_buttons/Next';
+import Close from './modal_buttons/Close';
 
 const { TILT_INTENSITY, FLIP_DURATION } = ProjectCardConstants;
 const { lowered, raised } = ProjectCardConstants.TiltAnimationStates;
@@ -72,6 +75,19 @@ const ModalInverseScale = styled.div`
     backface-visibility: hidden;
     transform: rotateY(180deg) scaleX(var(--inverseScaleX, 1)) scaleY(var(--inverseScaleY, 1));
     border-radius: 10px;
+`;
+
+const ModalControlButtons = styled.div`
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: var(--modal_active, none);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: ${({ theme }) => theme.buttonSizes.small};
+    z-index: 1001;
 `;
 
 function headerHeight() {
@@ -181,6 +197,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const modalContainerRef = useRef<HTMLDivElement>(null);
+    const modalButtonsContainerRef = useRef<HTMLDivElement>(null);
     const currentStateRef = useRef<string>('unflipped');
     const previousStateRef = useRef<string>('unflipped');
     const windowDimensionsRef = useRef({
@@ -202,6 +219,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({
     const [state, send, service] = useActor(flipMachine);
     const [animationClass, setAnimationClass] = useState('' as string);
     const [screenSide, setScreenSide] = useState('left' as 'left' | 'right');
+    const [project, setProject] = useState<string>("");
+    const { currentModal, totalSlides, currentSlide, setModal, setCurrentSlide, setTotalSlides } = useContext(ModalContext);
 
     const handleResize = useCallback(() => {
         windowDimensionsRef.current = getWindowDimensions();
@@ -268,8 +287,16 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                     setFlipAnimationTransformVars(containerRef, scaleX, scaleY, translateX, translateY);
                     setAnimationClass(animationClass);
                 });
+            } else if(state.value === 'flipped') {
+                setModal(ProjectCardProps.title);
+                setTotalSlides(ProjectModalProps.length); // props is just a single array of slides
+                modalButtonsContainerRef.current?.setAttribute('style', '--modal_active: flex');
             } else if (state.value === 'flippingToFront') {
                 windowDimensionsRef.current = getWindowDimensions();
+                setModal(null);
+                setTotalSlides(0);
+                setCurrentSlide(0);
+                modalButtonsContainerRef.current?.setAttribute('style', '--modal_active: none');
                 requestAnimationFrame(() => {
                     if (!containerRef.current) return;
                     const { zIndex } = flippingToFront;
@@ -288,6 +315,8 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             }
             previousStateRef.current = state.value.toString();
         });
+
+        setProject(ProjectCardProps.title);
 
         windowDimensionsRef.current = getWindowDimensions();
         cardDimensionsRef.current = getElementDimensions(containerRef);
@@ -310,9 +339,14 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         };
     }, []);
 
-    const onClick = useCallback(() => {
-        send({ type: 'FLIP' });
-    }, []);
+    const flipCard = () => {
+        send({type: 'FLIP'});
+    }
+
+    const closeModal = () => {
+        if (currentModal !== project) return;
+        send({type: 'FLIP'});
+    }
 
     return (
         <>
@@ -321,11 +355,11 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             className={animationClass}
             $side={screenSide}
         >
-            <ProjectCard {...ProjectCardProps} flipCard={onClick} />
+            <ProjectCard {...ProjectCardProps} flipCard={flipCard} />
             <ModalInverseScale
                 ref={modalContainerRef}    
             >
-                <ProjectModal content={ProjectModalProps} closeModal={onClick} />
+                <ProjectModal content={ProjectModalProps} project={project} />
             </ModalInverseScale>
         </FlipManagerContainer>
         <ModalBackgroundShader visible={() => {
@@ -335,7 +369,21 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             if (state.value === 'unflipped') { return '' }
             else if (state.value === 'flippingToFront') { return 'animateOpacityOut' }
             else { return 'animateOpacity' }
-        }} />
+        }}>
+        </ModalBackgroundShader>
+        <ModalControlButtons ref={modalButtonsContainerRef}>
+        <Next onClick={() => {
+            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
+            setCurrentSlide((currentSlide - 1 + totalSlides) % totalSlides);
+            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
+        }} side="left" />
+        <Close onClick={closeModal} />
+        <Next onClick={() =>{
+            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
+            setCurrentSlide((currentSlide + 1) % totalSlides);
+            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
+        }} side="right" />
+        </ModalControlButtons>
         </>
     );
 }

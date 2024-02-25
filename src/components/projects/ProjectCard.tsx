@@ -17,18 +17,18 @@ const ProjectCardContainer = styled.div`
     cursor: pointer;
     transform-style: preserve-3d;
     transition: var(--glow-transition);
-    box-shadow: 0 calc(var(--box-shadow-bottom) / 3) 15px 0 rgba(${({ theme }) => theme.colors.innerGlow}, 0.2),
-                0 calc(var(--box-shadow-bottom) / 3 * 2) 15px 0 rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                0 var(--box-shadow-bottom) 15px 0 rgba(${({ theme }) => theme.colors.outerGlow}, 0.2),
-                calc(var(--box-shadow-left) / 3) 0 15px 0 rgba(${({ theme }) => theme.colors.innerGlow}, 0.2),
-                calc(var(--box-shadow-left) / 3 * 2) 0 15px 0 rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                var(--box-shadow-left) 0 15px 0 rgba(${({ theme }) => theme.colors.outerGlow}, 0.2),
-                calc(var(--box-shadow-right) / 3) 0 15px 0 rgba(${({ theme }) => theme.colors.innerGlow}, 0.2),
-                calc(var(--box-shadow-right) / 3 * 2) 0 15px 0 rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                var(--box-shadow-right) 0 15px 0 rgba(${({ theme }) => theme.colors.outerGlow}, 0.2),
-                0 calc(var(--box-shadow-top) / 3) 15px 0 rgba(${({ theme }) => theme.colors.innerGlow}, 0.2),
-                0 calc(var(--box-shadow-top) / 3 * 2) 15px 0 rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                0 var(--box-shadow-top) 15px 0 rgba(${({ theme }) => theme.colors.outerGlow}, 0.2);
+    box-shadow: 0 calc(var(--box-shadow-bottom) / 3) 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
+                0 calc(var(--box-shadow-bottom) / 3 * 2) 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
+                0 var(--box-shadow-bottom) 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3),
+                calc(var(--box-shadow-left) / 3) 0 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
+                calc(var(--box-shadow-left) / 3 * 2) 0 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
+                var(--box-shadow-left) 0 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3),
+                calc(var(--box-shadow-right) / 3) 0 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
+                calc(var(--box-shadow-right) / 3 * 2) 0 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
+                var(--box-shadow-right) 0 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3),
+                0 calc(var(--box-shadow-top) / 3) 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
+                0 calc(var(--box-shadow-top) / 3 * 2) 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
+                0 var(--box-shadow-top) 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3);
 
     @media (min-width: 1920px) {
         padding: 3rem;
