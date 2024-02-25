@@ -21,8 +21,6 @@ const ContentContainer = styled.div`
 const ProjectMediaCarousel = ({ content }: { content: React.ReactNode[]; project: string }) => {
     const { currentSlide } = useContext(ModalContext);
 
-    console.log('currentSlide', currentSlide);
-
     return (
         <CarouselContainer>
             <ContentContainer>

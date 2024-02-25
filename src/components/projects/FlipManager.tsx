@@ -372,17 +372,14 @@ const FlipManager: React.FC<FlipManagerProps> = ({
         }}>
         </ModalBackgroundShader>
         <ModalControlButtons ref={modalButtonsContainerRef}>
-        <Next onClick={() => {
-            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
-            setCurrentSlide((currentSlide - 1 + totalSlides) % totalSlides);
-            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
-        }} side="left" />
-        <Close onClick={closeModal} />
-        <Next onClick={() =>{
-            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
-            setCurrentSlide((currentSlide + 1) % totalSlides);
-            console.log('currentSlide', currentSlide, 'totalSlides', totalSlides);
-        }} side="right" />
+            <Next onClick={() => {
+                setCurrentSlide((currentSlide - 1 + totalSlides) % totalSlides);
+            }} side="left"
+            modalActive={currentModal === project} />
+            <Close onClick={closeModal} modalActive={currentModal === project} />
+            <Next onClick={() =>{
+                setCurrentSlide((currentSlide + 1) % totalSlides);
+            }} side="right" modalActive={currentModal === project} />
         </ModalControlButtons>
         </>
     );

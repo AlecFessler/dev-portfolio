@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import CloseImg from '../../../../public/buttons/x.png';
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.div<{ $modalActive: boolean }>`
     position: relative;
     width: 100%;
     max-width: ${({ theme }) => theme.buttonSizes.small};
@@ -14,12 +14,30 @@ const ButtonContainer = styled.div`
     cursor: pointer;
     margin: 0 10px;
     transition: 0.2s ease-in-out;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        z-index: 1;
+        transition: 0.2s ease-in-out;
+        background-color: ${({ theme }) => theme.colors.background};
+        
+        @keyframes fadeOut {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+        animation: ${({ $modalActive }) => $modalActive ? 'fadeOut 0.15s ease-in-out forwards' : 'none'};
+    }
 `;
 
-const CloseButton = ({ onClick } : { onClick: () => void }) => {
+const CloseButton = ({ onClick, modalActive } : { onClick: () => void; modalActive: boolean }) => {
     return (
-        <ButtonContainer>
-            <Image src={CloseImg} alt="Close modal" onClick={onClick} fill={true} />
+        <ButtonContainer $modalActive={modalActive} onClick={onClick}>
+            <Image src={CloseImg} alt="Close modal" fill={true} />
         </ButtonContainer>
     );
 }
