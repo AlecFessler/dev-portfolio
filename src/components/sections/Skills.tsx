@@ -10,7 +10,7 @@ const SkillsSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.background};
+  background: transparent;
   color: ${({ theme }) => theme.colors.text};
   padding: 0 2rem;
 `;

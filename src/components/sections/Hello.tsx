@@ -8,10 +8,19 @@ const StyledSection = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme }) => theme.colors.background};
+    background: transparent;
     color: ${({ theme }) => theme.colors.text};
     text-align: left;
-    padding: 0 2rem;
+`;
+
+const TextContainer = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    transform-style: preserve-3d;
+    background-color: ${({ theme }) => theme.colors.background};
+    border-radius: 10px;
 
     @media (min-width: 425px) {
         padding: 0 4rem;
@@ -32,13 +41,6 @@ const StyledSection = styled.section`
     @media (min-width: 2560px) {
         width: 33%;
     }
-`;
-
-const TextContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transform-style: preserve-3d;
 `;
 
 const GreetingText = styled.h1`

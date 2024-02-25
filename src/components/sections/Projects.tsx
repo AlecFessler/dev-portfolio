@@ -26,7 +26,7 @@ const ProjectsSection = styled.section`
     gap: 2rem;
     align-items: stretch;
     grid-auto-rows: 1fr;
-    background-color: ${({ theme }) => theme.colors.background};
+    background: transparent;
     color: ${({ theme }) => theme.colors.text};
     padding: 0 2rem;
 

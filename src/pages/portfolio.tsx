@@ -9,6 +9,7 @@ import Projects from '../components/sections/Projects';
 import Skills from '../components/sections/Skills';
 import Contact from '../components/sections/Contact';
 import Footer from '../components/footer/Footer';
+import Background from '../components/sections/Background';
 
 const PortfolioContainer = styled.main`
     display: flex;
@@ -35,6 +36,7 @@ const Portfolio = () => {
       <Skills />
       <Contact />
       <Footer />
+      <Background />
     </PortfolioContainer>
   );
 };
