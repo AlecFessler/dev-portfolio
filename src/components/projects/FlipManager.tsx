@@ -90,11 +90,6 @@ const ModalControlButtons = styled.div`
     z-index: 1001;
 `;
 
-function headerHeight() {
-    const header = document.querySelector('header');
-    return header ? header.clientHeight : 0;
-}
-
 function computeScalingFactors(
     cardDimensions: ElementDimensions, 
     modalDimensions: {modalWidth: number, modalHeight: number}) {
@@ -112,7 +107,7 @@ function computeTranslationValues(windowDimensions: WindowDimensions,
     const {relativeCenterX: cardCenterX, relativeCenterY: cardCenterY} = cardDimensions;
     const [scaleX, scaleY] = computeScalingFactors(cardDimensions, modalDimensions);
     const translateX = ((windowCenterX - cardCenterX) / scaleX) * -1; // invert the X translation to account for 180 degree Y rotation
-    const translateY = ((windowCenterY - cardCenterY) / scaleY) + headerHeight() / 2;
+    const translateY = ((windowCenterY - cardCenterY) / scaleY);
     return [translateX, translateY];
 }
 

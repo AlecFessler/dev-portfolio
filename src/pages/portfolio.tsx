@@ -11,10 +11,10 @@ import Contact from '../components/sections/Contact';
 import Footer from '../components/footer/Footer';
 import Background from '../components/sections/Background';
 
-const PortfolioContainer = styled.main`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+const PortfolioContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Portfolio = () => {
@@ -32,11 +32,11 @@ const Portfolio = () => {
     <PortfolioContainer>
       <Header />
       <Hello />
+      <Background />
       <Projects />
       <Skills />
       <Contact />
       <Footer />
-      <Background />
     </PortfolioContainer>
   );
 };

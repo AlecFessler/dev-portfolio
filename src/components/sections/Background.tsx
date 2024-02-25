@@ -6,18 +6,27 @@ import Image from 'next/image';
 
 import GalacticTear from '../../../public/galactic_tear.png';
 
+const Sticky = styled.div`
+  position: sticky;
+  z-index: 0;
+  top: 25%;
+  min-height: 100vh;
+  width: 100%;
+`;
+
 const Wrapper = styled.div`
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 0;
 `;
 
 const Background = () => {
   return (
-    <Wrapper>
-      <Image src={GalacticTear} alt="Galactic Tear" fill={true} />
-    </Wrapper>
+    <Sticky>
+      <Wrapper>
+        <Image src={GalacticTear} alt="Galactic Tear" fill={true} />
+      </Wrapper>
+    </Sticky>
   );
 };
 

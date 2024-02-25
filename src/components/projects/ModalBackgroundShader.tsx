@@ -3,6 +3,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Background from '../sections/Background';
+
 import ProjectCardConstants from '../../state/ProjectCardConstants.json';
 const { FLIP_DURATION } = ProjectCardConstants;
 
@@ -10,7 +12,6 @@ const BackgroundShader = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
     height: 100vh;
     background-color: ${({ theme }) => theme.colors.background};
     opacity: 0;
@@ -27,7 +28,9 @@ const BackgroundShader = styled.div`
 
 const ModalBackgroundShader = ({ visible }: { visible: () => string }) => {
     return (
-        <BackgroundShader className={visible()} />
+        <BackgroundShader className={visible()}>
+            <Background />
+        </BackgroundShader>
     );
 };
 
