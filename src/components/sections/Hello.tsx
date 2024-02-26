@@ -3,7 +3,7 @@
 import { styled } from 'styled-components';
 
 const StyledSection = styled.section`
-    height: 105vh;
+    height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;

@@ -17,6 +17,12 @@ import TypewriterImg from '../../../public/project_cards/typewriter.png';
 import BedframeImg from '../../../public/project_cards/bedframe.png';
 import AsciiImg from '../../../public/project_cards/ascii.png';
 
+import LevelUpLogin from '../../../public/projects/level_up/level-up-login.gif';
+
+import FesslerPaintingDesktop from '../../../public/projects/fessler_painting/fessler-painting-page.png';
+import FesslerPaintingMobile from '../../../public/projects/fessler_painting/fessler-painting-mobile.png';
+import FesslerPaintingReviews from '../../../public/projects/fessler_painting/fessler-painting-reviews.png';
+
 import CpuCircuit from '../../../public/projects/turing_complete/cpu_circuit.png';
 
 const ProjectsSection = styled.section`
@@ -92,6 +98,29 @@ const Projects = () => {
     ];
 
     const ProjectModalContent = [
+        [ 
+            <ProjectMedia
+                key={0}
+                image={FesslerPaintingDesktop}
+                caption="Modern, minimalist desktop design"
+                width={0}
+                height={0}
+            />,
+            <ProjectMedia
+                key={1}
+                image={FesslerPaintingMobile}
+                caption="Fully mobile responsive"
+                width={0}
+                height={0}
+            />,
+            <ProjectMedia
+                key={2}
+                image={FesslerPaintingReviews}
+                caption="My code is meticulous too, just saying."
+                width={0}
+                height={0}
+            />
+        ],
         [<ProjectMedia
             key={0}
             image={CpuCircuit}

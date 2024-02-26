@@ -4,14 +4,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-import GalacticTear from '../../../public/galactic_tear.png';
+import GalacticTear from '../../../public/galactic_tear_sm.png';
 
 const Sticky = styled.div`
   position: sticky;
   z-index: 0;
   top: 25%;
-  min-height: 100vh;
   width: 100%;
+  aspect-ratio: 400 / 103;
 `;
 
 const Wrapper = styled.div`
@@ -24,7 +24,14 @@ const Background = () => {
   return (
     <Sticky>
       <Wrapper>
-        <Image src={GalacticTear} alt="Galactic Tear" fill={true} />
+        <Image 
+          src={GalacticTear} 
+          alt="A tear in the surface of the webpage, revealing interstellar space" 
+          fill={true}
+          objectFit='cover'
+          objectPosition='center center'
+          priority={true}
+          />
       </Wrapper>
     </Sticky>
   );
