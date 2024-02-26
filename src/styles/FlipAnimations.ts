@@ -51,29 +51,25 @@ const FlipAnimations = createGlobalStyle`
     }
 }
 
-@keyframes animateOpacity {
+@keyframes fadeOut {
     0% {
-        z-index: 1;
-        opacity: 0;
+        opacity: 1;
     }
     100% {
-        z-index: 1;
-        opacity: 1;
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
-@keyframes animateOpacityOut {
+@keyframes fadeIn {
     0% {
-        z-index: 1;
-        opacity: 1;
-    }
-    99% {
-        z-index: 1;
         opacity: 0;
     }
     100% {
-        z-index: -1;
+        opacity: 1;
+        visibility: visible;
     }
+}
 }
 `;
 

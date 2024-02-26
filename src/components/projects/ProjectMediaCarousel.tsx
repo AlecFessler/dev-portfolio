@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import NextButton from '../../../public/buttons/next.png';
 import PrevButton from '../../../public/buttons/prev.png';
+import CloseButton from '../../../public/buttons/close.png';
 
 const CarouselContainer = styled.div`
     display: flex;
@@ -21,15 +22,18 @@ const ContentContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 `;
 
-const Button = styled(Image)`
+const Button = styled(Image)<{ $side: 'left' | 'right' | '' }>`
     cursor: pointer;
     height: ${({ theme }) => theme.buttonSizes.small};
     width: ${({ theme }) => theme.buttonSizes.small};
+    margin: 0 10px;
+    transform: ${({ $side }) => $side === 'left' ? 'rotateZ(30deg)' : $side === 'right' ? 'rotateY(180deg) rotateZ(30deg)' : ''};
 `;
 
 const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {
@@ -49,9 +53,9 @@ const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNod
                 {content[currentSlide]}
             </ContentContainer>
             <ButtonContainer>
-                <Button src={PrevButton} alt="Previous" onClick={prevSlide} />
-                <button onClick={closeModal}>Close</button>
-                <Button src={NextButton} alt="Next" onClick={nextSlide} />
+                <Button src={PrevButton} alt='Previous' onClick={prevSlide} $side={'left'} />
+                <Button src={CloseButton} alt='Close' onClick={closeModal} $side={''} style={{marginTop:'0.5rem'}} />
+                <Button src={NextButton} alt='Next' onClick={nextSlide} $side={'right'} />
             </ButtonContainer>
         </CarouselContainer>
     );

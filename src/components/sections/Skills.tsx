@@ -1,7 +1,9 @@
 // src/components/sections/Skills.tsx
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+
+import FlippedContext from '../../state/FlippedContext';
 
 // Styled section for the skills graph
 const SkillsSection = styled.section`
@@ -13,11 +15,22 @@ const SkillsSection = styled.section`
   background: transparent;
   color: ${({ theme }) => theme.colors.text};
   padding: 0 2rem;
+
+  &.fadeOut {
+    animation: fadeOut 0.6s forwards;
+  }
+
+  &.fadeIn {
+    animation: fadeIn 0.6s forwards;
+  }
 `;
 
 const Skills = () => {
+
+  const { firstFlip, flipped } = useContext(FlippedContext);
+
   return (
-    <SkillsSection id="Skills">
+    <SkillsSection id="Skills" className={firstFlip ? '' : flipped ? 'fadeOut' : 'fadeIn'}>
       <h1>Skills Graph</h1>
     </SkillsSection>
   );

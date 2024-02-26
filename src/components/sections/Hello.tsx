@@ -1,6 +1,9 @@
 // src/components/sections/Hello.tsx
 
+import React, { useContext } from 'react';
 import { styled } from 'styled-components';
+
+import FlippedContext from '../../state/FlippedContext';
 
 const StyledSection = styled.section`
     height: 100vh;
@@ -30,6 +33,14 @@ const StyledSection = styled.section`
     }
     @media (min-width: 2560px) {
         width: 33%;
+    }
+
+    &.fadeOut {
+        animation: fadeOut 0.6s forwards;
+    }
+
+    &.fadeIn {
+        animation: fadeIn 0.6s forwards;
     }
 `;
 
@@ -155,8 +166,10 @@ const Highlight = styled.span<{ $top: boolean }>`
 `;*/}
 
 const Hello = () => {
+  const { flipped, firstFlip } = useContext(FlippedContext);
+
   return (
-    <StyledSection id="Hello">
+    <StyledSection id="Hello" className={firstFlip ? '' : flipped ? 'fadeOut' : 'fadeIn'}>
         <TextContainer>
             <GreetingText>
                 Hello, I'm <Highlight $top={true}>Alec</Highlight>.

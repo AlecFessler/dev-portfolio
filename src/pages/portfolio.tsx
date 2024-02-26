@@ -11,6 +11,8 @@ import Contact from '../components/sections/Contact';
 import Footer from '../components/footer/Footer';
 import Background from '../components/sections/Background';
 
+import FlippedContextProvider from '../../src/components/context_providers/FlippedContext';
+
 const PortfolioContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,12 +33,14 @@ const Portfolio = () => {
   return (
     <PortfolioContainer>
       <Header />
-      <Hello />
-      <Background />
-      <Projects />
-      <Skills />
-      <Contact />
-      <Footer />
+      <FlippedContextProvider>
+        <Hello />
+        <Background />
+        <Projects />
+        <Skills />
+        <Contact />
+        <Footer />
+      </FlippedContextProvider>
     </PortfolioContainer>
   );
 };

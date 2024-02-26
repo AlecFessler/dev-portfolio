@@ -1,8 +1,10 @@
 // src/components/projects/ProjectCard.tsx
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Image, { StaticImageData } from 'next/image';
+
+import FlippedContext from '../../state/FlippedContext';
 
 const ProjectCardContainer = styled.div`
     display: flex;
@@ -36,6 +38,14 @@ const ProjectCardContainer = styled.div`
     }
     @media (min-width: 2560px) {
         padding: 4rem;
+    }
+
+    &.fadeOut {
+        animation: fadeOut 0.6s forwards;
+    }
+
+    &.fadeIn {
+        animation: fadeIn 0.6s forwards;
     }
 `;
 
@@ -123,9 +133,10 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, flipCard }) => {
+    const { flipped, firstFlip } = useContext(FlippedContext);
 
     return (
-        <ProjectCardContainer onClick={flipCard}>
+        <ProjectCardContainer onClick={flipCard} className={firstFlip ? '' : flipped ? 'fadeOut' : 'fadeIn'}>
             <StyledImage src={image} alt={title} />
             <TextBackground>
                 <Title>{title}</Title>
