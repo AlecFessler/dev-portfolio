@@ -8,15 +8,15 @@ const theme = {
         xlarge: '80px', // Extra large buttons, possibly for hero sections or major actions
     },
     colors: {
-        primary: '#398ad7',   // Primary color
-        secondary: '#404A60', // Secondary color
+        primary: '#2283ea',   // Primary color
+        secondary: '#2F3C4F', // Secondary color
         tertiary: '48,101,140', // Tertiary, dark navy
-        background: '#23272a', // Background color
-        shadedContainer: '0, 0, 0, 0.25', // Shaded container color
+        background: '#1A1A1A', // Background color
+        shadedContainer: '0, 0, 0, 0.3', // Shaded container color
         glow: '64,130,174', // Glow color
         innerGlow: '156,229,245', // For inner glow
         outerGlow: '52,109,153', // For outter glow
-        text: '#ffffff', // Primary text
+        text: '#EAECEE', // Primary text
         secondaryText: '#bbbbbb', // Secondary text
         border: '#9FAAB5',     // Border color
         scrollbar: '#1c1f23',  // Scrollbar color

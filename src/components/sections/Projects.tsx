@@ -29,12 +29,12 @@ const ProjectsSection = styled.section`
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: 2rem;
+    gap: 3rem;
     align-items: stretch;
     grid-auto-rows: 1fr;
     background: transparent;
     color: ${({ theme }) => theme.colors.text};
-    padding: 0 2rem;
+    padding: 0 3rem;
 
     @media (min-width: 425px) {
         padding: 0 4rem;

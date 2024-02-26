@@ -35,9 +35,10 @@ const InsetShadowLayer = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.6);
+    z-index: 3;
     border-radius: 10px 10px 0 0;
+    background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const MediaCaptionContainer = styled.div`

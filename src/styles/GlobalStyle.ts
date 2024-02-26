@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
         line-height: 1.4;
         font-size: 1.6rem;
     }
-
+      
     a {
         color: ${({ theme }) => theme.colors.primary};
         text-decoration: none;

@@ -6,6 +6,9 @@ import Image from 'next/image';
 
 import GalacticTear from '../../../public/galactic_tear_sm.png';
 
+import MeteorClusterOne from '../fun_stuff/MeteorClusterOne';
+import MeteorClusterTwo from '../fun_stuff/MeteorClusterTwo';
+
 const Sticky = styled.div`
   position: sticky;
   z-index: 0;
@@ -23,13 +26,13 @@ const Wrapper = styled.div`
 const Background = () => {
   return (
     <Sticky>
+      <MeteorClusterOne />
+      <MeteorClusterTwo />
       <Wrapper>
         <Image 
           src={GalacticTear} 
           alt="A tear in the surface of the webpage, revealing interstellar space" 
           fill={true}
-          objectFit='cover'
-          objectPosition='center center'
           priority={true}
           />
       </Wrapper>

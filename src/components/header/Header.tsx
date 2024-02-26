@@ -17,6 +17,7 @@ const HeaderContainer = styled.header`
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 1000;
   font-size: ${({ theme }) => theme.fontSizes.medium};
+  letter-spacing: -1px;
 
   @media (min-width: 425px) {
     padding: 1rem 4rem 1rem 0;
@@ -51,12 +52,12 @@ const LogoContainer = styled.div`
 const ScrollNav = styled(ScrollLink)`
   margin-left: 1rem;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.3s linear;
   color: ${({ theme }) => theme.colors.text};
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
-    text-shadow: 0 0 10px rgba(${({ theme }) => theme.colors.glow}, 0.5);
+    text-shadow: 0 0 15px rgba(${({ theme }) => theme.colors.glow}, 0.5);
   }
 
   @media (min-width: 768px) {
@@ -79,12 +80,12 @@ const ScrollNav = styled(ScrollLink)`
 const RouterNav = styled(Link)`
   margin-left: 1rem;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.3s linear;
   color: ${({ theme }) => theme.colors.text};
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
-    text-shadow: 0 0 10px rgba(${({ theme }) => theme.colors.glow}, 0.5);
+    text-shadow: 0 0 15px rgba(${({ theme }) => theme.colors.glow}, 0.5);
   }
 
   @media (min-width: 768px) {

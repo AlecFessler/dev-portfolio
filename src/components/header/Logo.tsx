@@ -8,8 +8,7 @@ import LogoImg from '../../../public/logo.png';
 
 const LogoContainer = styled.div`
     position: relative;
-    min-width: 120px;
-    max-width: 120px;
+    width: clamp(7rem, 10vw, 25rem);
     aspect-ratio: 1 / 1;
 `;
 

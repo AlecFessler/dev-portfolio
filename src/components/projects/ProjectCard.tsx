@@ -8,6 +8,7 @@ const ProjectCardContainer = styled.div`
     display: flex;
     flex-direction: column;
     background-color: ${({ theme }) => theme.colors.secondary};
+    opacity: 0.9;
     color: ${({ theme }) => theme.colors.text};
     padding: 2rem;
     align-self: stretch;
@@ -76,6 +77,7 @@ const Title = styled.h3`
     font-family: ${({ theme }) => theme.fonts.heading};
     font-size: ${({ theme }) => theme.fontSizes.regular};
     margin-bottom: 1rem;
+    letter-spacing: -1.25px;
     
     @media (min-width: 375px) {
         font-size: ${({ theme }) => theme.fontSizes.large};

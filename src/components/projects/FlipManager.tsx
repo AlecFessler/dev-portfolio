@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useRef, useState, useContext } from 'rea
 import styled from 'styled-components';
 import { useActor } from '@xstate/react';
 
-import ModalBackgroundShader from './ModalBackgroundShader';
 import ModalContext from '../../state/ModalContext';
 import flipMachine from '../../state/FlipManagerMachine';
 import ProjectCardConstants from '../../state/ProjectCardConstants.json';
@@ -89,6 +88,22 @@ const ModalControlButtons = styled.div`
     height: ${({ theme }) => theme.buttonSizes.small};
     z-index: 1001;
 `;
+
+function preventDefault(e: any) {
+    e.preventDefault();
+}
+
+// Function to lock scroll
+function lockScroll() {
+    document.addEventListener('wheel', preventDefault, { passive: false });
+    document.addEventListener('touchmove', preventDefault, { passive: false });
+}
+
+// Function to unlock scroll
+function unlockScroll() {
+    document.removeEventListener('wheel', preventDefault);
+    document.removeEventListener('touchmove', preventDefault);
+}
 
 function computeScalingFactors(
     cardDimensions: ElementDimensions, 
@@ -273,6 +288,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             const flipDirection = screenSide === 'left' ? 'Left' : 'Right';
             const animationClass = `flip${flipDirection}`;
             if (state.value === 'flippingToBack') {
+                lockScroll();
                 windowDimensionsRef.current = getWindowDimensions();
                 cardDimensionsRef.current = getElementDimensions(containerRef);
                 requestAnimationFrame(() => {
@@ -287,6 +303,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 setTotalSlides(ProjectModalProps.length); // props is just a single array of slides
                 modalButtonsContainerRef.current?.setAttribute('style', '--modal_active: flex');
             } else if (state.value === 'flippingToFront') {
+                unlockScroll();
                 windowDimensionsRef.current = getWindowDimensions();
                 setModal(null);
                 setTotalSlides(0);
@@ -331,6 +348,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             window.removeEventListener('scroll', handleScroll);
             containerRef.current?.removeEventListener('mousemove', handleMouseMove);
             containerRef.current?.removeEventListener('mouseout', handleMouseOut);
+            unlockScroll();
         };
     }, []);
 
@@ -357,15 +375,6 @@ const FlipManager: React.FC<FlipManagerProps> = ({
                 <ProjectModal content={ProjectModalProps} project={project} />
             </ModalInverseScale>
         </FlipManagerContainer>
-        <ModalBackgroundShader visible={() => {
-            // this works because the component rerenders on the flip animation due to setting the
-            // animation class, thus the lambda passed to this function gets a new reference to the
-            // state value to cause a rerender of the background shader with the correct class
-            if (state.value === 'unflipped') { return '' }
-            else if (state.value === 'flippingToFront') { return 'animateOpacityOut' }
-            else { return 'animateOpacity' }
-        }}>
-        </ModalBackgroundShader>
         <ModalControlButtons ref={modalButtonsContainerRef}>
             <Next onClick={() => {
                 setCurrentSlide((currentSlide - 1 + totalSlides) % totalSlides);

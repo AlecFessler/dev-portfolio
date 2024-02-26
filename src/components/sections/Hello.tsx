@@ -10,7 +10,7 @@ const StyledSection = styled.section`
     align-items: center;
     background: transparent;
     color: ${({ theme }) => theme.colors.text};
-    text-align: left;
+    text-align: center;
 
     @media (min-width: 425px) {
         padding: 0 4rem;
@@ -45,9 +45,32 @@ const TextContainer = styled.div`
 const GreetingText = styled.h1`
     font-family: ${({ theme }) => theme.fonts.heading};
     font-weight: 400;
+    font-size: ${({ theme }) => theme.fontSizes.xlarge};
+    margin-bottom: 4rem;
+    letter-spacing: -1.5px;
+
+    @media (min-width: 425px) {
+        font-size: calc(${({ theme }) => theme.fontSizes.xxlarge} + 0.5rem);
+    }
+    @media (min-width: 768px) {
+        font-size: calc(${({ theme }) => theme.fontSizes.xxxlarge} + 0.5rem);
+    }
+    @media (min-width: 1440px) {
+        font-size: calc(${({ theme }) => theme.fontSizes.huge} + 0.5rem);
+    }
+    @media (min-width: 1920px) {
+        font-size: calc${({ theme }) => theme.fontSizes.xhuge} + 0.5rem);
+    }
+    @media (min-width: 2560px) {
+        font-size: calc${({ theme }) => theme.fontSizes.xxhuge} + 0.5rem);
+    }
+`;
+
+const StatementText = styled.h1`
+    font-family: ${({ theme }) => theme.fonts.heading};
+    font-weight: 400;
     font-size: ${({ theme }) => theme.fontSizes.xxlarge};
-    line-height: 1.8;
-    margin-bottom: 6rem;
+    letter-spacing: -1.5px;
 
     @media (min-width: 425px) {
         font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
@@ -136,9 +159,11 @@ const Hello = () => {
     <StyledSection id="Hello">
         <TextContainer>
             <GreetingText>
-                Hello, I'm <Highlight $top={true}>Alec</Highlight>. <br />
-                I'm a <Highlight $top={false}>programmer</Highlight>.
+                Hello, I'm <Highlight $top={true}>Alec</Highlight>.
             </GreetingText>
+            <StatementText>
+                I'm a <Highlight $top={false}>programmer</Highlight>.
+            </StatementText>
             {/*<Definition>
                 pro·gram·mer<br />
                 /`prōˌgramər/<br />
