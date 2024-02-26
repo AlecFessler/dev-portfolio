@@ -19,7 +19,7 @@ const theme = {
         text: '#EAECEE', // Primary text
         secondaryText: '#bbbbbb', // Secondary text
         border: '#9FAAB5',     // Border color
-        scrollbar: '#1c1f23',  // Scrollbar color
+        scrollbar: '#0D0D0D',  // Scrollbar color
     },
     fonts: {
         body: "'Fira Sans', sans-serif",
