@@ -1,7 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
 
-import ModalContext from '../../state/ModalContext';
+import NextButton from '../../../public/buttons/next.png';
+import PrevButton from '../../../public/buttons/prev.png';
 
 const CarouselContainer = styled.div`
     display: flex;
@@ -18,14 +20,39 @@ const ContentContainer = styled.div`
                 -10px 10px 15px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const ProjectMediaCarousel = ({ content }: { content: React.ReactNode[]; project: string }) => {
-    const { currentSlide } = useContext(ModalContext);
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`;
+
+const Button = styled(Image)`
+    cursor: pointer;
+    height: ${({ theme }) => theme.buttonSizes.small};
+    width: ${({ theme }) => theme.buttonSizes.small};
+`;
+
+const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const nextSlide = () => {
+        setCurrentSlide((currentSlide + 1) % content.length);
+    }
+
+    const prevSlide = () => {
+        setCurrentSlide((currentSlide - 1 + content.length) % content.length);
+    }
 
     return (
         <CarouselContainer>
             <ContentContainer>
                 {content[currentSlide]}
             </ContentContainer>
+            <ButtonContainer>
+                <Button src={PrevButton} alt="Previous" onClick={prevSlide} />
+                <button onClick={closeModal}>Close</button>
+                <Button src={NextButton} alt="Next" onClick={nextSlide} />
+            </ButtonContainer>
         </CarouselContainer>
     );
 };

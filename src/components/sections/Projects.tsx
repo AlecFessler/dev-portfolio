@@ -3,8 +3,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ModalContextProvider from '../context_providers/ModalContextProvider';
-
 import ProjectCard from '../projects/ProjectCard';
 import ProjectModal from '../projects/ProjectModal';
 import FlipManager from '../projects/FlipManager';
@@ -155,21 +153,19 @@ const Projects = () => {
     }
     
     return (
-        <ModalContextProvider>
-            <ProjectsSection id="Projects">
-                {projectCards.map((project, index) => {
-                    return (
-                        <FlipManager
-                            key={index}
-                            ProjectCard={ProjectCard}
-                            ProjectCardProps={project}
-                            ProjectModal={ProjectModal}
-                            ProjectModalProps={ProjectModalContent[0]}
-                        />
-                    );
-                })}
-            </ProjectsSection>
-        </ModalContextProvider>
+        <ProjectsSection id="Projects">
+            {projectCards.map((project, index) => {
+                return (
+                    <FlipManager
+                        key={index}
+                        ProjectCard={ProjectCard}
+                        ProjectCardProps={project}
+                        ProjectModal={ProjectModal}
+                        ProjectModalProps={ProjectModalContent[0]}
+                    />
+                );
+            })}
+        </ProjectsSection>
     );
 };
 
