@@ -12,6 +12,7 @@ const theme = {
         secondary: '#2F3C4F', // Secondary color
         tertiary: '48,101,140', // Tertiary, dark navy
         background: '#1A1A1A', // Background color
+        backgroundSecondary: '#23272a', // Secondary background color
         shadedContainer: '0, 0, 0, 0.3', // Shaded container color
         glow: '64,130,174', // Glow color
         innerGlow: '156,229,245', // For inner glow

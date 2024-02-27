@@ -2,20 +2,20 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import Image, { StaticImageData } from 'next/image';
+import { StaticImageData } from 'next/image';
 
 const GifContainer = styled.div`
     position: relative;
     display: flex;
+    justify-content: space-around;
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.05);
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
 `;
 
-const Gif = styled(Image)`
+const Gif = styled.img`
     height: 100%;
-    width: 100%;
 `;
 
 interface Props {
@@ -30,9 +30,9 @@ interface Props {
 const GifContainerComponent: React.FC<Props> = ({ srcOne, altOne, srcTwo, altTwo, srcThree, altThree }) => {
     return (
         <GifContainer>
-            <Gif src={srcOne} alt={altOne} />
-            <Gif src={srcTwo} alt={altTwo} />
-            <Gif src={srcThree} alt={altThree} />
+            <Gif src={srcOne.src} alt={altOne} />
+            <Gif src={srcTwo.src} alt={altTwo} />
+            <Gif src={srcThree.src} alt={altThree} />
         </GifContainer>
     );
 };
