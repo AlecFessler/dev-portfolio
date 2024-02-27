@@ -1,7 +1,9 @@
 // src/components/footer/Footer.tsx
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+
+import FlippedContext from '../../state/FlippedContext';
 
 // Styled section for the footer
 const FooterSection = styled.footer`
@@ -12,11 +14,22 @@ const FooterSection = styled.footer`
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
   margin-top: 20rem;
+
+  &.fadeOut {
+    animation: fadeOut 0.6s forwards;
+  }
+
+  &.fadeIn {
+    animation: fadeIn 0.6s forwards;
+  }
 `;
 
 const Footer = () => {
+
+  const { flipped, firstFlip } = useContext(FlippedContext);
+
   return (
-    <FooterSection>
+    <FooterSection className={firstFlip ? '' : flipped ? 'fadeOut' : 'fadeIn'}>
       <p>© 2024 Alec Fessler | All rights reserved</p>
     </FooterSection>
   );

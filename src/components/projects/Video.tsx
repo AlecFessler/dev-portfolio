@@ -6,6 +6,7 @@ const StyledIframe = styled.iframe`
     height: 100%;
     border: 0;
     border-radius: 10px 10px 0 0;
+    background-color: ${({ theme }) => theme.colors.backgroundSecondary};
 `;
 
 interface VideoProps {

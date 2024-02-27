@@ -14,6 +14,7 @@ const MediaContainer = styled.div`
     aspect-ratio: 16 / 9;
     transform-style: preserve-3d;
     border-radius: 10px;
+    background-color: ${({ theme }) => theme.colors.backgroundSecondary};
 
     @media (min-width: 768px) {
         width: calc(100vw - 10.5rem);
