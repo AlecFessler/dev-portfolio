@@ -2,7 +2,6 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
 
 import GalacticTear from '../../../public/galactic_tear.png';
 

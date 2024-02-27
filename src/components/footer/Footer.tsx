@@ -12,7 +12,7 @@ const FooterSection = styled.footer`
   justify-content: center;
   align-items: center;
   height: 10vh;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.text};
   margin-top: 20rem;
 
