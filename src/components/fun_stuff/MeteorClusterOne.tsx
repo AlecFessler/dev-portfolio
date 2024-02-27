@@ -20,6 +20,7 @@ const MeteorCluster = styled.div`
     grid-template-rows: 1fr 1fr;
     gap: 1rem;
     transform: translateY(60%) rotateZ(30deg);
+    visibility: hidden;
 `;
 
 const AnimatedMeteorContainer = styled.div`

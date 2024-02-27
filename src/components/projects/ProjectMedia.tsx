@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Image, { StaticImageData } from 'next/image';
 
+import GifContainerComponent from './GifContainer';
 import Video from './Video';
 
 const MediaContainer = styled.div`
@@ -38,7 +39,8 @@ const InsetShadowLayer = styled.div`
     box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.6);
     z-index: 3;
     border-radius: 10px 10px 0 0;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
+    pointer-events: none;
 `;
 
 const MediaCaptionContainer = styled.div`
@@ -80,12 +82,13 @@ const MediaCaption = styled.p`
 interface ProjectMediaProps {
     image?: StaticImageData;
     video?: string;
+    gifContainer?: React.ReactElement<typeof GifContainerComponent>;
     caption: string;
     width: number;
     height: number;
 }
 
-const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) => {
+const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, gifContainer, caption }) => {
 
     return (
         <>
@@ -99,12 +102,17 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ image, video, caption }) =>
                         style={{borderRadius: '10px 10px 0 0'}} />
                 </MediaContainer>
 
-            ) : (
+            ) : video ? (
                 <MediaContainer>
                     <InsetShadowLayer />
                     <Video src={video || ''} />
                 </MediaContainer>
-            )}
+            ) : gifContainer ? (
+                <MediaContainer>
+                    <InsetShadowLayer />
+                    {gifContainer}
+                </MediaContainer>
+            ) : null}
             <MediaCaptionContainer>
                 <MediaCaption>{caption}</MediaCaption>
             </MediaCaptionContainer>

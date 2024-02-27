@@ -22,6 +22,7 @@ const MeteorCluster = styled.div`
     transform: translateX(-50px) translateY(-120px) rotateZ(200deg);
     perspective: 1000px;
     transform-style: preserve-3d;
+    visibility: hidden;
 `;
 
 const AnimatedMeteorContainer = styled.div`

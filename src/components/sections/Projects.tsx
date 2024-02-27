@@ -7,6 +7,7 @@ import ProjectCard from '../projects/ProjectCard';
 import ProjectModal from '../projects/ProjectModal';
 import FlipManager from '../projects/FlipManager';
 import ProjectMedia from '../projects/ProjectMedia';
+import GifContainerComponent from '../projects/GifContainer';
 
 import BarbellImg from '../../../public/project_cards/barbell.png';
 import PaintingImg from '../../../public/project_cards/painting.png';
@@ -15,13 +16,36 @@ import TypewriterImg from '../../../public/project_cards/typewriter.png';
 import BedframeImg from '../../../public/project_cards/bedframe.png';
 import AsciiImg from '../../../public/project_cards/ascii.png';
 
-import LevelUpLogin from '../../../public/projects/level_up/level-up-login.gif';
+// Level up exercise log
+import LevelUpLog from '../../../public/projects/level_up/log.gif';
+import LevelUpPR from '../../../public/projects/level_up/personal-record.gif';
+import LevelUpStats from '../../../public/projects/level_up/stats.gif';
+import LevelUpLogin from '../../../public/projects/level_up/login.gif';
+import LevelUpCalendar from '../../../public/projects/level_up/calendar.gif';
+import LevelUpDelete from '../../../public/projects/level_up/delete-ui.gif';
 
+// Fesslerpainting.com
 import FesslerPaintingDesktop from '../../../public/projects/fessler_painting/fessler-painting-page.png';
 import FesslerPaintingMobile from '../../../public/projects/fessler_painting/fessler-painting-mobile.png';
 import FesslerPaintingReviews from '../../../public/projects/fessler_painting/fessler-painting-reviews.png';
 
+// Turing Complete CPU
 import CpuCircuit from '../../../public/projects/turing_complete/cpu_circuit.png';
+const MazeVideo = 'https://www.youtube.com/embed/E4nXSWYnsjw?rel=0';
+const MultipicationVideo = 'https://www.youtube.com/embed/yb0OvjXuftM?rel=0';
+
+// Interactive Story Writer
+// animated diagram video
+
+// Bedframe
+const LedVideo = 'https://www.youtube.com/embed/mskFpDB3tDQ?rel=0';
+import Blueprints from '../../../public/projects/bedframe/diagram.png';
+import BedConstruction from '../../../public/projects/bedframe/bed_construction.png';
+import LEDCircuit from '../../../public/projects/bedframe/led_circuit.png';
+
+// ASCII Art Generator
+// animated diagram video
+// artwork examples
 
 const ProjectsSection = styled.section`
     display: grid;
@@ -78,25 +102,59 @@ const Projects = () => {
             title: "Turing Complete CPU",
             description: "In 'Turing Complete,' a game that turns CPU design into an interactive learning experience, I constructed a CPU architecture from the ground up, designing circuits and logic gates. While including a video game project might appear unconventional in a professional portfolio, it profoundly enriched my understanding of CPU architecture and the nuances of low-level programming."
         },
-        {
-            image: TypewriterImg,
-            title: "Interactive Story Writer",
-            description: "Interactive Story Writer, a Python script I developed to solve a core problem in a group project for a college class of mine: crafting a detailed, branching narrative for a text-based adventure game. Leveraging the OpenAI API, and using an innovative algorithm I devised, the script generates a rich, coherent narrative. The result? Our project had an impressive 2186 unique endings."
-        },
+        // {
+        //     image: TypewriterImg,
+        //     title: "Interactive Story Writer",
+        //     description: "Interactive Story Writer, a Python script I developed to solve a core problem in a group project for a college class of mine: crafting a detailed, branching narrative for a text-based adventure game. Leveraging the OpenAI API, and using an innovative algorithm I devised, the script generates a rich, coherent narrative. The result? Our project had an impressive 2186 unique endings."
+        // },
         {
             image: BedframeImg,
             title: "Floating Bedframe",
             description: "A floating bed frame. Yes, you read that right—a bed frame in my developer portfolio. While it may seem out of place, this bed frame embodies my versatile problem-solving abilities, merging engineering principles and programming skills beyond the digital realm. This project is entirely of my own design. Detailed math was applied to perfect the floating illusion and to engineer a circuit capable of handling the LED's demands."
         },
-        {
-            image: AsciiImg,
-            title: "ASCII Art Generator",
-            description: "ASCII Art Generator, a Python script I developed, creatively applies convolution to translate images into colored ASCII art. By averaging color values and brightness, it maps images onto a grid of ASCII characters, each carefully chosen for its visual weight and color. Showcasing my technical prowess with algorithm design and my fascination with the intersection of mathematics and logic with art and creativity."
-        }
+        // {
+        //     image: AsciiImg,
+        //     title: "ASCII Art Generator",
+        //     description: "ASCII Art Generator, a Python script I developed, creatively applies convolution to translate images into colored ASCII art. By averaging color values and brightness, it maps images onto a grid of ASCII characters, each carefully chosen for its visual weight and color. Showcasing my technical prowess with algorithm design and my fascination with the intersection of mathematics and logic with art and creativity."
+        // }
     ];
 
     const ProjectModalContent = [
-        [ 
+        [ // Level Up Exercise Log
+            <ProjectMedia
+                key={0}
+                gifContainer={
+                    <GifContainerComponent
+                        srcOne={LevelUpLog}
+                        altOne="Level Up Exercise Log"
+                        srcTwo={LevelUpPR}
+                        altTwo="Level Up Personal Record"
+                        srcThree={LevelUpCalendar}
+                        altThree="Level Up Calendar"
+                    />
+                }
+                caption="Level Up Exercise Log"
+                width={0}
+                height={0}
+            />,
+            <ProjectMedia
+                key={1}
+                gifContainer={
+                    <GifContainerComponent
+                        srcOne={LevelUpLogin}
+                        altOne="Level Up Login"
+                        srcTwo={LevelUpStats}
+                        altTwo="Level Up Stats"
+                        srcThree={LevelUpDelete}
+                        altThree="Level Up Delete"
+                    />
+                }
+                caption="Level Up Exercise Log"
+                width={0}
+                height={0}
+            />
+        ],
+        [ // Fesslerpainting.com
             <ProjectMedia
                 key={0}
                 image={FesslerPaintingDesktop}
@@ -119,20 +177,59 @@ const Projects = () => {
                 height={0}
             />
         ],
-        [<ProjectMedia
-            key={0}
-            image={CpuCircuit}
-            caption="Turing Complete CPU Circuit"
-            width={0} // 0 dimensions placeholders, actual size is calculated in ProjectMediaCarousel.tsx
-            height={0}
-        />,
-        <ProjectMedia
-            key={1}
-            video="https://www.youtube.com/embed/dQw4w9WgXcQ"
-            caption="Turing Complete CPU Maze Game"
-            width={0}
-            height={0}
-        />],
+        [ // Turing Complete CPU
+            <ProjectMedia
+                key={0}
+                image={CpuCircuit}
+                caption="Turing Complete CPU Circuit"
+                width={0} // 0 dimensions placeholders, actual size is calculated in ProjectMediaCarousel.tsx
+                height={0}
+            />,
+            <ProjectMedia
+                key={1}
+                video={MazeVideo}
+                caption="Turing Complete CPU Maze Game"
+                width={0}
+                height={0}
+            />,
+            <ProjectMedia
+                key={2}
+                video={MultipicationVideo}
+                caption="Turing Complete CPU Multiplication Game"
+                width={0}
+                height={0}
+            />
+        ],
+        [ // Bed frame
+            <ProjectMedia
+                key={0}
+                video={LedVideo}
+                caption="LED Circuit"
+                width={0}
+                height={0}
+            />,
+            <ProjectMedia
+                key={1}
+                image={Blueprints}
+                caption="Bedframe Blueprints"
+                width={0}
+                height={0}
+            />,
+            <ProjectMedia
+                key={2}
+                image={BedConstruction}
+                caption="Floating Bedframe Construction"
+                width={0}
+                height={0}
+            />,
+            <ProjectMedia
+                key={3}
+                image={LEDCircuit}
+                caption="LED Circuit"
+                width={0}
+                height={0}
+            />
+        ],
     ];
 
     // Zip the project cards and project modal content together
@@ -161,7 +258,7 @@ const Projects = () => {
                         ProjectCard={ProjectCard}
                         ProjectCardProps={project}
                         ProjectModal={ProjectModal}
-                        ProjectModalProps={ProjectModalContent[0]}
+                        ProjectModalProps={ProjectModalContent[index]}
                     />
                 );
             })}
