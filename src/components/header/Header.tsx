@@ -117,8 +117,8 @@ const Header = () => {
     <LogoContainer>
       <Logo />
     </LogoContainer>
-    <HeaderContainer>
-      {/* <nav>
+    {/* <HeaderContainer>
+      <nav>
         <ScrollNav to="Hello" smooth={true} duration={500}>
           Hello
         </ScrollNav>
@@ -134,9 +134,9 @@ const Header = () => {
         <RouterNav href="/blog" passHref>
           Blog
         </RouterNav>
-      </nav> */}
+      </nav>
       alec-fessler.com is currently under construction
-  </HeaderContainer>
+  </HeaderContainer> */}
     </>
   );
 };
