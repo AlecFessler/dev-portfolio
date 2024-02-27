@@ -11,12 +11,13 @@ const FooterSection = styled.footer`
   height: 10vh;
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
+  margin-top: 20rem;
 `;
 
 const Footer = () => {
   return (
     <FooterSection>
-      <p>Footer</p>
+      <p>© 2024 Alec Fessler | All rights reserved</p>
     </FooterSection>
   );
 };
