@@ -1,0 +1,6 @@
+- get the meteors positioned
+- get everything responsive
+- tidy everything up
+- paralax the background would be a game changer dude
+- if you have time, make the ascii art and story writer animated diagrams
+- if you have even more time, make the colored ascii art

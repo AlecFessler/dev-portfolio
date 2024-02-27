@@ -102,21 +102,21 @@ const Projects = () => {
             title: "Turing Complete CPU",
             description: "In 'Turing Complete,' a game that turns CPU design into an interactive learning experience, I constructed a CPU architecture from the ground up, designing circuits and logic gates. While including a video game project might appear unconventional in a professional portfolio, it profoundly enriched my understanding of CPU architecture and the nuances of low-level programming."
         },
-        // {
-        //     image: TypewriterImg,
-        //     title: "Interactive Story Writer",
-        //     description: "Interactive Story Writer, a Python script I developed to solve a core problem in a group project for a college class of mine: crafting a detailed, branching narrative for a text-based adventure game. Leveraging the OpenAI API, and using an innovative algorithm I devised, the script generates a rich, coherent narrative. The result? Our project had an impressive 2186 unique endings."
-        // },
+        {
+            image: TypewriterImg,
+            title: "Interactive Story Writer",
+            description: "Interactive Story Writer, a Python script I developed to solve a core problem in a group project for a college class of mine: crafting a detailed, branching narrative for a text-based adventure game. Leveraging the OpenAI API, and using an innovative algorithm I devised, the script generates a rich, coherent narrative. The result? Our project had an impressive 2186 unique endings."
+        },
         {
             image: BedframeImg,
             title: "Floating Bedframe",
             description: "A floating bed frame. Yes, you read that right—a bed frame in my developer portfolio. While it may seem out of place, this bed frame embodies my versatile problem-solving abilities, merging engineering principles and programming skills beyond the digital realm. This project is entirely of my own design. Detailed math was applied to perfect the floating illusion and to engineer a circuit capable of handling the LED's demands."
         },
-        // {
-        //     image: AsciiImg,
-        //     title: "ASCII Art Generator",
-        //     description: "ASCII Art Generator, a Python script I developed, creatively applies convolution to translate images into colored ASCII art. By averaging color values and brightness, it maps images onto a grid of ASCII characters, each carefully chosen for its visual weight and color. Showcasing my technical prowess with algorithm design and my fascination with the intersection of mathematics and logic with art and creativity."
-        // }
+        {
+            image: AsciiImg,
+            title: "ASCII Art Generator",
+            description: "ASCII Art Generator, a Python script I developed, creatively applies convolution to translate images into colored ASCII art. By averaging color values and brightness, it maps images onto a grid of ASCII characters, each carefully chosen for its visual weight and color. Showcasing my technical prowess with algorithm design and my fascination with the intersection of mathematics and logic with art and creativity."
+        }
     ];
 
     const ProjectModalContent = [
@@ -230,6 +230,66 @@ const Projects = () => {
                 height={0}
             />
         ],
+        [ // Bed frame
+        <ProjectMedia
+            key={0}
+            video={LedVideo}
+            caption="LED Circuit"
+            width={0}
+            height={0}
+        />,
+        <ProjectMedia
+            key={1}
+            image={Blueprints}
+            caption="Bedframe Blueprints"
+            width={0}
+            height={0}
+        />,
+        <ProjectMedia
+            key={2}
+            image={BedConstruction}
+            caption="Floating Bedframe Construction"
+            width={0}
+            height={0}
+        />,
+        <ProjectMedia
+            key={3}
+            image={LEDCircuit}
+            caption="LED Circuit"
+            width={0}
+            height={0}
+        />
+    ],
+    [ // Bed frame
+    <ProjectMedia
+        key={0}
+        video={LedVideo}
+        caption="LED Circuit"
+        width={0}
+        height={0}
+    />,
+    <ProjectMedia
+        key={1}
+        image={Blueprints}
+        caption="Bedframe Blueprints"
+        width={0}
+        height={0}
+    />,
+    <ProjectMedia
+        key={2}
+        image={BedConstruction}
+        caption="Floating Bedframe Construction"
+        width={0}
+        height={0}
+    />,
+    <ProjectMedia
+        key={3}
+        image={LEDCircuit}
+        caption="LED Circuit"
+        width={0}
+        height={0}
+    />
+],
     ];
 
     // Zip the project cards and project modal content together

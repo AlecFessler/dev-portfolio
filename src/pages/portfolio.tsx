@@ -1,7 +1,6 @@
 // src/components/sections/Portfolio.tsx
 
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 
 import Header from '../components/header/Header';
 import Hello from '../components/sections/Hello';
@@ -12,12 +11,6 @@ import Footer from '../components/footer/Footer';
 import Background from '../components/sections/Background';
 
 import FlippedContextProvider from '../../src/components/context_providers/FlippedContext';
-
-const PortfolioContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const Portfolio = () => {
     useEffect(() => {
@@ -30,10 +23,12 @@ const Portfolio = () => {
             }
         }
     }, []);
+
+    
   return (
-    <PortfolioContainer>
-      <Header />
+    <>
       <FlippedContextProvider>
+        <Header />
         <Hello />
         <Background />
         <Projects />
@@ -41,7 +36,7 @@ const Portfolio = () => {
         <Contact />*/}
         <Footer />
       </FlippedContextProvider>
-    </PortfolioContainer>
+    </>
   );
 };
 

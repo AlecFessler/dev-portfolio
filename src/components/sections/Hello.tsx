@@ -6,7 +6,7 @@ import { styled } from 'styled-components';
 import FlippedContext from '../../state/FlippedContext';
 
 const StyledSection = styled.section`
-    height: 100vh;
+    height: 105vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -14,6 +14,7 @@ const StyledSection = styled.section`
     background: transparent;
     color: ${({ theme }) => theme.colors.text};
     text-align: center;
+    margin: 0 auto;
 
     @media (min-width: 425px) {
         padding: 0 4rem;
@@ -49,7 +50,6 @@ const TextContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     transform-style: preserve-3d;
-    background-color: ${({ theme }) => theme.colors.background};
     border-radius: 10px;
 `;
 

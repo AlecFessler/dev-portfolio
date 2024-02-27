@@ -7,6 +7,7 @@ import FlippedContext from '../../state/FlippedContext';
 
 // Styled section for the footer
 const FooterSection = styled.footer`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

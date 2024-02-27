@@ -1,7 +1,7 @@
 // src/components/fun_stuff/MeteorClusterOne.tsx
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import Image from 'next/image';
 
 import MeteorOneImg from '../../../public/meteors/meteor1.png';
@@ -11,67 +11,33 @@ import MeteorSevenImg from '../../../public/meteors/meteor7.png';
 
 const MeteorCluster = styled.div`
     position: absolute;
+    top: 47.5%;
+    left: 5%;
     z-index: 3;
     perspective: 1000px;
     transform-style: preserve-3d;
-    width: 100%;
-    height: 100%;
-    transform: translateX(7.5%) translateY(50%);
 `;
 
-const AnimatedMeteorContainer = styled.div`
+
+const AnimatedMeteorContainer = styled.div<{ $animation: ReturnType<typeof keyframes> }>`
     position: absolute;
-    min-width: 80px;
-    max-width: 150px;
+    min-width: 8rem;
+    max-width: 15rem;
+    width: 100%;
     aspect-ratio: 1 / 1;
 
-    @keyframes zeroG {
-        0% {
-            transform: translate3d(0, 0, 0) rotateZ(0);
-        }
-        10% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        20% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        30% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        40% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        50% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        60% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        70% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        80% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-        90% {
-            transform: translate3d(${Math.floor(Math.random() * 11) - 5}px, ${Math.floor(Math.random() * 11) - 5}px, 0) rotateZ(${Math.floor(Math.random() * 21) - 10}deg);
-        }
-
-        100% {
-            transform: translate3d(0, 0, 0) rotateZ(0);
-        }
-    }
-
-    &.zeroG {
-        animation: zeroG 60s infinite linear;
+    ${(props) => css`
+        animation: ${props.$animation} 60s infinite;
+    `}
     }
 `;
 
 // meteor 1
 const MeteorOneWrapper = styled.div`
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 8rem;
+    height: 8rem;
+    transform: translateX(12.5rem) translateY(2rem) rotateZ(30deg);
 
     &:after {
         content: '';
@@ -87,8 +53,9 @@ const MeteorOneWrapper = styled.div`
 // meteor 2
 const MeteorTwoWrapper = styled.div`
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 10rem
+    height: 10rem;
+    transform: translateY(2.5rem) rotateZ(-5deg);
 
     &:after {
         content: '';
@@ -104,8 +71,9 @@ const MeteorTwoWrapper = styled.div`
 // meteor 3
 const MeteorThreeWrapper = styled.div`
     position: relative;
-    width: 125px;
-    height: 125px;
+    width: 12.5rem;
+    height: 12.5rem;
+    transform: translateX(-5rem) translateY(17.5rem) rotateZ(30deg);
 
     &:after {
         content: '';
@@ -121,8 +89,9 @@ const MeteorThreeWrapper = styled.div`
 // meteor 4
 const MeteorFourWrapper = styled.div`
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 15rem;
+    height: 15rem;
+    transform: translateY(7.5rem) rotateZ(20deg);
 
     &:after {
         content: '';
@@ -135,29 +104,62 @@ const MeteorFourWrapper = styled.div`
     }
 `;
 
+const generateUniqueKeyframes = () => {
+    const randomValue = () => Math.floor(Math.random() * 11) - 5;
+    const randomDegree = () => Math.floor(Math.random() * 21) - 10;
+  
+    // Generating unique keyframes as string
+    const keyframesString = `
+      0% {
+        transform: translate3d(0, 0, 0) rotateZ(0);
+      }
+      ${Array.from({ length: 10 }).map((_, index) => `
+        ${index * 10}% {
+          transform: translate3d(${randomValue()}px, ${randomValue()}px, 0) rotateZ(${randomDegree()}deg);
+        }
+      `).join('')}
+      100% {
+        transform: translate3d(0, 0, 0) rotateZ(0);
+      }
+    `;
+  
+    // Using the keyframes helper to create a unique animation
+    return keyframes`${keyframesString}`;
+};
+
+const UniqueAnimatedMeteor = ({ children } : { children: React.ReactNode }) => {
+    const zeroGKeyframes = generateUniqueKeyframes();
+    
+    return (
+        <AnimatedMeteorContainer className="zeroG" $animation={zeroGKeyframes}>
+            {children}
+        </AnimatedMeteorContainer>
+    );
+};
+
 const MeteorClusterOne = () => {
     return (
             <MeteorCluster>
-                <AnimatedMeteorContainer className="zeroG">
+                <UniqueAnimatedMeteor>
                     <MeteorOneWrapper>
                         <Image src={MeteorOneImg} alt="meteor" height={80} width={80} />
                     </MeteorOneWrapper>
-                </AnimatedMeteorContainer>
-                <AnimatedMeteorContainer className="zeroG">
+                </UniqueAnimatedMeteor>
+                <UniqueAnimatedMeteor>
                     <MeteorTwoWrapper>
                         <Image src={MeteorTwoImg} alt="meteor" height={100} width={100} />
                     </MeteorTwoWrapper>
-                </AnimatedMeteorContainer>
-                <AnimatedMeteorContainer className="zeroG">
+                </UniqueAnimatedMeteor>
+                <UniqueAnimatedMeteor>
                     <MeteorThreeWrapper>
                         <Image src={MeteorFiveImg} alt="meteor" height={125} width={125} />
                     </MeteorThreeWrapper>
-                </AnimatedMeteorContainer>
-                <AnimatedMeteorContainer className="zeroG">
+                </UniqueAnimatedMeteor>
+                <UniqueAnimatedMeteor>
                     <MeteorFourWrapper>
                         <Image src={MeteorSevenImg} alt="meteor" height={150} width={150} />
                     </MeteorFourWrapper>
-                </AnimatedMeteorContainer>
+                </UniqueAnimatedMeteor>
             </MeteorCluster>
         );
 };
