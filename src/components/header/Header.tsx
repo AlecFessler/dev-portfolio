@@ -10,9 +10,10 @@ import Logo from './Logo';
 const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center; // flex-end;
+  text-align: center;
   width: 100vw;
-  padding: 1rem 2rem 1rem 0;
+  padding: 1rem 0; // 1rem 2rem 1rem 0;
   position: fixed;
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 1000;
@@ -20,24 +21,24 @@ const HeaderContainer = styled.header`
   letter-spacing: -1px;
 
   @media (min-width: 425px) {
-    padding: 1rem 4rem 1rem 0;
+    padding: 1rem 0; // 1rem 4rem 1rem 0;
   }
   @media (min-width: 768px) {
-    padding: 1rem 5rem 1rem 0;
+    padding: 1rem 0; // 1rem 5rem 1rem 0;
     font-size: ${({ theme }) => theme.fontSizes.regular};
   }
   @media (min-width: 1024px) {
-    padding: 1rem 10rem 1rem 0;
+    padding: 1rem 0; // 1rem 10rem 1rem 0;
   }
   @media (min-width: 1440px) {
-    padding: 1rem 30rem 1rem 0;
+    padding: 1rem 0; // 1rem 30rem 1rem 0;
   }
   @media (min-width: 1920px) {
-    padding: 1.5rem 35rem 1.5rem 0;
+    padding: 1.5rem 0; // 1.5rem 35rem 1.5rem 0;
     font-size: ${({ theme }) => theme.fontSizes.xlarge};
   }
   @media (min-width: 2560px) {
-    padding: 2rem 40rem 2rem 0;
+    padding: 2rem 0; // 2rem 40rem 2rem 0;
     font-size: ${({ theme }) => theme.fontSizes.xxxlarge};
   }
 `;
@@ -47,6 +48,11 @@ const LogoContainer = styled.div`
   left: 1rem;
   top: 1rem;
   z-index: 1001;
+  display: none;
+
+  @media (min-width: 1440px) {
+    display: block;
+  }
 `;
 
 const ScrollNav = styled(ScrollLink)`
@@ -111,8 +117,8 @@ const Header = () => {
     <LogoContainer>
       <Logo />
     </LogoContainer>
-    {/*<HeaderContainer>
-      <nav>
+    <HeaderContainer>
+      {/* <nav>
         <ScrollNav to="Hello" smooth={true} duration={500}>
           Hello
         </ScrollNav>
@@ -128,8 +134,9 @@ const Header = () => {
         <RouterNav href="/blog" passHref>
           Blog
         </RouterNav>
-      </nav>
-  </HeaderContainer>*/}
+      </nav> */}
+      alec-fessler.com is currently under construction
+  </HeaderContainer>
     </>
   );
 };
