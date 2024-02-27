@@ -16,6 +16,11 @@ const MeteorCluster = styled.div`
     z-index: 3;
     perspective: 1000px;
     transform-style: preserve-3d;
+    display: none;
+
+    @media (min-width: 1440px) {
+        display: block;
+    }
 `;
 
 

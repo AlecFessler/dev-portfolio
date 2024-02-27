@@ -16,6 +16,11 @@ const MeteorCluster = styled.div`
     perspective: 1000px;
     transform-style: preserve-3d;
     transform: rotateZ(180deg);
+    display: none;
+
+    @media (min-width: 1440px) {
+        display: block;
+    }
 `;
 
 const AnimatedMeteorContainer = styled.div<{ $animation: ReturnType<typeof keyframes> }>`

@@ -11,12 +11,21 @@ import MeteorClusterTwo from '../fun_stuff/MeteorClusterTwo';
 const Sticky = styled.div`
   position: sticky;
   z-index: 0;
-  top: 0;
+  top: 35%;
   width: 100%;
-  height: 100vh;
-  aspect-ratio: 16 / 9;
+  height: 20vh;
   margin-top: -15%;
   overflow: hidden;
+
+  @media (min-width: 768px) {
+    top: 15%;
+    height: 100vh;
+  }
+  
+  @media (min-width: 1440px) {
+    top: 0;
+    height: 100vh;
+  }
 `;
 
 const BackgroundImage = styled.div`
