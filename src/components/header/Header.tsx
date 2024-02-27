@@ -111,7 +111,7 @@ const Header = () => {
     <LogoContainer>
       <Logo />
     </LogoContainer>
-    <HeaderContainer>
+    {/*<HeaderContainer>
       <nav>
         <ScrollNav to="Hello" smooth={true} duration={500}>
           Hello
@@ -129,7 +129,7 @@ const Header = () => {
           Blog
         </RouterNav>
       </nav>
-    </HeaderContainer>
+  </HeaderContainer>*/}
     </>
   );
 };

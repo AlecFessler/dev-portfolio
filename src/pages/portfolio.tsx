@@ -37,8 +37,8 @@ const Portfolio = () => {
         <Hello />
         <Background />
         <Projects />
-        <Skills />
-        <Contact />
+        {/*<Skills />
+        <Contact />*/}
         <Footer />
       </FlippedContextProvider>
     </PortfolioContainer>
