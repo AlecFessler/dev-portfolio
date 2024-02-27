@@ -20,9 +20,9 @@ const ProjectCardContainer = styled.div`
     cursor: pointer;
     transform-style: preserve-3d;
     transition: var(--glow-transition);
-    box-shadow: calc(var(--h-shadow) / 3) calc(var(--v-shadow) / 3) 5px 5px var(--inner-glow-color),
-                calc(var(--h-shadow) / 3 * 2) calc(var(--v-shadow) / 3 * 2) 10px 5px var(--glow-color),
-                var(--h-shadow) var(--v-shadow) 15px 5px var(--outer-glow-color);
+    box-shadow: calc(var(--h-shadow) / 3) calc(var(--v-shadow) / 3) 10px 1px rgba(${({ theme }) => theme.colors.innerGlow}, 0.8),
+                calc(var(--h-shadow) / 3 * 2) calc(var(--v-shadow) / 3 * 2) 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.5),
+                var(--h-shadow) var(--v-shadow) 30px 10px rgba(${({ theme }) => theme.colors.outerGlow}, 0.5);
     @media (min-width: 1920px) {
         padding: 3rem;
     }

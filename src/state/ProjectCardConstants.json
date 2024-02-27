@@ -1,5 +1,5 @@
 {
-    "TILT_INTENSITY": 25,
+    "TILT_INTENSITY": 15,
     "FLIP_DURATION": 1.0,
     "TiltAnimationStates": {
         "lowered": {

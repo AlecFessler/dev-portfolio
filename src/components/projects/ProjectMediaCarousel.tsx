@@ -34,6 +34,23 @@ const Button = styled(Image)<{ $side: 'left' | 'right' | '' }>`
     width: ${({ theme }) => theme.buttonSizes.small};
     margin: 0 10px;
     transform: ${({ $side }) => $side === 'left' ? 'rotateZ(30deg)' : $side === 'right' ? 'rotateY(180deg) rotateZ(30deg)' : ''};
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        transform: ${({ $side }) => $side === 'left' ? 'rotateZ(30deg)' : $side === 'right' ? 'rotateY(180deg) rotateZ(30deg)' : ''} scale(1.1);
+    }
+`;
+
+const XButton = styled(Image)`
+    cursor: pointer;
+    height: calc(${({ theme }) => theme.buttonSizes.small} + 1rem);
+    width: calc(${({ theme }) => theme.buttonSizes.small} + 1rem);
+    margin: 0 10px;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 `;
 
 const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNode[], closeModal: () => void }) => {
@@ -54,7 +71,7 @@ const ProjectMediaCarousel = ({ content, closeModal }: { content: React.ReactNod
             </ContentContainer>
             <ButtonContainer>
                 <Button src={PrevButton} alt='Previous' onClick={prevSlide} $side={'left'} />
-                <Button src={CloseButton} alt='Close' onClick={closeModal} $side={''} style={{marginTop:'0.5rem'}} />
+                <XButton src={CloseButton} alt='Close' onClick={closeModal} />
                 <Button src={NextButton} alt='Next' onClick={nextSlide} $side={'right'} />
             </ButtonContainer>
         </CarouselContainer>

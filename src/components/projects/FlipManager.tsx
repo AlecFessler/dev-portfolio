@@ -47,10 +47,8 @@ const FlipManagerContainer = styled.div<{ $side: 'left' | 'right' }>`
     z-index: var(--zIndex, 0);
 
     /* These properties are for controlling the project cards glow */
-    --box-shadow-top: 2.5px;
-    --box-shadow-right: -2.5px;
-    --box-shadow-bottom: -2.5px;
-    --box-shadow-left: 2.5px;
+    --h-shadow: 2.5px;
+    --v-shadow: 2.5px;
     --glow-transition: 0.3s linear;
 
     &.flipLeft {
@@ -148,12 +146,10 @@ function setModalScale(containerRef: React.RefObject<HTMLDivElement>, inverseSca
     containerRef.current.style.setProperty('--inverseScaleY', inverseScaleY.toString());
 }
 
-function setProjectCardGlowStyleVars(containerRef: React.RefObject<HTMLDivElement>, top: string | null, right: string | null, bottom: string | null, left: string | null, glowTransition: string | null = null) {
+function setProjectCardGlowStyleVars(containerRef: React.RefObject<HTMLDivElement>, vShadow: string, hShadow: string, glowTransition: string | null = null) {
     if (!containerRef.current) return;
-    if (top !== null) containerRef.current.style.setProperty('--box-shadow-top', top);
-    if (right !== null) containerRef.current.style.setProperty('--box-shadow-right', right);
-    if (bottom !== null) containerRef.current.style.setProperty('--box-shadow-bottom', bottom);
-    if (left !== null) containerRef.current.style.setProperty('--box-shadow-left', left);
+    containerRef.current.style.setProperty('--v-shadow', vShadow);
+    containerRef.current.style.setProperty('--h-shadow', hShadow);
     if (glowTransition !== null) containerRef.current.style.setProperty('--glow-transition', glowTransition + 's' + ' linear');
 };
 
@@ -246,15 +242,10 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             cursorPosRef.current = {x: e.clientX - left, y: e.clientY - top};
             const [rotateX, rotateY] = computeTiltAngles(cardDimensionsRef.current, cursorPosRef.current);
             setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
-            const topGlow = rotateX > 0 ? rotateX * -3 : 5;
-            let rightGlow = rotateY > 0 ? rotateY * 3 : -5;
-            const bottomGlow = rotateX < 0 ? rotateX * -3 : -5;
-            let leftGlow = rotateY < 0 ? rotateY * 3 : 5;
-            if (rotateX > 0) {
-                rightGlow *= -1;
-                leftGlow *= -1;
-            }
-            setProjectCardGlowStyleVars(containerRef, topGlow.toString() + 'px', rightGlow.toString() + 'px', bottomGlow.toString() + 'px', leftGlow.toString() + 'px', '0');
+            const verticalGlow = rotateX > 0 ? rotateX * -3 : rotateX < 0 ? rotateX * -3 : 0;
+            let horizontalGlow = rotateY > 0 ? rotateY * 3 : rotateY < 0 ? rotateY * 3 : 0;
+            if (rotateX > 0) horizontalGlow *= -1;
+            setProjectCardGlowStyleVars(containerRef, verticalGlow.toString() + 'px', horizontalGlow.toString() + 'px', '0');
         });
     }, []);
 
@@ -263,7 +254,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             if (!containerRef.current || currentStateRef.current != 'unflipped') return;
             const {rotateX, rotateY, scaleX, scaleY, translateX, translateY, transition} = lowered;
             setContainerStyleVars(containerRef, transition, 0, getTransformString(rotateX, rotateY, scaleX, scaleY, translateX, translateY));
-            setProjectCardGlowStyleVars(containerRef, '2.5px', '-2.5px', '-2.5px', '2.5px', '0.3');
+            setProjectCardGlowStyleVars(containerRef, '2.5px', '2.5px', '0.3');
         });
     }, []);
 
@@ -282,6 +273,7 @@ const FlipManager: React.FC<FlipManagerProps> = ({
             if (state.value === 'flippingToBack') {
                 lockScroll();
                 setFlipped(true);
+                setProjectCardGlowStyleVars(containerRef, '2.5px', '2.5px', '0.3');
                 if (firstFlip) setfirstFlip(false);
                 windowDimensionsRef.current = getWindowDimensions();
                 cardDimensionsRef.current = getElementDimensions(containerRef);
