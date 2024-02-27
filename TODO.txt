@@ -1,4 +1,3 @@
-- get the meteors positioned
 - get everything responsive
 - tidy everything up
 - paralax the background would be a game changer dude

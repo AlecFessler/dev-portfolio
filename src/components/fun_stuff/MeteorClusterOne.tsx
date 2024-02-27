@@ -11,7 +11,7 @@ import MeteorSevenImg from '../../../public/meteors/meteor7.png';
 
 const MeteorCluster = styled.div`
     position: absolute;
-    top: 47.5%;
+    top: 57.5%;
     left: 5%;
     z-index: 3;
     perspective: 1000px;

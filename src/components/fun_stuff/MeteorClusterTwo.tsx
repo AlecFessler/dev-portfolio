@@ -10,7 +10,7 @@ import MeteorSixImg from '../../../public/meteors/meteor6.png';
 
 const MeteorCluster = styled.div`
     position: absolute;
-    top: 35%;
+    top: 37.5%;
     right: 5%;
     z-index: 3;
     perspective: 1000px;
@@ -126,17 +126,17 @@ const MeteorClusterTwo = () => {
         <MeteorCluster>
             <UniqueAnimatedMeteor>
                 <MeteorOneWrapper>
-                    <Image src={MeteorThreeImg} alt="meteor" height={80} width={80} objectFit='cover' />
+                    <Image src={MeteorThreeImg} alt="meteor" height={80} width={80} />
                 </MeteorOneWrapper>
             </UniqueAnimatedMeteor>
             <UniqueAnimatedMeteor>
                 <MeteorTwoWrapper>
-                    <Image src={MeteorFourImg} alt="meteor" height={100} width={100} objectFit='cover' />
+                    <Image src={MeteorFourImg} alt="meteor" height={100} width={100} />
                 </MeteorTwoWrapper>
             </UniqueAnimatedMeteor>
             <UniqueAnimatedMeteor>
                 <MeteorThreeWrapper>
-                    <Image src={MeteorSixImg} alt="meteor" height={125} width={125} objectFit='cover' />
+                    <Image src={MeteorSixImg} alt="meteor" height={125} width={125} />
                 </MeteorThreeWrapper>
             </UniqueAnimatedMeteor>
         </MeteorCluster>

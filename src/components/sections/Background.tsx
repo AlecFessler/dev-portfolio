@@ -14,14 +14,16 @@ const Sticky = styled.div`
   z-index: 0;
   top: 0;
   width: 100%;
+  height: 100vh;
   aspect-ratio: 16 / 9;
   margin-top: -15%;
+  overflow: hidden;
 `;
 
 const BackgroundImage = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
   background-image: url(${GalacticTear.src});
   background-size: cover;
   background-position: center;
