@@ -10,23 +10,17 @@ import MeteorSixImg from '../../../public/meteors/meteor6.png';
 
 const MeteorCluster = styled.div`
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 300px;
     z-index: 3;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 1rem;
-    transform: translateX(-50px) translateY(-120px) rotateZ(200deg);
     perspective: 1000px;
     transform-style: preserve-3d;
-    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-7.5%) translateY(35%);
 `;
 
 const AnimatedMeteorContainer = styled.div`
-    position: relative;
+    position: absolute;
+    right: 0;
     min-width: 80px;
     max-width: 150px;
     aspect-ratio: 1 / 1;
@@ -73,13 +67,11 @@ const AnimatedMeteorContainer = styled.div`
     }
 `;
 
-
 // meteor 1
 const MeteorOneWrapper = styled.div`
     position: relative;
     width: 80px;
     height: 80px;
-    transform: translate3d(-20px, 40px, 0) rotateZ(20deg);
 
     &:after {
         content: '';
@@ -89,7 +81,6 @@ const MeteorOneWrapper = styled.div`
         background: rgba(0, 0, 0, 0.5);
         border-radius: 50%;
         filter: blur(30px);
-        transform: translate3d(-225%, -50%, 0);
     }
 `;
 
@@ -98,7 +89,6 @@ const MeteorTwoWrapper = styled.div`
     position: relative;
     width: 100px;
     height: 100px;
-    transform: translate3d(-50px, 60px, 0) rotateZ(0);
 
     &:after {
         content: '';
@@ -108,7 +98,6 @@ const MeteorTwoWrapper = styled.div`
         background: rgba(0, 0, 0, 0.5);
         border-radius: 50%;
         filter: blur(30px);
-        transform: translate3d(-225%, -50%, 0);
     }
 `;
 
@@ -117,7 +106,6 @@ const MeteorThreeWrapper = styled.div`
     position: relative;
     width: 125px;
     height: 125px;
-    transform: translate3d(-30px, -60px, 0) rotateZ(40deg);
 
     &:after {
         content: '';
@@ -127,7 +115,6 @@ const MeteorThreeWrapper = styled.div`
         background: rgba(0, 0, 0, 0.5);
         border-radius: 50%;
         filter: blur(30px);
-        transform: translate3d(-225%, -50%, 0);
     }
 `;
 
@@ -136,21 +123,22 @@ const MeteorClusterTwo = () => {
         <MeteorCluster>
             <AnimatedMeteorContainer className="zeroG">
                 <MeteorOneWrapper>
-                    <Image src={MeteorThreeImg} alt="meteor" height={80} width={80} />
+                    <Image src={MeteorThreeImg} alt="meteor" height={80} width={80} objectFit='cover' />
                 </MeteorOneWrapper>
             </AnimatedMeteorContainer>
             <AnimatedMeteorContainer className="zeroG">
                 <MeteorTwoWrapper>
-                    <Image src={MeteorFourImg} alt="meteor" height={100} width={100} />
+                    <Image src={MeteorFourImg} alt="meteor" height={100} width={100} objectFit='cover' />
                 </MeteorTwoWrapper>
             </AnimatedMeteorContainer>
             <AnimatedMeteorContainer className="zeroG">
                 <MeteorThreeWrapper>
-                    <Image src={MeteorSixImg} alt="meteor" height={125} width={125} />
+                    <Image src={MeteorSixImg} alt="meteor" height={125} width={125} objectFit='cover' />
                 </MeteorThreeWrapper>
             </AnimatedMeteorContainer>
         </MeteorCluster>
     );
 };
+
 
 export default MeteorClusterTwo;

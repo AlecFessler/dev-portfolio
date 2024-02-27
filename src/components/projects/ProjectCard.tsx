@@ -20,19 +20,9 @@ const ProjectCardContainer = styled.div`
     cursor: pointer;
     transform-style: preserve-3d;
     transition: var(--glow-transition);
-    box-shadow: 0 calc(var(--box-shadow-bottom) / 3) 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
-                0 calc(var(--box-shadow-bottom) / 3 * 2) 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                0 var(--box-shadow-bottom) 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3),
-                calc(var(--box-shadow-left) / 3) 0 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
-                calc(var(--box-shadow-left) / 3 * 2) 0 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                var(--box-shadow-left) 0 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3),
-                calc(var(--box-shadow-right) / 3) 0 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
-                calc(var(--box-shadow-right) / 3 * 2) 0 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                var(--box-shadow-right) 0 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3),
-                0 calc(var(--box-shadow-top) / 3) 5px 5px rgba(${({ theme }) => theme.colors.innerGlow}, 0.1),
-                0 calc(var(--box-shadow-top) / 3 * 2) 10px 5px rgba(${({ theme }) => theme.colors.glow}, 0.2),
-                0 var(--box-shadow-top) 15px 5px rgba(${({ theme }) => theme.colors.outerGlow}, 0.3);
-
+    box-shadow: calc(var(--h-shadow) / 3) calc(var(--v-shadow) / 3) 5px 5px var(--inner-glow-color),
+                calc(var(--h-shadow) / 3 * 2) calc(var(--v-shadow) / 3 * 2) 10px 5px var(--glow-color),
+                var(--h-shadow) var(--v-shadow) 15px 5px var(--outer-glow-color);
     @media (min-width: 1920px) {
         padding: 3rem;
     }
