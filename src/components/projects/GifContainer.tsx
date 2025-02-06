@@ -28,6 +28,33 @@ interface Props {
 }
 
 const GifContainerComponent: React.FC<Props> = ({ srcOne, altOne, srcTwo, altTwo, srcThree, altThree }) => {
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (containerRef.current) {
+            console.log('GifContainer mounted/updated:', {
+                className: containerRef.current.className,
+                styles: {
+                    display: window.getComputedStyle(containerRef.current).display,
+                    justifyContent: window.getComputedStyle(containerRef.current).justifyContent
+                },
+                sources: {
+                    one: srcOne.src,
+                    two: srcTwo.src,
+                    three: srcThree.src
+                }
+            });
+        }
+
+        return () => {
+            console.log('GifContainer unmounting with sources:', {
+                one: srcOne.src,
+                two: srcTwo.src,
+                three: srcThree.src
+            });
+        };
+    }, [srcOne.src, srcTwo.src, srcThree.src]);
+
     return (
         <GifContainer>
             <Gif src={srcOne.src} alt={altOne} />
